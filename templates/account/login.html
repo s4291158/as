@@ -1,0 +1,50 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load bootstrap %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+
+            <h1 class="title text-center">{% trans "Sign In to AirSponge" %}</h1>
+
+            <div class="row">
+                <div class="col-sm-4 col-sm-offset-1">
+                    <form class="login" method="POST" action="{% url 'account_login' %}">
+                        {% csrf_token %}
+                        {{ form|bootstrap }}
+                        {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                        {% endif %}
+                        <div class="form-actions">
+                            <button class="btn btn-primary" style="width: 100%" type="submit">{% trans "Sign In" %}</button>
+                            <a class="btn" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-4 col-sm-offset-2">
+                    <ul>
+                        <li>
+                            <a class="btn btn-block btn-social btn-facebook"
+                               href="{% provider_login_url "facebook" method="oauth2" %}">
+                                <span class="fa fa-facebook"></span> Sign In with Facebook
+                            </a>
+                        </li>
+                        <li>
+                            <a class="btn btn-block btn-social btn-twitter"
+                               href="{% provider_login_url "twitter" method="oauth" %}">
+                                <span class="fa fa-twitter"></span> Sign In with Twitter
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

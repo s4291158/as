@@ -1,0 +1,51 @@
+{% extends "account/base.html" %}
+
+{% load bootstrap %}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div class="title-block">
+                <h1 class="title text-center">{% trans "Sign Up with AirSponge" %}</h1>
+                <p class="text-center">Literally takes 3 seconds</p>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 col-sm-offset-4">
+                    <form id="signup_form" method="post" action="{% url 'account_signup' %}">
+                        {% csrf_token %}
+                        {{ form|bootstrap }}
+                        {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                        {% endif %}
+                        <div class="form-actions">
+                            <button class="btn btn-primary" style="width: 100%"
+                                    type="submit">{% trans "Sign Up" %}</button>
+                        </div>
+                    </form>
+                    <br/>
+                    <p>{% blocktrans %}Already have an account? <a href="{{ login_url }}">Sign In</a>
+                        .{% endblocktrans %}</p>
+                    <ul>
+                        <li>
+                            <a class="btn btn-block btn-social btn-facebook"
+                               href="{% provider_login_url "facebook" method="oauth2" %}">
+                                <span class="fa fa-facebook"></span> Sign Up with Facebook
+                            </a>
+                        </li>
+                        <li>
+                            <a class="btn btn-block btn-social btn-twitter"
+                               href="{% provider_login_url "twitter" method="oauth" %}">
+                                <span class="fa fa-twitter"></span> Sign Up with Twitter
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

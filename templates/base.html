@@ -1,0 +1,21 @@
+<html lang="en">
+
+<head>
+    <title>P | {% block head_title %}{% endblock %}</title>
+
+    {% include 'meta.html' %}
+    {% include 'css.html' %}
+
+
+</head>
+
+<body>
+
+{% include 'nav.html' %}
+
+{% block content %}{% endblock %}
+
+{% include 'js.html' %}
+</body>
+
+</html>
