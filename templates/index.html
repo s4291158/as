@@ -23,7 +23,23 @@
         <div class="container text-center">
             <h2 class="title">CARWASH. ON DEMAND</h2>
             <p class="intro">We'll bring the carwash to you</p>
-            <p><a class="btn btn-cta btn-cta-primary" href="signup.html">Try AirSponge Free</a></p>
+            {{ message }}
+            <form method="post" action="">
+                {% csrf_token %}
+
+                {{ form.non_field_errors }}
+                {{ form.oneline_address.errors }}
+
+                <div class="input-group">
+                    {{ form.oneline_address }}
+                    <span class="input-group-btn" style="width:0px;"></span>
+
+                    <div class="form-action input-group-btn">
+                        <button class="btn btn-cta btn-cta-primary" type="submit">Get Started</button>
+                    </div>
+                </div>
+
+            </form>
         </div><!--//container-->
     </section><!--//promo-->
 

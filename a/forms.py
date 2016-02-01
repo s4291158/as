@@ -1,5 +1,49 @@
 from django import forms
-from .models import BaseUser, Address, BankAccount
+from django.utils import timezone
+from .models import BaseUser, Address, BankAccount, WashRequest, Car
+
+
+class LandingForm(forms.Form):
+    class Meta:
+        model = WashRequest
+
+    oneline_address = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Car location e.g 123 abc st, brisbane CBD 4000',
+        'class': 'form-control',
+    }))
+
+    types = [
+        ('Small Sedan / Hatchback', 'Small Sedan / Hatchback'),
+        ('Large Sedan / Wagon', 'Large Sedan / Wagon'),
+        ('Small SUV', 'Small SUV'),
+        ('Large SUV', 'Large SUV'),
+        ('Van', 'Van')
+    ]
+    type = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Car Type e.g Sedan',
+            'class': 'form-control',
+        }))
+
+    def save(self):
+        washrequest = WashRequest()
+        washrequest.request_date = timezone.now()
+        washrequest.save()
+
+        car = Car()
+        car.washRequest = washrequest
+        car.type = self.cleaned_data['type']
+        car.save()
+        washrequest.car_set.add(car)
+
+        address = Address()
+        address.washRequest = washrequest
+        address.oneline_address = self.cleaned_data['oneline_address']
+        address.save()
+        washrequest.address = address
+
+        washrequest.save()
 
 
 class CustomSignupForm(forms.Form):

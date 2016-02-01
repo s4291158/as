@@ -1,0 +1,15 @@
+@media (min-width: 992px) {
+    .branding {
+        margin-left: 20px;
+    }
+
+    .navbar-right {
+        margin-right: 20px;
+    }
+
+}
+
+.form-control {
+    height: 45px;
+}
+

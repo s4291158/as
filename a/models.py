@@ -24,26 +24,32 @@ class Washee(BaseUser):
 
 
 class WashRequest(models.Model):
-    washee = models.ForeignKey(Washee, on_delete=models.CASCADE)
+    washee = models.ForeignKey(Washee, on_delete=models.CASCADE, null=True, blank=True)
 
-    assigned_washer = models.ForeignKey(Washer, on_delete=models.CASCADE, blank=True)
+    assigned_washer = models.ForeignKey(Washer, on_delete=models.CASCADE, null=True, blank=True)
 
-    request_date = models.DateTimeField()
-    wash_date = models.DateTimeField()
-    water_details = models.CharField(max_length=40, blank=True)
-    electricity_details = models.CharField(max_length=40, blank=True)
-    vacuum_details = models.CharField(max_length=40, blank=True)
-    description = models.CharField(max_length=254, blank=True)
+    request_date = models.DateTimeField(null=True, blank=True)
+    wash_date = models.DateTimeField(null=True, blank=True)
+    water_details = models.CharField(max_length=40, null=True, blank=True)
+    electricity_details = models.CharField(max_length=40, null=True, blank=True)
+    vacuum_details = models.CharField(max_length=40, null=True, blank=True)
+    description = models.CharField(max_length=254, null=True, blank=True)
     discount = models.FloatField(default=0, blank=True)
     total_price = models.FloatField(default=0, blank=True)
 
+    def __str__(self):
+        return 'wash no.' + str(self.id)
+
 
 class Car(models.Model):
-    washRequest = models.ForeignKey(WashRequest)
+    washRequest = models.ForeignKey(WashRequest, null=True)
 
-    number_plate = models.CharField(max_length=10, blank=True)
-    type = models.CharField(max_length=10, blank=True)
-    dirtiness = models.IntegerField(blank=True)
+    number_plate = models.CharField(max_length=10, null=True, blank=True)
+    type = models.CharField(max_length=10, null=True, blank=True)
+    dirtiness = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return self.number_plate
 
 
 class Address(models.Model):
@@ -51,26 +57,30 @@ class Address(models.Model):
 
     washRequest = models.OneToOneField(WashRequest, null=True)
 
-    street_address = models.CharField(max_length=200)
-    suburb = models.CharField(max_length=40)
-    city = models.CharField(max_length=40, blank=True)
-    postcode = models.IntegerField()
-    state = models.CharField(max_length=20, blank=True)
-    country = models.CharField(max_length=40, blank=True)
+    street_address = models.CharField(max_length=200, null=True, blank=True)
+    suburb = models.CharField(max_length=40, null=True, blank=True)
+    city = models.CharField(max_length=40, null=True, blank=True)
+    postcode = models.IntegerField(blank=True, null=True)
+    state = models.CharField(max_length=20, null=True, blank=True)
+    country = models.CharField(max_length=40, null=True, blank=True)
 
-    formatted = models.CharField(max_length=200, blank=True)
+    oneline_address = models.CharField(max_length=200, null=True, blank=True)
+    formatted = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
-        return self.street_address
+        if self.oneline_address:
+            return self.oneline_address
+        else:
+            return self.street_address + ', ' + self.suburb + str(self.postcode)
 
 
 class BankAccount(models.Model):
     baseUser = models.OneToOneField(BaseUser)
 
-    bank_name = models.CharField(max_length=40)
-    bsb = models.IntegerField()
-    account_number = models.IntegerField()
-    account_holder = models.CharField(max_length=40)
+    bank_name = models.CharField(max_length=40, null=True, blank=True)
+    bsb = models.IntegerField(null=True, blank=True)
+    account_number = models.IntegerField(null=True, blank=True)
+    account_holder = models.CharField(max_length=40, null=True, blank=True)
 
     def __str__(self):
         return self.bank_name
