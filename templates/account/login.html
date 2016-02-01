@@ -4,47 +4,54 @@
 {% load bootstrap %}
 {% load account socialaccount %}
 
-{% block head_title %}{% trans "Sign In" %}{% endblock %}
+{% block head_title %}{% trans "Log In" %}{% endblock %}
 
+{% block body-class %}
+    class="login-page access-page has-full-screen-bg"
+{% endblock %}
+
+{% block nav %}{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-sm-6 col-sm-offset-3">
+    <div class="upper-wrapper">
+        {% include 'nav2.html' %}
+        <!-- ******Login Section****** -->
+        <section class="login-section access-section section">
+            <div class="container">
+                <div class="row">
+                    <div class="form-box col-md-8 col-sm-12 col-xs-12 col-md-offset-2 col-sm-offset-0 xs-offset-0">
+                        <div class="form-box-inner">
+                            <h2 class="title text-center">Log in to AirSponge</h2>
+                            <div class="row">
+                                <div class="form-container col-md-5 col-sm-12 col-xs-12">
+                                    <form class="login login-form" method="POST" action="{% url 'account_login' %}">
+                                        {% csrf_token %}
+                                        {{ form|bootstrap }}
+                                        {% if redirect_field_value %}
+                                            <input type="hidden" name="{{ redirect_field_name }}"
+                                                   value="{{ redirect_field_value }}"/>
+                                        {% endif %}
+                                        <div class="form-actions">
+                                            <button class="btn btn-block btn-cta-primary"
+                                                    type="submit">{% trans "Log In" %}</button>
+                                            <a class="btn"
+                                               href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+                                        </div>
+                                        <p class="lead">Don't have an account with AirSponge?<a class="signup-link"
+                                                                                                href="/accounts/signup">Sign
+                                            Up</a></p>
+                                    </form>
 
-            <h1 class="title text-center">{% trans "Sign In to AirSponge" %}</h1>
-
-            <div class="row">
-                <div class="col-sm-4 col-sm-offset-1">
-                    <form class="login" method="POST" action="{% url 'account_login' %}">
-                        {% csrf_token %}
-                        {{ form|bootstrap }}
-                        {% if redirect_field_value %}
-                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-                        {% endif %}
-                        <div class="form-actions">
-                            <button class="btn btn-primary" style="width: 100%" type="submit">{% trans "Sign In" %}</button>
-                            <a class="btn" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-sm-4 col-sm-offset-2">
-                    <ul>
-                        <li>
-                            <a class="btn btn-block btn-social btn-facebook"
-                               href="{% provider_login_url "facebook" method="oauth2" %}">
-                                <span class="fa fa-facebook"></span> Sign In with Facebook
-                            </a>
-                        </li>
-                        <li>
-                            <a class="btn btn-block btn-social btn-twitter"
-                               href="{% provider_login_url "twitter" method="oauth" %}">
-                                <span class="fa fa-twitter"></span> Sign In with Twitter
-                            </a>
-                        </li>
-                    </ul>
-
-                </div>
-            </div>
-        </div>
-    </div>
+                                </div><!--//form-container-->
+                                <div class="social-btns col-md-5 col-sm-12 col-xs-12 col-md-offset-1 col-sm-offset-0 col-sm-offset-0">
+                                    <div class="divider"><span>Or</span></div>
+                                    {% include 'socialbuttons.html' with action='Log in' %}
+                                </div><!--//social-btns-->
+                            </div><!--//row-->
+                        </div><!--//form-box-inner-->
+                    </div><!--//form-box-->
+                </div><!--//row-->
+            </div><!--//container-->
+        </section><!--//contact-section-->
+    </div><!--//upper-wrapper-->
 {% endblock %}

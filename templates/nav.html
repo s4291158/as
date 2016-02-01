@@ -1,47 +1,52 @@
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span cssssssslass="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">AirSponge</a>
-        </div>
+<header id="header{{ none }}" class="header navbar-fixed-top {{ scrolled }}">
+    <div class="container">
+        <h1 class="logo">
+            <a href="/"><span class="text">AirSponge</span></a>
+        </h1><!--//logo-->
+        <nav class="main-nav navbar-right" role="navigation">
+            <div class="navbar-header">
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button><!--//nav-toggle-->
+            </div><!--//navbar-header-->
+            <div id="navbar-collapse" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                {% if user.is_authenticated %}
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">
-                            {% if user.first_name %}
-                                {{ user.first_name }}
-                            {% else %}
-                                {{ user.username }}
-                            {% endif %}
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="/accounts/profile">Profile</a>
-                            </li>
-                            <li role="separator" class="divider"></li>
-                            <li>
-                                <a href="/accounts/logout">Log Out</a>
-                            </li>
-                        </ul>
-                    </li>
+                    <li class="nav-item {{ pricing_active }}"><a href="/pricing">Pricing</a></li>
+                    <li class="nav-item {{ insurance_active }}"><a href="/insurance">Insurance</a></li>
+                    <li class="nav-item {{ about_active }}"><a href="/about">About Us</a></li>
+                    <li class="nav-item {{ contact_active }}"><a href="/contact">Contact Us</a></li>
 
-                {% else %}
-                    <li><a class="register-btn" href="/accounts/signup">Register</a></li>
-                    <li><a href="/accounts/login">Sign In</a></li>
-                {% endif %}
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item nav-item-cta last dropdown">
+                            <a class="dropdown-toggle btn btn-cta btn-cta-secondary" data-toggle="dropdown"
+                               data-hover="dropdown" data-delay="0"
+                               data-close-others="false" href="#">
+                                {% if user.first_name %}
+                                    {{ user.first_name }}
+                                {% else %}
+                                    {{ user.username }}
+                                {% endif %}
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/accounts/profile">Profile</a></li>
+                                <li><a href="/accounts/logout">Log out</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item"><a href="/accounts/login">Log in</a></li>
+                        <li class="nav-item nav-item-cta last"><a class="btn btn-cta btn-cta-secondary"
+                                                                  href="/accounts/signup">Sign
+                            Up Free</a></li>
+                    {% endif %}
+
+
+                </ul><!--//nav-->
+            </div><!--//navabr-collapse-->
+        </nav><!--//main-nav-->
+    </div><!--//container-->
+</header><!--//header-->

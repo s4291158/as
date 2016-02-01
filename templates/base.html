@@ -9,13 +9,19 @@
 
 </head>
 
-<body>
 
-{% include 'nav.html' %}
+<body {% block body-class %}{% endblock %}>
+
+{% block nav %}
+    {% include 'nav.html' %}
+{% endblock %}
 
 {% block content %}{% endblock %}
 
+{% include 'footer.html' %}
+
 {% include 'js.html' %}
+
 </body>
 
 </html>

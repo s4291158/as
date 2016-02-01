@@ -1,0 +1,15 @@
+{% load account socialaccount %}
+
+<ul class="list-unstyled social-login">
+    <li>
+        <a href="{% provider_login_url 'twitter' method='oauth' %}"
+           class="twitter-btn btn" type="button"><i class="fa fa-twitter"></i>{{ action }} with Twitter
+        </a>
+    </li>
+    <li>
+        <a href="{% provider_login_url 'facebook' method='oauth2' %}"
+           class="facebook-btn btn" type="button"><i
+                class="fa fa-facebook"></i>{{ action }} with Facebook
+        </a>
+    </li>
+</ul>

@@ -43,6 +43,7 @@ class Car(models.Model):
 
     number_plate = models.CharField(max_length=10, blank=True)
     type = models.CharField(max_length=10, blank=True)
+    dirtiness = models.IntegerField(blank=True)
 
 
 class Address(models.Model):

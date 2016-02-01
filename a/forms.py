@@ -15,15 +15,14 @@ class CustomSignupForm(forms.Form):
 
     email = forms.EmailField()
     password1 = forms.CharField()
-    password2 = forms.CharField()
 
-    first_name = forms.CharField()
-    last_name = forms.CharField()
-    phone = forms.IntegerField()
-
-    street_address = forms.CharField(widget=forms.TextInput(attrs={'placeholder': '123 abc street'}))
-    suburb = forms.CharField()
-    postcode = forms.IntegerField()
+    # first_name = forms.CharField()
+    # last_name = forms.CharField()
+    # phone = forms.IntegerField()
+    #
+    # street_address = forms.CharField(widget=forms.TextInput(attrs={'placeholder': '123 abc street'}))
+    # suburb = forms.CharField()
+    # postcode = forms.IntegerField()
 
     # bank_name = forms.CharField()
     # bsb = forms.IntegerField()
@@ -31,14 +30,14 @@ class CustomSignupForm(forms.Form):
     # account_holder = forms.CharField()
 
     def save(self, user):
-        user.phone = self.cleaned_data['phone']
-
-        address = Address()
-        address.baseUser = user
-        address.street_address = self.cleaned_data['street_address']
-        address.suburb = self.cleaned_data['suburb']
-        address.postcode = self.cleaned_data['postcode']
-        address.save()
-
-        user.address = address
+        # user.phone = self.cleaned_data['phone']
+        #
+        # address = Address()
+        # address.baseUser = user
+        # address.street_address = self.cleaned_data['street_address']
+        # address.suburb = self.cleaned_data['suburb']
+        # address.postcode = self.cleaned_data['postcode']
+        # address.save()
+        #
+        # user.address = address
         user.save()

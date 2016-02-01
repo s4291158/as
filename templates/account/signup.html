@@ -4,48 +4,59 @@
 {% load i18n %}
 {% load account socialaccount %}
 
-{% block head_title %}{% trans "Signup" %}{% endblock %}
+{% block head_title %}{% trans "Sign Up" %}{% endblock %}
+
+{% block body-class %}
+    class="signup-page access-page has-full-screen-bg"
+{% endblock %}
+
+{% block nav %}{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-sm-6 col-sm-offset-3">
-            <div class="title-block">
-                <h1 class="title text-center">{% trans "Sign Up with AirSponge" %}</h1>
-                <p class="text-center">Literally takes 3 seconds</p>
-            </div>
-            <div class="row">
-                <div class="col-sm-4 col-sm-offset-4">
-                    <form id="signup_form" method="post" action="{% url 'account_signup' %}">
-                        {% csrf_token %}
-                        {{ form|bootstrap }}
-                        {% if redirect_field_value %}
-                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-                        {% endif %}
-                        <div class="form-actions">
-                            <button class="btn btn-primary" style="width: 100%"
-                                    type="submit">{% trans "Sign Up" %}</button>
-                        </div>
-                    </form>
-                    <br/>
-                    <p>{% blocktrans %}Already have an account? <a href="{{ login_url }}">Sign In</a>
-                        .{% endblocktrans %}</p>
-                    <ul>
-                        <li>
-                            <a class="btn btn-block btn-social btn-facebook"
-                               href="{% provider_login_url "facebook" method="oauth2" %}">
-                                <span class="fa fa-facebook"></span> Sign Up with Facebook
-                            </a>
-                        </li>
-                        <li>
-                            <a class="btn btn-block btn-social btn-twitter"
-                               href="{% provider_login_url "twitter" method="oauth" %}">
-                                <span class="fa fa-twitter"></span> Sign Up with Twitter
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="upper-wrapper">
+        {% include 'nav2.html' %}
+
+        <!-- ******Signup Section****** -->
+        <section class="signup-section access-section section">
+            <div class="container">
+                <div class="row">
+                    <div class="form-box col-md-8 col-sm-12 col-xs-12 col-md-offset-2 col-sm-offset-0 xs-offset-0">
+                        <div class="form-box-inner">
+                            <h2 class="title text-center">Sign up now</h2>
+                            <p class="intro text-center">It only takes 3 minutes!</p>
+                            <div class="row">
+                                <div class="form-container col-md-5 col-sm-12 col-xs-12">
+                                    <form id="signup_form signup-form" method="post"
+                                          action="{% url 'account_signup' %}">
+                                        {% csrf_token %}
+                                        {{ form|bootstrap }}
+                                        {% if redirect_field_value %}
+                                            <input type="hidden" name="{{ redirect_field_name }}"
+                                                   value="{{ redirect_field_value }}"/>
+                                        {% endif %}
+                                        <div class="form-actions">
+                                            <button class="btn btn-block btn-cta-primary"
+                                                    type="submit">{% trans "Sign Up" %}</button>
+                                        </div>
+                                        <p class="note">By signing up, you agree to our terms of services and privacy
+                                            policy.</p>
+                                        <p class="lead">Already have an account? <a class="login-link" id="login-link"
+                                                                                    href="/accounts/login">Log in</a>
+                                        </p>
+                                    </form>
+                                </div><!--//form-container-->
+                                <div class="social-btns col-md-5 col-sm-12 col-xs-12 col-md-offset-1 col-sm-offset-0 col-sm-offset-0">
+                                    <div class="divider"><span>Or</span></div>
+                                    {% include 'socialbuttons.html' with action='Sign up' %}
+                                    <p class="note">Don't worry, we won't post anything without your permission.</p>
+                                </div><!--//social-login-->
+                            </div><!--//row-->
+                        </div><!--//form-box-inner-->
+                    </div><!--//form-box-->
+                </div><!--//row-->
+            </div><!--//container-->
+        </section><!--//signup-section-->
+    </div><!--//upper-wrapper-->
+
 
 {% endblock %}
