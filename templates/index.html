@@ -29,13 +29,30 @@
 
                 {{ form.non_field_errors }}
                 {{ form.oneline_address.errors }}
-
-                <div class="input-group">
-                    {{ form.oneline_address }}
-                    <span class="input-group-btn" style="width:0px;"></span>
-
-                    <div class="form-action input-group-btn">
-                        <button class="btn btn-cta btn-cta-primary" type="submit">Get Started</button>
+                <div class="row no-pad">
+                    {{ form.type }}
+                    {{ form.interior }}
+                    <div class="col-xs-12 col-md-2 col-md-offset-2 col-lg-offset-3 form-group form-group-type">
+                        <select id="select-type" data-width="100%" class="selectpicker" onchange="selectChange(this)">
+                            {% for type, price in form.types %}
+                                <option class="select-options" {% if type == form.default_type %}selected{% endif %}>
+                                    ${{ price }} &nbsp;&nbsp;&nbsp; {{ type }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-xs-12 col-md-4 col-lg-3 form-group form-group-interior">
+                        <select id="select-interior" data-width="100%" class="selectpicker" onchange="selectChange(this)">
+                            {% for interior, price in form.interiors %}
+                                <option class="select-options"
+                                        {% if interior == form.default_interior %}selected{% endif %}>
+                                    ${{ price }} &nbsp;&nbsp;&nbsp; {{ interior }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-xs-12 col-md-2 col-lg-1 form-group form-group-submit">
+                        <button id="landing_submit" class="btn btn-cta btn-cta-primary btn-block" type="submit">Get Started
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </button>
                     </div>
                 </div>
 

@@ -4,46 +4,67 @@ from .models import BaseUser, Address, BankAccount, WashRequest, Car
 
 
 class LandingForm(forms.Form):
-    class Meta:
-        model = WashRequest
-
-    oneline_address = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Car location e.g 123 abc st, brisbane CBD 4000',
-        'class': 'form-control',
-    }))
-
     types = [
-        ('Small Sedan / Hatchback', 'Small Sedan / Hatchback'),
-        ('Large Sedan / Wagon', 'Large Sedan / Wagon'),
-        ('Small SUV', 'Small SUV'),
-        ('Large SUV', 'Large SUV'),
-        ('Van', 'Van')
+        ('Hatchback', 25),
+        ('Sedan', 29),
+        ('Wagon', 35),
+        ('SUV', 39),
+        ('Van', 45),
     ]
+    types_dict = dict(types)
+
+    default_type = types[1][0]
+
     type = forms.CharField(
-        required=False,
+        initial=default_type,
         widget=forms.TextInput(attrs={
-            'placeholder': 'Car Type e.g Sedan',
             'class': 'form-control',
-        }))
+            'type': 'hidden',
+        })
+    )
+
+    interiors = [
+        ('No Interior Cleaning', 0),
+        ('Interior Vacuum & Wipe', 19),
+    ]
+    interiors_dict = dict(interiors)
+
+    default_interior = interiors[1][0]
+
+    interior = forms.CharField(
+        initial=default_interior,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'type': 'hidden',
+        })
+    )
 
     def save(self):
+        car_type = self.cleaned_data['type']
+        car_price = self.types_dict.get(car_type)
+        interior_type = self.cleaned_data['interior']
+        interior_price = self.interiors_dict.get(interior_type)
+
         washrequest = WashRequest()
         washrequest.request_date = timezone.now()
+        if interior_price == 0:
+            washrequest.vacuum = False
+            washrequest.wiping = False
+
+        else:
+            washrequest.vacuum = True
+            washrequest.wiping = True
+        washrequest.total_price += car_price
+        washrequest.total_price += interior_price
         washrequest.save()
 
         car = Car()
         car.washRequest = washrequest
-        car.type = self.cleaned_data['type']
+        car.type = car_type
         car.save()
-        washrequest.car_set.add(car)
 
-        address = Address()
-        address.washRequest = washrequest
-        address.oneline_address = self.cleaned_data['oneline_address']
-        address.save()
-        washrequest.address = address
-
-        washrequest.save()
+    def strip_type(self, field):
+        return self.cleaned_data[field].replace("$", "").split(' - ')[1]
 
 
 class CustomSignupForm(forms.Form):

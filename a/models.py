@@ -28,6 +28,8 @@ class WashRequest(models.Model):
 
     assigned_washer = models.ForeignKey(Washer, on_delete=models.CASCADE, null=True, blank=True)
 
+    vacuum = models.BooleanField(default=True)
+    wiping = models.BooleanField(default=True)
     request_date = models.DateTimeField(null=True, blank=True)
     wash_date = models.DateTimeField(null=True, blank=True)
     water_details = models.CharField(max_length=40, null=True, blank=True)
@@ -45,11 +47,11 @@ class Car(models.Model):
     washRequest = models.ForeignKey(WashRequest, null=True)
 
     number_plate = models.CharField(max_length=10, null=True, blank=True)
-    type = models.CharField(max_length=10, null=True, blank=True)
+    type = models.CharField(max_length=40, null=True, blank=True)
     dirtiness = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return self.number_plate
+        return self.type
 
 
 class Address(models.Model):

@@ -9,7 +9,44 @@
 
 }
 
-.form-control {
-    height: 45px;
+#landing_submit,
+.btn.dropdown-toggle.btn-default {
+    border-radius: 0px;
+    height: 65px;
+    display: block;
+    font-size: 17px;
 }
+
+.dropdown-menu.open {
+    padding: 0;
+}
+
+.dropdown-menu.inner > li:hover {
+    background: #ccffff;
+}
+
+.dropdown-menu.inner > li > a {
+    height: 100%;
+    width: 100%;
+    line-height: 50px;
+}
+
+.dropdown-menu.inner > li > a {
+    display: inline-block;
+    velical-align: middle;
+}
+
+.row.no-pad {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.row.no-pad > [class*='col-'] {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+
+
+
 
