@@ -32,7 +32,7 @@
                 <div class="row no-pad">
                     {{ form.type }}
                     {{ form.interior }}
-                    <div class="col-xs-12 col-md-2 col-md-offset-2 col-lg-offset-3 form-group form-group-type">
+                    <div class="col-xs-12 col-md-3 col-md-offset-2 form-group form-group-type">
                         <select id="select-type" data-width="100%" class="selectpicker" onchange="selectChange(this)">
                             {% for type, price in form.types %}
                                 <option class="select-options" {% if type == form.default_type %}selected{% endif %}>
@@ -40,7 +40,7 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="col-xs-12 col-md-4 col-lg-3 form-group form-group-interior">
+                    <div class="col-xs-12 col-md-4 form-group form-group-interior">
                         <select id="select-interior" data-width="100%" class="selectpicker" onchange="selectChange(this)">
                             {% for interior, price in form.interiors %}
                                 <option class="select-options"
@@ -49,7 +49,7 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="col-xs-12 col-md-2 col-lg-1 form-group form-group-submit">
+                    <div class="col-xs-12 col-md-1 form-group form-group-submit">
                         <button id="landing_submit" class="btn btn-cta btn-cta-primary btn-block" type="submit">Get Started
                             <span class="glyphicon glyphicon-chevron-right"></span>
                         </button>

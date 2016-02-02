@@ -29,7 +29,8 @@
                                     <form id="signup_form signup-form" method="post"
                                           action="{% url 'account_signup' %}">
                                         {% csrf_token %}
-                                        {{ form|bootstrap }}
+                                        {{ form.email }}
+                                        {{ form.password1 }}
                                         {% if redirect_field_value %}
                                             <input type="hidden" name="{{ redirect_field_name }}"
                                                    value="{{ redirect_field_value }}"/>
