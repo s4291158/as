@@ -12,6 +12,9 @@ urlpatterns = [
     url(r'^about/', TemplateView.as_view(template_name='about.html')),
     url(r'^insurance/', TemplateView.as_view(template_name='insurance.html')),
     url(r'^contact/', TemplateView.as_view(template_name='contact.html')),
+    url(r'^booking/', views.booking, name='booking'),
+
     url(r'^accounts/profile/', views.profile, name='profile'),
+
 
 ]

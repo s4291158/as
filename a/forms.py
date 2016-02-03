@@ -1,6 +1,7 @@
 from django import forms
 from django.utils import timezone
 from .models import BaseUser, Address, BankAccount, WashRequest, Car
+from django.utils.translation import gettext as _
 
 
 class LandingForm(forms.Form):
@@ -41,68 +42,39 @@ class LandingForm(forms.Form):
 
     def save(self):
         car_type = self.cleaned_data['type']
-        car_price = self.types_dict.get(car_type)
         interior_type = self.cleaned_data['interior']
-        interior_price = self.interiors_dict.get(interior_type)
-
-        washrequest = WashRequest()
-        washrequest.request_date = timezone.now()
-        if interior_price == 0:
-            washrequest.vacuum = False
-            washrequest.wiping = False
-
-        else:
-            washrequest.vacuum = True
-            washrequest.wiping = True
-        washrequest.total_price += car_price
-        washrequest.total_price += interior_price
-        washrequest.save()
-
-        car = Car()
-        car.washRequest = washrequest
-        car.type = car_type
-        car.save()
-
-    def strip_type(self, field):
-        return self.cleaned_data[field].replace("$", "").split(' - ')[1]
+        save_request(car_type, interior_type)
 
 
-class CustomSignupForm(forms.Form):
-    class Meta:
-        model = BaseUser
+class BookingForm(LandingForm):
+    extra_dirty = forms.BooleanField()
 
-        fieldsets = (
-            ('Account', {'fields': ['email', 'password1', 'password2']}),
-            ('Personal', {'fields': ['first_name', 'last_name', 'phone']}),
-            ('Address', {'fields': ['street_address', 'suburb', 'postcode']}),
-            ('Bank', {'fields': ['bank_name', 'bsb', 'account_number', 'account_holder']}),
-        )
+    def save(self):
+        car_type = self.cleaned_data['type']
+        interior_type = self.cleaned_data['interior']
+        extra_dirty = self.cleand_data['extra_dirty']
+        save_request(car_type, interior_type, extra_dirty)
 
-    email = forms.EmailField()
-    password1 = forms.CharField()
 
-    # first_name = forms.CharField()
-    # last_name = forms.CharField()
-    # phone = forms.IntegerField()
-    #
-    # street_address = forms.CharField(widget=forms.TextInput(attrs={'placeholder': '123 abc street'}))
-    # suburb = forms.CharField()
-    # postcode = forms.IntegerField()
+def save_request(car_type, interior_type, extra_dirty=False):
+    car_price = LandingForm.types_dict.get(car_type)
+    interior_price = LandingForm.interiors_dict.get(interior_type)
+    dirty_price = (5 if extra_dirty else 0)
 
-    # bank_name = forms.CharField()
-    # bsb = forms.IntegerField()
-    # account_number = forms.IntegerField()
-    # account_holder = forms.CharField()
+    washrequest = WashRequest()
+    washrequest.request_date = timezone.now()
+    if interior_price == 0:
+        washrequest.vacuum = False
+        washrequest.wiping = False
 
-    def save(self, user):
-        # user.phone = self.cleaned_data['phone']
-        #
-        # address = Address()
-        # address.baseUser = user
-        # address.street_address = self.cleaned_data['street_address']
-        # address.suburb = self.cleaned_data['suburb']
-        # address.postcode = self.cleaned_data['postcode']
-        # address.save()
-        #
-        # user.address = address
-        user.save()
+    else:
+        washrequest.vacuum = True
+        washrequest.wiping = True
+    washrequest.extra_dirty = extra_dirty
+    washrequest.total_price += sum([car_price, interior_price, dirty_price])
+    washrequest.save()
+
+    car = Car()
+    car.washRequest = washrequest
+    car.type = car_type
+    car.save()

@@ -18,7 +18,7 @@ function getTotalPrice() {
 }
 
 function getTupleById(id) {
-    var tuple = $('#' + id).val().replace("$", "").split(" ");
+    var tuple = document.getElementById(id).value.replace("$", "").split(/\s{3}/);
     return tuple;
 }
 

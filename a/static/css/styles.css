@@ -1,3 +1,12 @@
+/* <!-- ALL PAGES --> */
+/* SECTION */
+.custom-section {
+    padding-top: 90px;
+    position: relative;
+    z-index: 10;
+}
+
+/* NAVBAR */
 @media (min-width: 992px) {
     .branding {
         margin-left: 20px;
@@ -8,12 +17,33 @@
     }
 }
 
-.nav-item.nav-item-cta.last.dropdown.open .dropdown-menu{
+.header h1.logo > a {
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
 
+.nav-item.nav-item-cta.last > a {
+    border-radius: 2px;
+}
+
+/* <!-- INDEX PAGE --> */
+
+/* LANDING SECTION */
+@media (max-width: 767px) {
+    .container.text-center > h2 {
+        font-size: 32px;
+        display: block;
+    }
+}
+
+@media (min-width: 768px) {
+    .container.text-center > h2 {
+        display: inline-block;
+        font-size: 64px;
+    }
 }
 
 .container.text-center > h2 {
-    font-size: 64px;
     font-weight: 200;
 }
 
@@ -65,7 +95,31 @@
     padding-left: 0;
 }
 
+/* WHY SECTION */
+.why .row.item.last-item {
+    padding: 30px 0;
+}
 
+.why .row.item.last-item .content {
+    text-align: center;
+    padding: 0 20px;
+}
 
+.why .row.item.last-item .content > h3 {
+    text-align: center;
+}
 
+.why .row.item.last-item .content > img {
+    margin-bottom: 20px;
+}
 
+/* <!-- SIGNUP PAGE --> */
+#signup-form .lead {
+    font-size: 18px;
+}
+
+#signup-form .lead .login-link {
+    font-weight: 400;
+}
+
+/* <!-- BOOKING PAGE --> */

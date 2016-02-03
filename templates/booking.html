@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block head_title %}
+    Booking
+{% endblock %}
+
+{% block body-class %}
+    class='booking-page'
+{% endblock %}
+
+{% block content %}
+    <div class="headline-bg booking-headline-bg">
+    </div><!--//headline-bg-->
+
+    <section class="booking-section custom-section section section-on-bg">
+        <div class="container">
+            <h2 class="title text-center">{{ message }}</h2>
+        </div>
+    </section>
+{% endblock %}

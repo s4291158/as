@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load staticfiles %}
+
 {% block head_title %}
     Home
 {% endblock %}
@@ -21,10 +23,11 @@
 
     <section class="promo section section-on-bg">
         <div class="container text-center">
-            <h2 class="title">CARWASH. ON DEMAND</h2>
+            <h2 class="title">CARWASH.</h2>
+            <h2 class="title">ON DEMAND</h2>
             <p class="intro">We'll bring the carwash to you</p>
             {{ message }}
-            <form method="post" action="">
+            <form method="post" action="/booking/">
                 {% csrf_token %}
 
                 {{ form.non_field_errors }}
@@ -41,7 +44,8 @@
                         </select>
                     </div>
                     <div class="col-xs-12 col-md-4 form-group form-group-interior">
-                        <select id="select-interior" data-width="100%" class="selectpicker" onchange="selectChange(this)">
+                        <select id="select-interior" data-width="100%" class="selectpicker"
+                                onchange="selectChange(this)">
                             {% for interior, price in form.interiors %}
                                 <option class="select-options"
                                         {% if interior == form.default_interior %}selected{% endif %}>
@@ -50,8 +54,8 @@
                         </select>
                     </div>
                     <div class="col-xs-12 col-md-1 form-group form-group-submit">
-                        <button id="landing_submit" class="btn btn-cta btn-cta-primary btn-block" type="submit">Get Started
-                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        <button id="landing_submit" class="btn btn-cta btn-cta-primary btn-block" type="submit">Get
+                            Started
                         </button>
                     </div>
                 </div>
@@ -61,5 +65,56 @@
     </section><!--//promo-->
 
     <div class="sections-wrapper">
+        <!-- ******Steps Section****** -->
+        <section id="why" class="section why">
+            <div class="container">
+                <h2 class="title text-center">Why AirSponge?</h2>
+                <p class="intro text-center">We keep your car clean so you dont have to</p>
+
+                <div class="row item last-item">
+                    <div class="content col-sm-3">
+                        <img class="image" src="{% static 'images/icons/clock.png' %}" alt=""/>
+                        <h3 class="title text-center">Save Time</h3>
+                        <div class="desc">
+                            <p>Explain one of your product benefits here. Let users know how they can benefit using your
+                                product. It’s also a good idea to back it up with a testimonial or tweet from your
+                                users.</p>
+                        </div>
+                    </div><!--//content-->
+                    <div class="content col-sm-3">
+                        <img class="image" src="{% static 'images/icons/clock.png' %}" alt=""/>
+                        <h3 class="title text-center">Save Time</h3>
+                        <div class="desc">
+                            <p>Explain one of your product benefits here. Let users know how they can benefit using your
+                                product. It’s also a good idea to back it up with a testimonial or tweet from your
+                                users.</p>
+                        </div>
+                    </div><!--//content-->
+                    <div class="content col-sm-3">
+                        <img class="image" src="{% static 'images/icons/clock.png' %}" alt=""/>
+                        <h3 class="title text-center">Save Time</h3>
+                        <div class="desc">
+                            <p>Explain one of your product benefits here. Let users know how they can benefit using your
+                                product. It’s also a good idea to back it up with a testimonial or tweet from your
+                                users.</p>
+                        </div>
+                    </div><!--//content-->
+                    <div class="content col-sm-3">
+                        <img class="image" src="{% static 'images/icons/clock.png' %}" alt=""/>
+                        <h3 class="title text-center">Save Time</h3>
+                        <div class="desc">
+                            <p>Explain one of your product benefits here. Let users know how they can benefit using your
+                                product. It’s also a good idea to back it up with a testimonial or tweet from your
+                                users.</p>
+                        </div>
+                    </div><!--//content-->
+                </div><!--//row-->
+
+                <div class="feature-lead text-center">
+                    <h4 class="title">Want to discover all the features?</h4>
+                    <p><a class="btn btn-cta btn-cta-secondary" href="#">Take a Tour</a></p>
+                </div>
+            </div><!--//container-->
+        </section><!--//why-->
     </div>
 {% endblock %}

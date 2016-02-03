@@ -28,8 +28,11 @@ class WashRequest(models.Model):
 
     assigned_washer = models.ForeignKey(Washer, on_delete=models.CASCADE, null=True, blank=True)
 
+    confirmed = models.BooleanField(default=False)
+
     vacuum = models.BooleanField(default=True)
     wiping = models.BooleanField(default=True)
+    extra_dirty = models.BooleanField(default=False)
     request_date = models.DateTimeField(null=True, blank=True)
     wash_date = models.DateTimeField(null=True, blank=True)
     water_details = models.CharField(max_length=40, null=True, blank=True)

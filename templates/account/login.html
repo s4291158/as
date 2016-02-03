@@ -24,22 +24,51 @@
                             <h2 class="title text-center">Log in to AirSponge</h2>
                             <div class="row">
                                 <div class="form-container col-md-5 col-sm-12 col-xs-12">
-                                    <form class="login login-form" method="POST" action="{% url 'account_login' %}">
+                                    <form class="login-form" method="POST" action="{% url 'account_login' %}">
                                         {% csrf_token %}
-                                        {{ form|bootstrap }}
+
+                                        <div class="form-group email">
+                                            <label class="sr-only" for="id_login">Email or username</label>
+                                            <input id="id_login" name="login" type="email"
+                                                   class="form-control login-email"
+                                                   placeholder="Email">
+                                        </div><!--//form-group-->
+
+                                        <div class="form-group password">
+                                            <label class="sr-only" for="login-password">Password</label>
+                                            <input id="id_password" name="password" type="password"
+                                                   class="form-control login-password" placeholder="Password">
+
+                                        </div><!--//form-group-->
+
+                                        <div class="form-group">
+                                            <div class="checkbox remember">
+                                                <label>
+                                                    <input id="id_remember" name="remember"
+                                                           type="checkbox">Remember me
+                                                </label>
+                                            </div><!--//checkbox-->
+                                        </div>
+
                                         {% if redirect_field_value %}
                                             <input type="hidden" name="{{ redirect_field_name }}"
                                                    value="{{ redirect_field_value }}"/>
                                         {% endif %}
+
                                         <div class="form-actions">
                                             <button class="btn btn-block btn-cta-primary"
                                                     type="submit">{% trans "Log In" %}</button>
-                                            <a class="btn"
-                                               href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
                                         </div>
+
+                                        <p class="forgot-password"><a
+                                                href="{% url 'account_reset_password' %}">
+                                            Forgot
+                                            password?</a></p>
+
                                         <p class="lead">Don't have an account with AirSponge?<a class="signup-link"
                                                                                                 href="/accounts/signup">Sign
                                             Up</a></p>
+
                                     </form>
 
                                 </div><!--//form-container-->

@@ -26,30 +26,51 @@
                             <p class="intro text-center">It only takes 3 minutes!</p>
                             <div class="row">
                                 <div class="form-container col-md-5 col-sm-12 col-xs-12">
-                                    <form id="signup_form signup-form" method="post"
+                                    <form id="signup-form" method="post"
                                           action="{% url 'account_signup' %}">
                                         {% csrf_token %}
-                                        {{ form.email }}
-                                        {{ form.password1 }}
+
+                                        <div class="form-group email">
+                                            <label class="sr-only" for="id_email">Your email</label>
+                                            <input id="id_email" name="email" type="email"
+                                                   class="form-control login-email"
+                                                   placeholder="Your email">
+                                        </div><!--//form-group-->
+
+                                        <div class="form-group password">
+                                            <label class="sr-only" for="id_password">Your password</label>
+                                            <input id="id_password1" name="password1" type="password"
+                                                   class="form-control login-password" placeholder="Password">
+                                        </div><!--//form-group-->
+
                                         {% if redirect_field_value %}
                                             <input type="hidden" name="{{ redirect_field_name }}"
                                                    value="{{ redirect_field_value }}"/>
                                         {% endif %}
+
                                         <div class="form-actions">
-                                            <button class="btn btn-block btn-cta-primary"
-                                                    type="submit">{% trans "Sign Up" %}</button>
+                                            <button class="btn btn-block btn-cta-primary" type="submit">
+                                                {% trans "Sign Up" %}
+                                            </button>
                                         </div>
-                                        <p class="note">By signing up, you agree to our terms of services and privacy
-                                            policy.</p>
-                                        <p class="lead">Already have an account? <a class="login-link" id="login-link"
-                                                                                    href="/accounts/login">Log in</a>
+
+                                        <p class="note">
+                                            By signing up, you agree to our terms of services and privacy
+                                            policy.
                                         </p>
+
+                                        <p class="lead">
+                                            Already have an account?
+                                            <a class="login-link" id="login-link"
+                                               href="/accounts/login">Log in</a>
+                                        </p>
+
                                     </form>
                                 </div><!--//form-container-->
                                 <div class="social-btns col-md-5 col-sm-12 col-xs-12 col-md-offset-1 col-sm-offset-0 col-sm-offset-0">
                                     <div class="divider"><span>Or</span></div>
                                     {% include 'socialbuttons.html' with action='Sign up' %}
-                                    <p class="note">Don't worry, we won't post anything without your permission.</p>
+                                    <p class="note">Don't worry, we won't post anything on your behalf.</p>
                                 </div><!--//social-login-->
                             </div><!--//row-->
                         </div><!--//form-box-inner-->
