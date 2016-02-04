@@ -27,7 +27,9 @@
                                     <form class="login-form" method="POST" action="{% url 'account_login' %}">
                                         {% csrf_token %}
 
+
                                         <div class="form-group email">
+                                            {{ form.login.error }}
                                             <label class="sr-only" for="id_login">Email or username</label>
                                             <input id="id_login" name="login" type="email"
                                                    class="form-control login-email"
@@ -35,6 +37,7 @@
                                         </div><!--//form-group-->
 
                                         <div class="form-group password">
+                                            {{ form.password.error }}
                                             <label class="sr-only" for="login-password">Password</label>
                                             <input id="id_password" name="password" type="password"
                                                    class="form-control login-password" placeholder="Password">
@@ -68,10 +71,12 @@
                                         <p class="lead">
                                             Don't have an account with AirSponge?
                                             <a class="signup-link"
-                                               href="{% url 'account_signup' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
+                                               href="
+                                                       {% url 'account_signup' %}{% if request.GET.next %}?next={{ request.GET.next|urlencode }}{% endif %}">
                                                 Sign Up
                                             </a>
                                         </p>
+
 
                                     </form>
 

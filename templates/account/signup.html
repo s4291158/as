@@ -31,6 +31,7 @@
                                         {% csrf_token %}
 
                                         <div class="form-group email">
+                                            {{ form.email.error }}
                                             <label class="sr-only" for="id_email">Your email</label>
                                             <input id="id_email" name="email" type="email"
                                                    class="form-control login-email"
@@ -38,6 +39,7 @@
                                         </div><!--//form-group-->
 
                                         <div class="form-group password">
+                                            {{ form.password1.error }}
                                             <label class="sr-only" for="id_password">Your password</label>
                                             <input id="id_password1" name="password1" type="password"
                                                    class="form-control login-password" placeholder="Password">
@@ -63,7 +65,7 @@
                                             Already have an account?
                                             <a class="login-link" id="login-link"
                                                href="
-                                                       {% url 'account_login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
+                                                       {% url 'account_login' %}{% if request.GET.next %}?next={{ request.GET.next|urlencode }}{% endif %}">
                                                 Log in
                                             </a>
                                         </p>

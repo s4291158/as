@@ -19,12 +19,12 @@ def index(request):
             query_string = parse.urlencode({
                 'type': form.type_choice,
                 'interior': form.interior_choice
+                # 'type': form.type_choice[:2],
+                # 'interior': form.interior_choice[:2],
             })
-            print(query_string)
-            print(parse.urlparse(reverse('a:booking') + "?" + query_string))
-            # return HttpResponseRedirect(
-            #     reverse('a:booking')
-            # )
+            return HttpResponseRedirect(
+                reverse('a:booking') + "?" + query_string
+            )
         else:
             context['message'] = 'We could not process your request at this time'
 
@@ -39,10 +39,18 @@ def profile(request):
 
 
 @login_required(login_url='/accounts/signup/')
-def booking(request, request_id=None):
+def booking(request):
+    # query_short_dict = {
+    #     'Ha': 'Hatchback',
+    #     'Se': 'Sedan',
+    #     'Wa': 'Wagon',
+    #     'SU': 'SUV',
+    #     'Va': 'Van',
+    #     'No': 'No '
+    # }
     context = {
         'form': BookingForm(),
-        'message': request_id,
+        'message': request.GET.get('type') + request.GET.get('interior'),
     }
 
     return render(request, 'booking.html', context)
