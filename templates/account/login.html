@@ -65,9 +65,13 @@
                                             Forgot
                                             password?</a></p>
 
-                                        <p class="lead">Don't have an account with AirSponge?<a class="signup-link"
-                                                                                                href="/accounts/signup">Sign
-                                            Up</a></p>
+                                        <p class="lead">
+                                            Don't have an account with AirSponge?
+                                            <a class="signup-link"
+                                               href="{% url 'account_signup' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
+                                                Sign Up
+                                            </a>
+                                        </p>
 
                                     </form>
 

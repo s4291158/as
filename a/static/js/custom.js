@@ -4,9 +4,9 @@ function selectChange(ele) {
     var field = getTupleById(ele.id)[1];
 
     if (ele.id == 'select-type') {
-        $('#id_type').val(field);
+        $('#id_type_field').val(field);
     } else if (ele.id == 'select-interior') {
-        $('#id_interior').val(field)
+        $('#id_interior_field').val(field)
     }
     getTotalPrice();
 }

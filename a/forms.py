@@ -5,63 +5,74 @@ from django.utils.translation import gettext as _
 
 
 class LandingForm(forms.Form):
-    types = [
+    type_choice = None
+    interior_choice = None
+
+    type_choices = [
         ('Hatchback', 25),
         ('Sedan', 29),
         ('Wagon', 35),
         ('SUV', 39),
         ('Van', 45),
     ]
-    types_dict = dict(types)
+    type_choices_dict = dict(type_choices)
 
-    default_type = types[1][0]
+    default_type_choice = type_choices[1][0]
 
-    type = forms.CharField(
-        initial=default_type,
+    type_field = forms.CharField(
+        initial=default_type_choice,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'type': 'hidden',
         })
     )
 
-    interiors = [
+    interior_choices = [
         ('No Interior Cleaning', 0),
         ('Interior Vacuum & Wipe', 19),
     ]
-    interiors_dict = dict(interiors)
+    interior_choices_dict = dict(interior_choices)
 
-    default_interior = interiors[1][0]
+    default_interior_choice = interior_choices[1][0]
 
-    interior = forms.CharField(
-        initial=default_interior,
+    interior_field = forms.CharField(
+        initial=default_interior_choice,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'type': 'hidden',
         })
     )
 
+    def get_query(self):
+        self.type_choice = self.cleaned_data['type_field']
+        self.interior_choice = self.cleaned_data['interior_field']
+
     def save(self):
-        car_type = self.cleaned_data['type']
-        interior_type = self.cleaned_data['interior']
-        save_request(car_type, interior_type)
+        self.get_query()
+        save_request(self.type_choice, self.interior_choice)
 
 
 class BookingForm(LandingForm):
-    extra_dirty = forms.BooleanField()
+    extra_dirty_choice = None
+
+    extra_dirty_field = forms.BooleanField()
+
+    def get_query(self):
+        self.type_choice = self.cleaned_data['type_field']
+        self.interior_choice = self.cleaned_data['interior_field']
+        self.extra_dirty_choice = self.cleaned_data['extra_dirty_field']
 
     def save(self):
-        car_type = self.cleaned_data['type']
-        interior_type = self.cleaned_data['interior']
-        extra_dirty = self.cleand_data['extra_dirty']
-        save_request(car_type, interior_type, extra_dirty)
+        save_request(self.type_choice, self.interior_choice, self.extra_dirty_choice)
 
 
-def save_request(car_type, interior_type, extra_dirty=False):
-    car_price = LandingForm.types_dict.get(car_type)
-    interior_price = LandingForm.interiors_dict.get(interior_type)
-    dirty_price = (5 if extra_dirty else 0)
+def save_request(type_choice, interior_choice, extra_dirty_choice=False):
+    car_price = LandingForm.types_dict.get(type_choice)
+    interior_price = LandingForm.interiors_dict.get(interior_choice)
+    dirty_price = (5 if extra_dirty_choice else 0)
 
     washrequest = WashRequest()
+
     washrequest.request_date = timezone.now()
     if interior_price == 0:
         washrequest.vacuum = False
@@ -70,11 +81,11 @@ def save_request(car_type, interior_type, extra_dirty=False):
     else:
         washrequest.vacuum = True
         washrequest.wiping = True
-    washrequest.extra_dirty = extra_dirty
+    washrequest.extra_dirty = extra_dirty_choice
     washrequest.total_price += sum([car_price, interior_price, dirty_price])
     washrequest.save()
 
     car = Car()
     car.washRequest = washrequest
-    car.type = car_type
+    car.type = type_choice
     car.save()

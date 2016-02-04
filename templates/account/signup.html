@@ -62,8 +62,12 @@
                                         <p class="lead">
                                             Already have an account?
                                             <a class="login-link" id="login-link"
-                                               href="/accounts/login">Log in</a>
+                                               href="
+                                                       {% url 'account_login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
+                                                Log in
+                                            </a>
                                         </p>
+
 
                                     </form>
                                 </div><!--//form-container-->
