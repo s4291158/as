@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block body-class %}
-    class='home-page'
+    class='home-page' onload='getTotalPriceLanding();'
 {% endblock %}
 
 {% block content %}
@@ -34,18 +34,20 @@
                 {{ form.oneline_address.errors }}
                 <div class="row no-pad">
                     {{ form.type_field }}
-                    {{ form.interior_field }}
                     <div class="col-xs-12 col-md-3 col-md-offset-2 form-group form-group-type">
-                        <select id="select-type" data-width="100%" class="selectpicker" onchange="selectChange(this)">
+                        <select id="select-type" data-width="100%" class="selectpicker" onchange="selectChangeLanding(this)">
                             {% for car_type, car_price in form.type_choices %}
-                                <option class="select-options" {% if car_type == form.default_type_choice %}selected{% endif %}>
+                                <option class="select-options"
+                                        {% if car_type == form.default_type_choice %}selected{% endif %}>
                                     ${{ car_price }} &nbsp;&nbsp;&nbsp; {{ car_type }}</option>
                             {% endfor %}
                         </select>
                     </div>
+
+                    {{ form.interior_field }}
                     <div class="col-xs-12 col-md-4 form-group form-group-interior">
                         <select id="select-interior" data-width="100%" class="selectpicker"
-                                onchange="selectChange(this)">
+                                onchange="selectChangeLanding(this)">
                             {% for interior_type, interior_price in form.interior_choices %}
                                 <option class="select-options"
                                         {% if interior_type == form.default_interior_choice %}selected{% endif %}>
@@ -54,7 +56,7 @@
                         </select>
                     </div>
                     <div class="col-xs-12 col-md-1 form-group form-group-submit">
-                        <button id="landing_submit" class="btn btn-cta btn-cta-primary btn-block" type="submit">Get
+                        <button id="landing-submit" class="btn btn-cta btn-cta-primary btn-block" type="submit">Get
                             Started
                         </button>
                     </div>

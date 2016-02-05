@@ -1,39 +1,17 @@
-/* <!-- ALL PAGES --> */
-/* SECTION */
-.custom-section {
-    padding-top: 90px;
-    position: relative;
-    z-index: 10;
-}
-
-/* NAVBAR */
-@media (min-width: 992px) {
-    .branding {
-        margin-left: 20px;
-    }
-
-    .navbar-right {
-        margin-right: 20px;
-    }
-}
-
-.header h1.logo > a {
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
-}
-
-.nav-item.nav-item-cta.last > a {
-    border-radius: 2px;
-}
-
 /* <!-- INDEX PAGE --> */
 
 /* LANDING SECTION */
 @media (max-width: 767px) {
+    .promo.section {
+        padding-top: 20px;
+    }
+
     .container.text-center > h2 {
         font-size: 32px;
         display: block;
     }
+
+    .container
 }
 
 @media (min-width: 768px) {
@@ -47,14 +25,14 @@
     font-weight: 200;
 }
 
-.btn.dropdown-toggle.btn-default {
+.promo.section .btn.dropdown-toggle.btn-default {
     border-radius: 0;
     height: 65px;
     display: block;
     font-size: 16px;
 }
 
-#landing_submit {
+#landing-submit {
     border-radius: 0;
     height: 65px;
     display: block;
@@ -63,24 +41,25 @@
     padding: 0;
 }
 
-.dropdown-menu.open {
+.promo.section .dropdown-menu.open {
     border-radius: 0;
     padding: 0;
     border: 1px;
     margin: 1px 0;
 }
 
-.dropdown-menu.inner > li:hover {
+.promo.section .dropdown-menu.inner > li:hover {
     background: #ccffff;
 }
 
-.dropdown-menu.inner > li > a {
+.promo.section .dropdown-menu.inner > li > a {
     height: 100%;
     width: 100%;
     line-height: 46px;
+    z-index: 1;
 }
 
-.dropdown-menu.inner > li > a {
+.promo.section .dropdown-menu.inner > li > a {
     display: inline-block;
     velical-align: middle;
 }
@@ -123,3 +102,109 @@
 }
 
 /* <!-- BOOKING PAGE --> */
+.booking-section .booking-form {
+    margin: 0 15px;
+}
+
+.booking-section .booking-form-inner {
+    background: white;
+    padding: 30px;
+    border-radius: 4px;
+}
+
+.booking-section .btn.dropdown-toggle.btn-default {
+    border-radius: 3px;
+    height: 40px;
+    display: block;
+    font-size: 16px;
+}
+
+.booking-section .dropdown-menu.open {
+    border-radius: 0;
+    padding: 0;
+    border: 1px;
+    margin: 1px 0;
+}
+
+.booking-section .dropdown-menu.inner > li:hover {
+    background: #ccffff;
+}
+
+.booking-section .dropdown-menu.inner > li > a {
+    height: 100%;
+    width: 100%;
+    line-height: 46px;
+    z-index: 1;
+}
+
+.booking-section .dropdown-menu.inner > li > a {
+    display: inline-block;
+}
+
+.booking-section .form-group .form-control {
+    border: 1px solid #ccc;
+}
+
+#booking-submit {
+    margin-top: 20px;
+    height: 50px;
+    font-size: 20px;
+}
+
+/* <!-- ALL PAGES --> */
+/* SECTION */
+.custom-section {
+    padding-top: 90px;
+    position: relative;
+    z-index: 10;
+}
+
+.custom-section {
+    padding-top: 125px;
+}
+
+.custom-section .title {
+    font-size: 36px;
+    font-weight: 300;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+.custom-section .inner-section-title {
+    font-weight: 300;
+    float: left;
+    padding: 0;
+    margin-top: 30px;
+}
+
+#total-price {
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 26px;
+    padding: 0;
+    margin-top: 30px;
+    display: inline-block;
+    float: right;
+}
+
+/* NAVBAR */
+@media (min-width: 992px) {
+    .branding {
+        margin-left: 20px;
+    }
+
+    .navbar-right {
+        margin-right: 20px;
+    }
+}
+
+.header h1.logo > a {
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.nav-item.nav-item-cta.last > a {
+    border-radius: 2px;
+}
+
+

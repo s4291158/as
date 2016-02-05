@@ -253,15 +253,15 @@
     <table name="a_address" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="street_address" sqlType="VARCHAR(200)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="suburb" sqlType="VARCHAR(40)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
       <column name="city" sqlType="VARCHAR(40)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
       <column name="postcode" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
       <column name="state" sqlType="VARCHAR(20)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
       <column name="country" sqlType="VARCHAR(40)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
       <column name="formatted" sqlType="VARCHAR(200)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
       <column name="baseUser_id" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
-      <column name="washRequest_id" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
       <column name="oneline_address" sqlType="VARCHAR(200)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
-      <column name="suburb" sqlType="VARCHAR(40)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="washRequest_id" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
       <primary-key columns="id"/>
       <foreign-key name="#FAKE_a_address_1" columns="washRequest_id" ref-table="a_washrequest" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
       <foreign-key name="#FAKE_a_address_2" columns="baseUser_id" ref-table="a_baseuser" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>

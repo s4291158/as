@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 
 class BaseUser(AbstractUser):
     role = models.CharField(max_length=40, null=True, blank=True)
-    phone = models.IntegerField(null=True, blank=True)
+    phone = models.CharField(max_length=20, null=True, blank=True)
     rating = models.IntegerField(null=True, blank=True)
 
 
@@ -30,9 +30,6 @@ class WashRequest(models.Model):
 
     confirmed = models.BooleanField(default=False)
 
-    vacuum = models.BooleanField(default=True)
-    wiping = models.BooleanField(default=True)
-    extra_dirty = models.BooleanField(default=False)
     request_date = models.DateTimeField(null=True, blank=True)
     wash_date = models.DateTimeField(null=True, blank=True)
     water_details = models.CharField(max_length=40, null=True, blank=True)
@@ -49,18 +46,22 @@ class WashRequest(models.Model):
 class Car(models.Model):
     washRequest = models.ForeignKey(WashRequest, null=True)
 
+    specs = models.CharField(max_length=40, null=True, blank=True)
     number_plate = models.CharField(max_length=10, null=True, blank=True)
     type = models.CharField(max_length=40, null=True, blank=True)
     dirtiness = models.IntegerField(null=True, blank=True)
+    extra_dirty = models.BooleanField(default=False)
+    vacuum = models.BooleanField(default=True)
+    wiping = models.BooleanField(default=True)
 
     def __str__(self):
         return self.type
 
 
 class Address(models.Model):
-    baseUser = models.OneToOneField(BaseUser, null=True)
+    baseUser = models.OneToOneField(BaseUser, null=True, blank=True)
 
-    washRequest = models.OneToOneField(WashRequest, null=True)
+    washRequest = models.OneToOneField(WashRequest, null=True, blank=True)
 
     street_address = models.CharField(max_length=200, null=True, blank=True)
     suburb = models.CharField(max_length=40, null=True, blank=True)

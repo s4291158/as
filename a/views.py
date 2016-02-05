@@ -19,8 +19,6 @@ def index(request):
             query_string = parse.urlencode({
                 'type': form.type_choice,
                 'interior': form.interior_choice
-                # 'type': form.type_choice[:2],
-                # 'interior': form.interior_choice[:2],
             })
             return HttpResponseRedirect(
                 reverse('a:booking') + "?" + query_string
@@ -40,17 +38,36 @@ def profile(request):
 
 @login_required(login_url='/accounts/signup/')
 def booking(request):
-    # query_short_dict = {
-    #     'Ha': 'Hatchback',
-    #     'Se': 'Sedan',
-    #     'Wa': 'Wagon',
-    #     'SU': 'SUV',
-    #     'Va': 'Van',
-    #     'No': 'No '
-    # }
     context = {
-        'form': BookingForm(),
-        'message': request.GET.get('type') + request.GET.get('interior'),
+        'initial_type_choice': request.GET.get('type'),
+        'initial_interior_choice': request.GET.get('interior'),
     }
 
+    if request.method == 'POST':
+        form = BookingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            query_string = parse.urlencode({
+                'id': form.request_id
+            })
+            return HttpResponseRedirect(
+                reverse('a:payment') + "?" + query_string
+            )
+
+        else:
+            context['message'] = 'We could not process your request at this time'
+
+    context['form'] = BookingForm(initial={
+        'first_name_field': request.user.first_name,
+        'last_name_field': request.user.last_name,
+    })
+
     return render(request, 'booking.html', context)
+
+
+@login_required
+def payment(request):
+    context = {
+        'message': request.GET.get('id')
+    }
+    return render(request, 'payment.html', context)

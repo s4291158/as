@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block head_title %}
+    Payment
+{% endblock %}
+
+{% block body-class %}
+    class='payment-page'
+{% endblock %}
+
+{% block content %}
+    <div class="headline-bg payment-headline-bg">
+    </div><!--//headline-bg-->
+
+    <section class="payment-section custom-section section section-on-bg">
+        <div class="container">
+            <h2 class="title text-center">{{ message }}</h2>
+            {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <div class="alert alert-error">
+                            <strong>FIELD ERROR - {{ field.name }}{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-error">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

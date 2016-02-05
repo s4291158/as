@@ -7,8 +7,9 @@
 {% endblock %}
 
 {% block body-class %}
-    class='booking-page'
+    class='booking-page' onload='assignValueFromLanding();'
 {% endblock %}
+
 
 {% block content %}
     <div class="headline-bg booking-headline-bg">
@@ -16,7 +17,124 @@
 
     <section class="booking-section custom-section section section-on-bg">
         <div class="container">
-            <h2 class="title text-center">{{ message }}</h2>
+            <h2 class="title text-center">Request Carwash</h2>
+
+            <form class="booking-form" method="POST" action="">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="booking-form-inner col-md-6 col-md-offset-3 col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 class="inner-section-title">Profile</h3>
+                            </div>
+
+                            <div class="col-sm-6 form-group form-group-first-name">
+                                {{ form.first_name_field }}
+                            </div>
+                            <div class="col-sm-6 form-group form-group-last-name">
+                                {{ form.last_name_field }}
+                            </div>
+                            <div class="col-sm-12 form-group form-group-phone">
+                                <input id="id_phone" name="phone" type="text" class="form-control"
+                                       placeholder="Mobile Number"
+                                        {% if user.phone %} value="{{ user.phone }}"{% endif %}>
+                            </div>
+                            <div class="col-sm-12 form-group from-group-email">
+                                <input id="id_email" name="email" type="email" class="form-control" placeholder="Email"
+                                        {% if user.email %} value="{{ user.email }}"{% endif %}>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <h3 class="inner-section-title">Carwash Request</h3>
+                            </div>
+                            <div class="col-sm-12 form-group form-group-street-address">
+                                <input id="id_street_address" name="street_address" type="text" class="form-control"
+                                       placeholder="Street address"
+                                        {% if user.address.street_address %}
+                                       value="{{ user.address.street_address }}"{% endif %}>
+                            </div>
+                            <div class="col-sm-6 form-group form-group-suburb">
+                                <input id="id_suburb" name="suburb" type="text" class="form-control"
+                                       placeholder="Suburb"
+                                        {% if user.address.suburb %}
+                                       value="{{ user.address.suburb }}"{% endif %}>
+                            </div>
+                            <div class="col-sm-3 form-group form-group-state">
+                                <input id="id_state" name="state" type="text" class="form-control"
+                                       placeholder="state"
+                                        {% if user.address.state %}
+                                       value="{{ user.address.state }}"{% endif %}>
+                            </div>
+                            <div class="col-sm-3 form-group form-group-postcode">
+                                <input id="id_postcode" name="postcode" type="text" class="form-control"
+                                       placeholder="postcode"
+                                        {% if user.address.postcode %}
+                                       value="{{ user.address.postcode }}"{% endif %}>
+                            </div>
+                            <div class="col-sm-12 form-group form-group-wash-date">
+
+                            </div>
+
+
+                            <div class="col-sm-12">
+                                <h3 class="inner-section-title">Car Details</h3>
+                                <p id="total-price">$0</p>
+                            </div>
+
+                            {{ form.type_field }}
+                            <div class="col-sm-5 form-group form-group-type">
+                                <select id="select-type" data-width="100%" class="selectpicker"
+                                        onchange="selectChangeBooking(this)">
+                                    {% for car_type, car_price in form.type_choices %}
+                                        <option class="select-options"
+                                                {% if car_type == initial_type_choice %}selected{% endif %}>
+                                            ${{ car_price }} &nbsp;&nbsp;&nbsp; {{ car_type }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            {{ form.interior_field }}
+                            <div class="col-sm-7 form-group form-group-interior">
+                                <select id="select-interior" data-width="100%" class="selectpicker"
+                                        onchange="selectChangeBooking(this)">
+                                    {% for interior_type, interior_price in form.interior_choices %}
+                                        <option class="select-options"
+                                                {% if interior_type == initial_interior_choice %}selected{% endif %}>
+                                            ${{ interior_price }} &nbsp;&nbsp;&nbsp; {{ interior_type }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            {{ form.extra_dirty_field }}
+                            <div class="col-sm-12 form-group form-group-extra-dirty">
+                                <select id="select-extra-dirty" data-width="100%" class="selectpicker"
+                                        onchange="selectChangeBooking(this)">
+                                    {% for extra_dirty_type, extra_dirty_price in form.extra_dirty_choices %}
+                                        <option class="select-options"
+                                                {% if extra_dirty_type == form.default_extra_dirty_choice %}selected{% endif %}>
+                                            ${{ extra_dirty_price }} &nbsp;&nbsp;&nbsp; {{ extra_dirty_type }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="col-sm-12 form-group form-group-car-specs">
+                                {{ form.car_specs_field }}
+                            </div>
+
+                            <div class="col-sm-12 form-group form-group-submit">
+                                <button id="booking-submit" class="btn btn-cta btn-cta-primary btn-block" type="submit">
+                                    Submit Request
+                                </button>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <p>{{ message }}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </section>
 {% endblock %}

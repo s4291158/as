@@ -8,6 +8,7 @@ urlpatterns = [
 
     url(r'^$', views.index, name='index'),
     url(r'^booking/', views.booking, name='booking'),
+    url(r'^payment/', views.payment, name='payment'),
 
     url(r'^pricing/', TemplateView.as_view(template_name='pricing.html'), name='pricing'),
     url(r'^about/', TemplateView.as_view(template_name='about.html'), name='about'),
