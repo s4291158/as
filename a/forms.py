@@ -1,7 +1,7 @@
 from django import forms
 from django.utils import timezone
 
-from .models import BaseUser, Address, BankAccount, WashRequest, Car
+from .models import BaseUser, Washee, Address, BankAccount, WashRequest, Car
 
 
 class LandingForm(forms.Form):
@@ -46,6 +46,8 @@ class LandingForm(forms.Form):
 class BookingForm(LandingForm):
     request_id = None
 
+    user = None
+
     first_name = None
     first_name_field = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'class': 'form-control',
@@ -72,13 +74,42 @@ class BookingForm(LandingForm):
         'class': 'form-control',
         'type': 'email',
         'placeholder': 'Email Address',
+        'readonly': True,
+    }))
+
+    street_address = None
+    street_address_field = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'type': 'text',
+        'placeholder': 'Street Address',
+    }))
+
+    suburb = None
+    suburb_field = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'type': 'text',
+        'placeholder': 'Suburb',
+    }))
+
+    state = None
+    state_field = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'type': 'text',
+        'placeholder': 'State',
+    }))
+
+    postcode = None
+    postcode_field = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'type': 'text',
+        'placeholder': 'Postcode',
     }))
 
     car_specs = None
     car_specs_field = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'class': 'form-control',
         'type': 'text',
-        'placeholder': 'Car make, model, color and/or number plate'
+        'placeholder': 'Car make and model'
     }))
 
     extra_dirty_choice = None
@@ -90,10 +121,11 @@ class BookingForm(LandingForm):
     default_extra_dirty_choice = extra_dirty_choices[0][0]
     extra_dirty_field = forms.BooleanField(
         initial=False,
-        required=False,
-        widget=forms.TextInput(attrs={
+        label='Car is really dirty',
+        widget=forms.CheckboxInput(attrs={
             'class': 'form-control',
-            'type': 'hidden',
+            'type': 'checkbox',
+            'onclick': 'getTotalPrice();'
         }))
 
     wash_date_field = forms.CharField(
@@ -103,11 +135,32 @@ class BookingForm(LandingForm):
             'class': 'form-control',
         }))
 
+    def __init__(self, user, *args, **kwargs):
+        super(BookingForm, self).__init__(*args, **kwargs)
+        self.user = user
+        self.fields['first_name_field'].initial = user.first_name
+        self.fields['last_name_field'].initial = user.last_name
+        self.fields['phone_field'].initial = user.phone
+        self.fields['email_field'].initial = user.email
+
+        try:
+            address = Address.objects.get(baseUser=self.user)
+            self.fields['street_address_field'].initial = address.street_address
+            self.fields['suburb_field'].initial = address.suburb
+            self.fields['state_field'].initial = address.state
+            self.fields['postcode_field'].initial = address.postcode
+        except Address.DoesNotExist:
+            pass
+
     def get_cleaned_data(self):
         self.first_name = self.cleaned_data['first_name_field']
         self.last_name = self.cleaned_data['last_name_field']
         self.phone = self.cleaned_data['phone_field']
-        self.email = self.cleaned_data['email_field']
+
+        self.street_address = self.cleaned_data['street_address_field']
+        self.suburb = self.cleaned_data['suburb_field']
+        self.state = self.cleaned_data['state_field']
+        self.postcode = self.cleaned_data['postcode_field']
 
         self.type_choice = self.cleaned_data['type_field']
         self.interior_choice = self.cleaned_data['interior_field']
@@ -121,11 +174,37 @@ class BookingForm(LandingForm):
         interior_price = LandingForm.interior_choices_dict.get(self.interior_choice)
         dirty_price = (5 if self.extra_dirty_choice else 0)
 
+        user = BaseUser.objects.get(id=self.user.id)
+        user.first_name = self.first_name
+        user.last_name = self.last_name
+        user.phone = self.phone
+        user.role = "Washee"
+        user.save()
+
+        washee = Washee()
+        washee.__dict__ = user.__dict__
+        washee.save()
+
+        if self.check_valid_address():
+            try:
+                address = Address.objects.get(baseUser=user)
+            except Address.DoesNotExist:
+                address = Address()
+                address.baseUser = user
+            address.street_address = self.street_address
+            address.suburb = self.suburb
+            address.state = self.state
+            address.postcode = self.postcode
+            address.save()
+
         washrequest = WashRequest()
-        self.request_id = washrequest.id
+        washrequest.washee = washee
+        if self.check_valid_address():
+            washrequest.address = address
         washrequest.request_date = timezone.now()
         washrequest.total_price += sum([car_price, interior_price, dirty_price])
         washrequest.save()
+        self.request_id = washrequest.id
 
         car = Car()
         car.washRequest = washrequest
@@ -139,3 +218,9 @@ class BookingForm(LandingForm):
         car.extra_dirty = self.extra_dirty_choice
         car.type = self.type_choice
         car.save()
+
+    def check_valid_address(self):
+        if not self.street_address and self.suburb and self.state and self.postcode:
+            return False
+        else:
+            return True

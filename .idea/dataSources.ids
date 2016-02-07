@@ -288,9 +288,9 @@
       <column name="is_staff" sqlType="BOOL" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="is_active" sqlType="BOOL" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="date_joined" sqlType="DATETIME" precision="0" scale="-1" nullable="false" jdbcType="12"/>
-      <column name="phone" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
       <column name="rating" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
       <column name="role" sqlType="VARCHAR(40)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="phone" sqlType="VARCHAR(20)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
       <primary-key columns="id"/>
     </table>
     <table name="a_baseuser_groups" schema="" catalog="" type="TABLE">
@@ -319,8 +319,12 @@
       <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="number_plate" sqlType="VARCHAR(10)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
       <column name="washRequest_id" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
-      <column name="dirtiness" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
       <column name="type" sqlType="VARCHAR(40)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="dirtiness" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
+      <column name="extra_dirty" sqlType="BOOL" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="specs" sqlType="VARCHAR(40)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="vacuum" sqlType="BOOL" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="wiping" sqlType="BOOL" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <primary-key columns="id"/>
       <foreign-key name="#FAKE_a_car_1" columns="washRequest_id" ref-table="a_washrequest" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
       <index name="a_car_1b083532" unique="true" columns="washRequest_id"/>
@@ -347,10 +351,7 @@
       <column name="vacuum_details" sqlType="VARCHAR(40)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
       <column name="wash_date" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
       <column name="water_details" sqlType="VARCHAR(40)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
-      <column name="vacuum" sqlType="BOOL" precision="0" scale="-1" nullable="false" jdbcType="4"/>
-      <column name="wiping" sqlType="BOOL" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="confirmed" sqlType="BOOL" precision="0" scale="-1" nullable="false" jdbcType="4"/>
-      <column name="extra_dirty" sqlType="BOOL" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <primary-key columns="id"/>
       <foreign-key name="#FAKE_a_washrequest_1" columns="washee_id" ref-table="a_washee" ref-schema="" ref-catalog="" ref-columns="baseuser_ptr_id" update-rule="3" delete-rule="3" deferrability="1"/>
       <foreign-key name="#FAKE_a_washrequest_2" columns="assigned_washer_id" ref-table="a_washer" ref-schema="" ref-catalog="" ref-columns="baseuser_ptr_id" update-rule="3" delete-rule="3" deferrability="1"/>

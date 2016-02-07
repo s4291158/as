@@ -35,42 +35,28 @@
                                 {{ form.last_name_field }}
                             </div>
                             <div class="col-sm-12 form-group form-group-phone">
-                                <input id="id_phone" name="phone" type="text" class="form-control"
-                                       placeholder="Mobile Number"
-                                        {% if user.phone %} value="{{ user.phone }}"{% endif %}>
+                                {{ form.phone_field }}
                             </div>
                             <div class="col-sm-12 form-group from-group-email">
-                                <input id="id_email" name="email" type="email" class="form-control" placeholder="Email"
-                                        {% if user.email %} value="{{ user.email }}"{% endif %}>
+                                {{ form.email_field }}
                             </div>
 
                             <div class="col-sm-12">
                                 <h3 class="inner-section-title">Carwash Request</h3>
                             </div>
                             <div class="col-sm-12 form-group form-group-street-address">
-                                <input id="id_street_address" name="street_address" type="text" class="form-control"
-                                       placeholder="Street address"
-                                        {% if user.address.street_address %}
-                                       value="{{ user.address.street_address }}"{% endif %}>
+                                {{ form.street_address_field }}
                             </div>
                             <div class="col-sm-6 form-group form-group-suburb">
-                                <input id="id_suburb" name="suburb" type="text" class="form-control"
-                                       placeholder="Suburb"
-                                        {% if user.address.suburb %}
-                                       value="{{ user.address.suburb }}"{% endif %}>
+                                {{ form.suburb_field }}
                             </div>
                             <div class="col-sm-3 form-group form-group-state">
-                                <input id="id_state" name="state" type="text" class="form-control"
-                                       placeholder="state"
-                                        {% if user.address.state %}
-                                       value="{{ user.address.state }}"{% endif %}>
+                                {{ form.state_field }}
                             </div>
                             <div class="col-sm-3 form-group form-group-postcode">
-                                <input id="id_postcode" name="postcode" type="text" class="form-control"
-                                       placeholder="postcode"
-                                        {% if user.address.postcode %}
-                                       value="{{ user.address.postcode }}"{% endif %}>
+                                {{ form.postcode_field }}
                             </div>
+
                             <div class="col-sm-12 form-group form-group-wash-date">
 
                             </div>
@@ -105,16 +91,10 @@
                                 </select>
                             </div>
 
-                            {{ form.extra_dirty_field }}
+
                             <div class="col-sm-12 form-group form-group-extra-dirty">
-                                <select id="select-extra-dirty" data-width="100%" class="selectpicker"
-                                        onchange="selectChangeBooking(this)">
-                                    {% for extra_dirty_type, extra_dirty_price in form.extra_dirty_choices %}
-                                        <option class="select-options"
-                                                {% if extra_dirty_type == form.default_extra_dirty_choice %}selected{% endif %}>
-                                            ${{ extra_dirty_price }} &nbsp;&nbsp;&nbsp; {{ extra_dirty_type }}</option>
-                                    {% endfor %}
-                                </select>
+                                {{ form.extra_dirty_field }}
+                                <label for="{{ form.extra_dirty_field.id_for_label }}">{{ form.extra_dirty_field.label }}</label>
                             </div>
 
                             <div class="col-sm-12 form-group form-group-car-specs">

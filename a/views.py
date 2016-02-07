@@ -44,7 +44,7 @@ def booking(request):
     }
 
     if request.method == 'POST':
-        form = BookingForm(request.POST)
+        form = BookingForm(request.user, request.POST)
         if form.is_valid():
             form.save()
             query_string = parse.urlencode({
@@ -57,10 +57,7 @@ def booking(request):
         else:
             context['message'] = 'We could not process your request at this time'
 
-    context['form'] = BookingForm(initial={
-        'first_name_field': request.user.first_name,
-        'last_name_field': request.user.last_name,
-    })
+    context['form'] = BookingForm(user=request.user)
 
     return render(request, 'booking.html', context)
 
@@ -68,6 +65,6 @@ def booking(request):
 @login_required
 def payment(request):
     context = {
-        'message': request.GET.get('id')
+
     }
     return render(request, 'payment.html', context)

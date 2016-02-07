@@ -15,12 +15,6 @@ function selectChange(ele) {
         $('#id_type_field').val(field);
     } else if (ele.id == 'select-interior') {
         $('#id_interior_field').val(field)
-    } else if (ele.id == 'select-extra-dirty') {
-        if (field == 'Yes') {
-            $('#id_extra_dirty_field').val('True')
-        } else if (field == 'No') {
-            $('#id_extra_dirty_field').val('False')
-        }
     }
 }
 
@@ -34,7 +28,8 @@ function getTotalPriceLanding() {
 function getTotalPrice() {
     var car_price = Number(getTupleById('select-type')[0]);
     var interior_price = Number(getTupleById('select-interior')[0]);
-    var extra_dirty_price = Number(getTupleById('select-extra-dirty')[0]);
+    var extra_dirty = document.getElementById('id_extra_dirty_field').checked;
+    var extra_dirty_price = ((extra_dirty) ? 5 : 0)
     var total_price = car_price + interior_price + extra_dirty_price;
     $('#total-price').text("$" + total_price);
 }

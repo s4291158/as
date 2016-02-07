@@ -23,8 +23,30 @@ class Washee(BaseUser):
         verbose_name = 'Washee'
 
 
+class Address(models.Model):
+    baseUser = models.OneToOneField(BaseUser, null=True, blank=True)
+
+    street_address = models.CharField(max_length=200, null=True, blank=True)
+    suburb = models.CharField(max_length=40, null=True, blank=True)
+    city = models.CharField(max_length=40, null=True, blank=True)
+    postcode = models.CharField(max_length=10, blank=True, null=True)
+    state = models.CharField(max_length=20, null=True, blank=True)
+    country = models.CharField(max_length=40, null=True, blank=True)
+
+    oneline_address = models.CharField(max_length=200, null=True, blank=True)
+    formatted = models.CharField(max_length=200, null=True, blank=True)
+
+    def __str__(self):
+        if self.oneline_address:
+            return self.oneline_address
+        else:
+            return self.street_address + ', ' + self.suburb + ' ' + self.postcode
+
+
 class WashRequest(models.Model):
     washee = models.ForeignKey(Washee, on_delete=models.CASCADE, null=True, blank=True)
+
+    address = models.ForeignKey(Address, null=True, blank=True)
 
     assigned_washer = models.ForeignKey(Washer, on_delete=models.CASCADE, null=True, blank=True)
 
@@ -55,29 +77,10 @@ class Car(models.Model):
     wiping = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.type
-
-
-class Address(models.Model):
-    baseUser = models.OneToOneField(BaseUser, null=True, blank=True)
-
-    washRequest = models.OneToOneField(WashRequest, null=True, blank=True)
-
-    street_address = models.CharField(max_length=200, null=True, blank=True)
-    suburb = models.CharField(max_length=40, null=True, blank=True)
-    city = models.CharField(max_length=40, null=True, blank=True)
-    postcode = models.IntegerField(blank=True, null=True)
-    state = models.CharField(max_length=20, null=True, blank=True)
-    country = models.CharField(max_length=40, null=True, blank=True)
-
-    oneline_address = models.CharField(max_length=200, null=True, blank=True)
-    formatted = models.CharField(max_length=200, null=True, blank=True)
-
-    def __str__(self):
-        if self.oneline_address:
-            return self.oneline_address
+        if self.specs:
+            return self.specs
         else:
-            return self.street_address + ', ' + self.suburb + str(self.postcode)
+            return self.type
 
 
 class BankAccount(models.Model):
