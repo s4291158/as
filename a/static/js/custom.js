@@ -45,3 +45,14 @@ function assignValueFromLanding() {
     $('#id_interior_field').val(getTupleById('select-interior')[1])
     getTotalPrice();
 }
+
+
+$("#id_wash_date_field").datetimepicker({
+    autoclose: true,
+    language: 'en',
+    showMeridian: true,
+    format: 'dd-mm-yyyy hh:ii:ss',
+    pickerPosition: "bottom-left",
+    container:'.wash-date-field',
+    todayBtn: true,
+});

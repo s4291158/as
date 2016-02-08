@@ -122,17 +122,20 @@ class BookingForm(LandingForm):
     extra_dirty_field = forms.BooleanField(
         initial=False,
         label='Car is really dirty',
+        required=False,
         widget=forms.CheckboxInput(attrs={
             'class': 'form-control',
             'type': 'checkbox',
             'onclick': 'getTotalPrice();'
         }))
 
-    wash_date_field = forms.CharField(
-        initial=timezone.now(),
+    wash_date_field = forms.DateTimeField(
         required=False,
+        label='Pick a wash time',
         widget=forms.TextInput(attrs={
             'class': 'form-control',
+            'type': 'text',
+            'readonly': True,
         }))
 
     def __init__(self, user, *args, **kwargs):

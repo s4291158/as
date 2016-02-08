@@ -6,6 +6,10 @@
     Booking
 {% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datetimepicker.min.css' %}">
+{% endblock %}
+
 {% block body-class %}
     class='booking-page' onload='assignValueFromLanding();'
 {% endblock %}
@@ -58,6 +62,12 @@
                             </div>
 
                             <div class="col-sm-12 form-group form-group-wash-date">
+                                <div id="id_wash_date_field" class="input-group date wash-date-field">
+                                    {{ form.wash_date_field }}
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </span>
+                                </div>
 
                             </div>
 
@@ -117,4 +127,8 @@
             </form>
         </div>
     </section>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
 {% endblock %}
