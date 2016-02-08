@@ -1,5 +1,6 @@
 from django import forms
 from django.utils import timezone
+from datetime import datetime
 
 from .models import BaseUser, Washee, Address, BankAccount, WashRequest, Car
 
@@ -49,68 +50,95 @@ class BookingForm(LandingForm):
     user = None
 
     first_name = None
-    first_name_field = forms.CharField(required=False, widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        'type': 'text',
-        'placeholder': 'First Name',
-    }))
+    first_name_field = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'type': 'text',
+            'placeholder': 'First Name',
+        }))
 
     last_name = None
-    last_name_field = forms.CharField(required=False, widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        'type': 'text',
-        'placeholder': 'Last Name',
-    }))
+    last_name_field = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'type': 'text',
+            'placeholder': 'Last Name',
+        }))
 
     phone = None
-    phone_field = forms.CharField(required=False, widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        'type': 'text',
-        'placeholder': 'Contact Number',
-    }))
+    phone_field = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'type': 'text',
+            'placeholder': 'Contact Number',
+        }))
 
     email = None
-    email_field = forms.EmailField(required=False, widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        'type': 'email',
-        'placeholder': 'Email Address',
-        'readonly': True,
-    }))
+    email_field = forms.EmailField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'type': 'email',
+            'placeholder': 'Email Address   e.g. ',
+            'readonly': True,
+        }))
 
     street_address = None
-    street_address_field = forms.CharField(required=False, widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        'type': 'text',
-        'placeholder': 'Street Address',
-    }))
+    street_address_field = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'type': 'text',
+            'placeholder': 'Street Address  e.g. 24 raven street',
+        }))
 
     suburb = None
-    suburb_field = forms.CharField(required=False, widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        'type': 'text',
-        'placeholder': 'Suburb',
-    }))
+    suburb_field = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'type': 'text',
+            'placeholder': 'Suburb  e.g. st lucia',
+        }))
 
     state = None
-    state_field = forms.CharField(required=False, widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        'type': 'text',
-        'placeholder': 'State',
-    }))
+    state_field = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'type': 'text',
+            'placeholder': 'State   e.g. qld',
+        }))
 
     postcode = None
-    postcode_field = forms.CharField(required=False, widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        'type': 'text',
-        'placeholder': 'Postcode',
-    }))
+    postcode_field = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'type': 'text',
+            'placeholder': 'Postcode    e.g. 4067',
+        }))
+
+    wash_date = None
+    wash_date_field = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'type': 'text',
+            'placeholder': 'Wash date   e.g. 01/02/2016 5:20pm'
+        }))
 
     car_specs = None
-    car_specs_field = forms.CharField(required=False, widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        'type': 'text',
-        'placeholder': 'Car make and model'
-    }))
+    car_specs_field = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'type': 'text',
+            'placeholder': 'Car make and model  e.g. Honda CRV'
+        }))
 
     extra_dirty_choice = None
     extra_dirty_choices = [
@@ -121,21 +149,12 @@ class BookingForm(LandingForm):
     default_extra_dirty_choice = extra_dirty_choices[0][0]
     extra_dirty_field = forms.BooleanField(
         initial=False,
-        label='Car is really dirty',
+        label='This car is really dirty, like seriously',
         required=False,
         widget=forms.CheckboxInput(attrs={
             'class': 'form-control',
             'type': 'checkbox',
             'onclick': 'getTotalPrice();'
-        }))
-
-    wash_date_field = forms.DateTimeField(
-        required=False,
-        label='Pick a wash time',
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'type': 'text',
-            'readonly': True,
         }))
 
     def __init__(self, user, *args, **kwargs):
@@ -164,6 +183,8 @@ class BookingForm(LandingForm):
         self.suburb = self.cleaned_data['suburb_field']
         self.state = self.cleaned_data['state_field']
         self.postcode = self.cleaned_data['postcode_field']
+
+        self.wash_date = self.cleaned_data['wash_date_field']
 
         self.type_choice = self.cleaned_data['type_field']
         self.interior_choice = self.cleaned_data['interior_field']
@@ -205,6 +226,9 @@ class BookingForm(LandingForm):
         if self.check_valid_address():
             washrequest.address = address
         washrequest.request_date = timezone.now()
+        wash_date = self.check_valid_wash_date()
+        if wash_date:
+            washrequest.wash_date = wash_date
         washrequest.total_price += sum([car_price, interior_price, dirty_price])
         washrequest.save()
         self.request_id = washrequest.id
@@ -227,3 +251,15 @@ class BookingForm(LandingForm):
             return False
         else:
             return True
+
+    def check_valid_wash_date(self):
+        if self.wash_date:
+            try:
+                wash_date = datetime.strptime(self.wash_date, "%d/%m/%Y %I:%M%p")
+                wash_date = timezone.make_aware(wash_date, timezone.get_default_timezone())
+                if wash_date > timezone.now():
+                    return wash_date
+            except ValueError:
+                pass
+
+        return None
