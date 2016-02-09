@@ -1,3 +1,5 @@
+var car_count = 1;
+
 function selectChangeLanding(ele) {
     selectChange(ele);
     getTotalPriceLanding();
@@ -26,11 +28,14 @@ function getTotalPriceLanding() {
 }
 
 function getTotalPrice() {
-    var car_price = Number(getTupleById('select-type')[0]);
-    var interior_price = Number(getTupleById('select-interior')[0]);
-    var extra_dirty = document.getElementById('id_extra_dirty_field').checked;
-    var extra_dirty_price = ((extra_dirty) ? 5 : 0)
-    var total_price = car_price + interior_price + extra_dirty_price;
+    var total_price = 0;
+    for (var i = 1; i < car_count + 1; i++) {
+        var car_price = Number(getTupleById('select-type' + i)[0]);
+        var interior_price = Number(getTupleById('select-interior' + i)[0]);
+        var extra_dirty = document.getElementById('id_extra_dirty_field' + i).checked;
+        var extra_dirty_price = ((extra_dirty) ? 5 : 0);
+        total_price += car_price + interior_price + extra_dirty_price;
+    }
     $('#total-price').text("$" + total_price);
 }
 
@@ -41,18 +46,31 @@ function getTupleById(id) {
 }
 
 function assignValueFromLanding() {
-    $('#id_type_field').val(getTupleById('select-type')[1]);
-    $('#id_interior_field').val(getTupleById('select-interior')[1])
+    $('#id_type_field1').val(getTupleById('select-type1')[1]);
+    $('#id_interior_field1').val(getTupleById('select-interior1')[1]);
     getTotalPrice();
 }
 
+function addCar(btn) {
+    car_count++;
+    console.log(car_count);
+    $('#car' + car_count).css('display', 'block');
+    getTotalPrice();
+    if (car_count >= 5) {
+        btn.style.display = 'none';
+    } else {
+        $('#remove_car_btn').css('display', 'block');
+    }
+}
 
-//$("#id_wash_date_field").datetimepicker({
-//    autoclose: true,
-//    language: 'en',
-//    showMeridian: true,
-//    format: 'dd-mm-yyyy hh:ii:ss',
-//    pickerPosition: "bottom-left",
-//    container:'.wash-date-field',
-//    todayBtn: true,
-//});
+function removeCar(btn) {
+    $('#car' + car_count).css('display', 'none');
+    car_count--;
+    console.log(car_count);
+    getTotalPrice()
+    if (car_count <= 1) {
+        btn.style.display = 'none';
+    } else {
+        $('#add_car_btn').css('display', 'block');
+    }
+}

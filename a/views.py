@@ -48,7 +48,7 @@ def booking(request):
         if form.is_valid():
             form.save()
             query_string = parse.urlencode({
-                'id': form.request_id
+                'id': form.booking['request_id']
             })
             return HttpResponseRedirect(
                 reverse('a:payment') + "?" + query_string

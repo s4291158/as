@@ -6,10 +6,6 @@
     Booking
 {% endblock %}
 
-{% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datetimepicker.min.css' %}">
-{% endblock %}
-
 {% block body-class %}
     class='booking-page' onload='assignValueFromLanding();'
 {% endblock %}
@@ -71,39 +67,55 @@
                                 <p id="total-price">$0</p>
                             </div>
 
-                            {{ form.type_field }}
-                            <div class="col-sm-5 form-group form-group-type">
-                                <select id="select-type" data-width="100%" class="selectpicker"
-                                        onchange="selectChangeBooking(this)">
-                                    {% for car_type, car_price in form.type_choices %}
-                                        <option class="select-options"
-                                                {% if car_type == initial_type_choice %}selected{% endif %}>
-                                            ${{ car_price }} &nbsp;&nbsp;&nbsp; {{ car_type }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+                            {% for car in form.booking.cars %}
+                                <div id="car{{ car }}" {% if car != '1' %}style="display:none"{% endif %}>
+                                    <div class="col-sm-12 form-group form-group-car-specs">
+                                        <input class="form-control" id="id_car_specs_field{{ car }}"
+                                               name="car_specs_field{{ car }}" placeholder="Car make and model"
+                                               type="text">
+                                    </div>
+                                    <input class="form-control" id="id_type_field{{ car }}" name="type_field{{ car }}"
+                                           type="hidden" value="Sedan">
+                                    <div class="col-sm-5 form-group form-group-type">
+                                        <select id="select-type{{ car }}" data-width="100%" class="selectpicker"
+                                                onchange="selectChangeBooking(this)">
+                                            {% for car_type, car_price in form.type_choices %}
+                                                <option class="select-options"
+                                                        {% if car_type == initial_type_choice %}selected{% endif %}>
+                                                    ${{ car_price }} &nbsp;&nbsp;&nbsp; {{ car_type }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <input class="form-control" id="id_interior_field{{ car }}"
+                                           name="interior_field{{ car }}" type="hidden"
+                                           value="Interior Vacuum &amp; Wipe">
+                                    <div class="col-sm-7 form-group form-group-interior">
+                                        <select id="select-interior{{ car }}" data-width="100%" class="selectpicker"
+                                                onchange="selectChangeBooking(this)">
+                                            {% for interior_type, interior_price in form.interior_choices %}
+                                                <option class="select-options"
+                                                        {% if interior_type == initial_interior_choice %}selected{% endif %}>
+                                                    ${{ interior_price }}
+                                                    &nbsp;&nbsp;&nbsp; {{ interior_type }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
 
-                            {{ form.interior_field }}
-                            <div class="col-sm-7 form-group form-group-interior">
-                                <select id="select-interior" data-width="100%" class="selectpicker"
-                                        onchange="selectChangeBooking(this)">
-                                    {% for interior_type, interior_price in form.interior_choices %}
-                                        <option class="select-options"
-                                                {% if interior_type == initial_interior_choice %}selected{% endif %}>
-                                            ${{ interior_price }} &nbsp;&nbsp;&nbsp; {{ interior_type }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+
+                                    <div class="col-sm-12 form-group form-group-extra-dirty">
+                                        <input class="form-control" id="id_extra_dirty_field{{ car }}" name="extra_dirty_field{{ car }}" onclick="getTotalPrice();" type="checkbox">
+                                        <label for="id_extra_dirty_field{{ car }}">This car is really dirty, like seriously</label>
+
+                                    </div>
+
+                                </div>
+                            {% endfor %}
 
 
-                            <div class="col-sm-12 form-group form-group-extra-dirty">
-                                {{ form.extra_dirty_field }}
-                                <label for="{{ form.extra_dirty_field.id_for_label }}">{{ form.extra_dirty_field.label }}</label>
-                            </div>
 
-                            <div class="col-sm-12 form-group form-group-car-specs">
-                                {{ form.car_specs_field }}
-                            </div>
+                            <input id="add_car_btn" type="button" value="Add another car" onclick="addCar(this);">
+                            <input id="remove_car_btn" type="button" value="Remove a car" onclick="removeCar(this);" style="display: none">
+
 
                             <div class="col-sm-12 form-group form-group-submit">
                                 <button id="booking-submit" class="btn btn-cta btn-cta-primary btn-block" type="submit">
@@ -112,7 +124,7 @@
                             </div>
 
                             <div class="col-sm-12">
-                                <p>{{ message }}</p>
+                                <p style="color:red">{{ message }}</p>
                             </div>
 
                         </div>
@@ -121,8 +133,4 @@
             </form>
         </div>
     </section>
-{% endblock %}
-
-{% block js %}
-    <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
 {% endblock %}
