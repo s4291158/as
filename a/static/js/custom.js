@@ -59,7 +59,7 @@ function addCar(btn) {
     if (car_count >= 5) {
         btn.style.display = 'none';
     } else {
-        $('#remove_car_btn').css('display', 'block');
+        $('#remove_car_btn').css('display', 'inline-block');
     }
 }
 
@@ -71,6 +71,6 @@ function removeCar(btn) {
     if (car_count <= 1) {
         btn.style.display = 'none';
     } else {
-        $('#add_car_btn').css('display', 'block');
+        $('#add_car_btn').css('display', 'inline-block');
     }
 }

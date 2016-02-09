@@ -112,9 +112,12 @@
                             {% endfor %}
 
 
+                            <div class="col-sm-12 form-group form-group-extra-cars">
+                                <a id="add_car_btn" onclick="addCar(this);">add another car</a>
+                                |
+                                <a id="remove_car_btn" onclick="removeCar(this);" style="display: none">remove a car</a>
+                            </div>
 
-                            <input id="add_car_btn" type="button" value="Add another car" onclick="addCar(this);">
-                            <input id="remove_car_btn" type="button" value="Remove a car" onclick="removeCar(this);" style="display: none">
 
 
                             <div class="col-sm-12 form-group form-group-submit">
