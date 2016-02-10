@@ -1,5 +1,3 @@
-var car_count = 1;
-
 function selectChangeLanding(ele) {
     selectChange(ele);
     getTotalPriceLanding();
@@ -29,6 +27,7 @@ function getTotalPriceLanding() {
 
 function getTotalPrice() {
     var total_price = 0;
+    var car_count = numberOfCars();
     for (var i = 1; i < car_count + 1; i++) {
         var car_price = Number(getTupleById('select-type' + i)[0]);
         var interior_price = Number(getTupleById('select-interior' + i)[0]);
@@ -52,8 +51,7 @@ function assignValueFromLanding() {
 }
 
 function addCar(btn) {
-    car_count++;
-    console.log(car_count);
+    var car_count = numberOfCars('+');
     $('#car' + car_count).css('display', 'block');
     getTotalPrice();
     if (car_count >= 5) {
@@ -64,13 +62,27 @@ function addCar(btn) {
 }
 
 function removeCar(btn) {
-    $('#car' + car_count).css('display', 'none');
-    car_count--;
-    console.log(car_count);
-    getTotalPrice()
+    $('#car' + numberOfCars()).css('display', 'none');
+    var car_count = numberOfCars('-');
+    getTotalPrice();
     if (car_count <= 1) {
         btn.style.display = 'none';
     } else {
         $('#add_car_btn').css('display', 'inline-block');
     }
+}
+
+function numberOfCars(operation) {
+    operation = operation || '';
+    var ele = $('#id_car_count_field');
+    var car_count = Number(ele.val());
+    if (operation == '+') {
+        car_count++;
+    } else if (operation == '-') {
+        car_count--;
+    } else {
+        return car_count;
+    }
+    ele.val(car_count);
+    return car_count;
 }

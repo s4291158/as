@@ -44,11 +44,13 @@ class Address(models.Model):
 
 
 class WashRequest(models.Model):
-    washee = models.ForeignKey(Washee, on_delete=models.CASCADE, null=True, blank=True)
+    washee = models.ForeignKey(BaseUser, on_delete=models.CASCADE, null=True, blank=True,
+                               related_name='assigned_washee')
 
     address = models.ForeignKey(Address, null=True, blank=True)
 
-    assigned_washer = models.ForeignKey(Washer, on_delete=models.CASCADE, null=True, blank=True)
+    washer = models.ForeignKey(BaseUser, on_delete=models.CASCADE, null=True, blank=True,
+                               related_name='assigned_washer')
 
     confirmed = models.BooleanField(default=False)
 
@@ -59,6 +61,7 @@ class WashRequest(models.Model):
     vacuum_details = models.CharField(max_length=40, null=True, blank=True)
     description = models.CharField(max_length=254, null=True, blank=True)
     discount = models.FloatField(default=0, blank=True)
+    car_count = models.IntegerField(default=1, blank=True)
     total_price = models.FloatField(default=0, blank=True)
 
     def __str__(self):
@@ -75,6 +78,7 @@ class Car(models.Model):
     extra_dirty = models.BooleanField(default=False)
     vacuum = models.BooleanField(default=True)
     wiping = models.BooleanField(default=True)
+    price = models.FloatField(default=0)
 
     def __str__(self):
         if self.specs:

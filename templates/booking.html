@@ -22,7 +22,7 @@
             <form class="booking-form" method="POST" action="">
                 {% csrf_token %}
                 <div class="row">
-                    <div class="booking-form-inner col-md-6 col-md-offset-3 col-sm-12">
+                    <div class="section-inner col-md-6 col-md-offset-3 col-sm-12">
                         <div class="row">
                             <div class="col-sm-12">
                                 <h3 class="inner-section-title">Profile</h3>
@@ -67,6 +67,8 @@
                                 <p id="total-price">$0</p>
                             </div>
 
+                            {{ form.car_count_field }}
+
                             {% for car in form.booking.cars %}
                                 <div id="car{{ car }}" {% if car != '1' %}style="display:none"{% endif %}>
                                     <div class="col-sm-12 form-group form-group-car-specs">
@@ -81,7 +83,11 @@
                                                 onchange="selectChangeBooking(this)">
                                             {% for car_type, car_price in form.type_choices %}
                                                 <option class="select-options"
-                                                        {% if car_type == initial_type_choice %}selected{% endif %}>
+                                                        {% if car == '1' and initial_type_choice != None %}
+                                                        {% if car_type == initial_type_choice %}selected{% endif %}
+                                                        {% else %}
+                                                        {% if car_type == form.default_type_choice %}selected{% endif %}
+                                                        {% endif %}>
                                                     ${{ car_price }} &nbsp;&nbsp;&nbsp; {{ car_type }}</option>
                                             {% endfor %}
                                         </select>
@@ -94,17 +100,25 @@
                                                 onchange="selectChangeBooking(this)">
                                             {% for interior_type, interior_price in form.interior_choices %}
                                                 <option class="select-options"
-                                                        {% if interior_type == initial_interior_choice %}selected{% endif %}>
-                                                    ${{ interior_price }}
-                                                    &nbsp;&nbsp;&nbsp; {{ interior_type }}</option>
+                                                        {% if car == '1' and initial_interior_choice != None %}
+                                                        {% if interior_type == initial_interior_choice %}selected
+                                                        {% endif %}
+                                                        {% else %}
+                                                        {% if interior_type == form.default_interior_choice %}selected
+                                                        {% endif %}
+                                                        {% endif %}>
+                                                    ${{ interior_price }}&nbsp;&nbsp;&nbsp; {{ interior_type }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
 
 
                                     <div class="col-sm-12 form-group form-group-extra-dirty">
-                                        <input class="form-control" id="id_extra_dirty_field{{ car }}" name="extra_dirty_field{{ car }}" onclick="getTotalPrice();" type="checkbox">
-                                        <label for="id_extra_dirty_field{{ car }}">This car is really dirty, like seriously</label>
+                                        <input class="form-control" id="id_extra_dirty_field{{ car }}"
+                                               name="extra_dirty_field{{ car }}" onclick="getTotalPrice();"
+                                               type="checkbox">
+                                        <label for="id_extra_dirty_field{{ car }}">This car is really dirty, like
+                                            seriously</label>
 
                                     </div>
 
@@ -113,11 +127,10 @@
 
 
                             <div class="col-sm-12 form-group form-group-extra-cars">
-                                <a id="add_car_btn" onclick="addCar(this);">add another car</a>
+                                <a id="add_car_btn" onclick="addCar(this);">add another car </a>
                                 |
                                 <a id="remove_car_btn" onclick="removeCar(this);" style="display: none">remove a car</a>
                             </div>
-
 
 
                             <div class="col-sm-12 form-group form-group-submit">

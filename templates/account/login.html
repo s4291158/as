@@ -27,7 +27,6 @@
                                     <form class="login-form" method="POST" action="{% url 'account_login' %}">
                                         {% csrf_token %}
 
-
                                         <div class="form-group email">
                                             {{ form.login.error }}
                                             <label class="sr-only" for="id_login">Email or username</label>
@@ -72,6 +71,7 @@
                                             Don't have an account with AirSponge?
                                             <a class="signup-link"
                                                href="
+
                                                        {% url 'account_signup' %}{% if request.GET.next %}?next={{ request.GET.next|urlencode }}{% endif %}">
                                                 Sign Up
                                             </a>

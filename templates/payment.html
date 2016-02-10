@@ -16,7 +16,104 @@
 
     <section class="payment-section custom-section section section-on-bg">
         <div class="container">
-            <h2 class="title text-center">Payment</h2>
-        </div>
+            <h2 class="title text-center">Wash Request #{{ wash_request.id }}</h2>
+            <div class="row">
+                <div class="section-inner col-md-6 col-md-offset-3 col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3 class="inner-section-title">Request</h3>
+                        </div>
+                        <div class="col-sm-12">
+                            <table>
+                                <tr>
+                                    <th>Name:</th>
+                                    <td>{{ wash_request.washee.first_name }} {{ wash_request.washee.last_name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Phone:</th>
+                                    <td>{{ wash_request.washee.phone }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email:</th>
+                                    <td>{{ wash_request.washee.email }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Address:</th>
+                                    <td>{{ wash_request.address.oneline_address }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Wash Date:</th>
+                                    <td>{{ wash_request.wash_date }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Total:</th>
+                                    <td>${{ wash_request.total_price }}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        {% for car in wash_request.car_set.all %}
+                            <div class="col-sm-12 col-md-4">
+                                <h3 class="inner-section-title">{{ car.specs }}</h3>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            {{ car.type }}
+                                        </td>
+                                    </tr>
+                                    {% if car.wiping %}
+                                        <tr>
+                                            <td>Interior wipe</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if car.vacuum %}
+                                        <tr>
+                                            <td>Interior vacuum</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if car.extra_dirty %}
+                                        <tr>
+                                            <td>
+                                                Extra dirty
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+
+                                    <tr>
+                                        <td>
+                                            ${{ car.price }}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group paypal-form text-center">
+
+                        <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+
+                            <!-- Identify your business so that you can collect the payments. -->
+                            <input type="hidden" name="business" value="herschelgomez@xyzzyu.com">
+
+                            <!-- Specify a Buy Now button. -->
+                            <input type="hidden" name="cmd" value="_xclick">
+
+                            <!-- Specify details about the item that buyers will purchase. -->
+                            <input type="hidden" name="item_name" value="One time carwash">
+                            <input type="hidden" name="amount" value={{ wash_request.total_price }}>
+                            <input type="hidden" name="currency_code" value="AUD">
+
+                            <!-- Display the payment button. -->
+                            <input type="image" name="submit" border="0"
+                                   src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif"
+                                   alt="PayPal - The safer, easier way to pay online">
+                            <img alt="" border="0" width="1" height="1"
+                                 src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif">
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
     </section>
 {% endblock %}

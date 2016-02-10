@@ -4,7 +4,7 @@ from django.utils import timezone
 from datetime import datetime
 import collections
 
-from .models import BaseUser, Washee, Address, BankAccount, WashRequest, Car
+from .models import BaseUser, Address, BankAccount, WashRequest, Car
 
 
 class LandingForm(forms.Form):
@@ -19,6 +19,7 @@ class LandingForm(forms.Form):
     type_choices_dict = dict(type_choices)
     default_type_choice = type_choices[1][0]
     type_field = forms.CharField(
+        required=False,
         initial=default_type_choice,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
@@ -34,6 +35,7 @@ class LandingForm(forms.Form):
     interior_choices_dict = dict(interior_choices)
     default_interior_choice = interior_choices[1][0]
     interior_field = forms.CharField(
+        required=False,
         initial=default_interior_choice,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
@@ -69,6 +71,8 @@ class BookingForm(LandingForm):
         },
         'request': {
             'wash_date': None,
+            'car_count': None,
+            'total_price': None,
         },
         'cars': collections.OrderedDict(),
     }
@@ -159,16 +163,25 @@ class BookingForm(LandingForm):
                 'placeholder': 'Wash date   e.g. 01/02/2016 5:20pm'
             }))
 
+        self.fields['car_count_field'] = forms.IntegerField(
+            initial=1,
+            required=False,
+            widget=forms.TextInput(attrs={
+                'type': 'hidden',
+            })
+        )
+
         for i in range(1, 6):
-            self.fields['type_field' + str(i)] = forms.CharField()
-            self.fields['interior_field' + str(i)] = forms.CharField()
-            self.fields['car_specs_field' + str(i)] = forms.CharField()
-            self.fields['extra_dirty_field' + str(i)] = forms.BooleanField()
+            self.fields['type_field' + str(i)] = forms.CharField(required=False)
+            self.fields['interior_field' + str(i)] = forms.CharField(required=False)
+            self.fields['car_specs_field' + str(i)] = forms.CharField(required=False)
+            self.fields['extra_dirty_field' + str(i)] = forms.BooleanField(required=False)
             car_details = {
                 'type_choice': None,
                 'interior_choice': None,
                 'extra_dirty_choice': None,
                 'car_specs': None,
+                'price': None,
             }
             self.booking['cars'][str(i)] = car_details
 
@@ -184,19 +197,21 @@ class BookingForm(LandingForm):
         self.booking['address'] = self.get_valid_address(street_address, suburb, state, postcode)
 
         self.booking['request']['wash_date'] = self.get_valid_wash_date(self.cleaned_data['wash_date_field'])
+        self.booking['request']['car_count'] = self.cleaned_data['car_count_field']
 
-        self.booking['cars']['one']['type_choice'] = self.cleaned_data['type_field']
-        self.booking['cars']['one']['interior_choice'] = self.cleaned_data['interior_field']
-        self.booking['cars']['one']['extra_dirty_choice'] = self.cleaned_data['extra_dirty_field']
-        self.booking['cars']['one']['car_specs'] = self.cleaned_data['car_specs_field']
+        for i in range(1, self.booking['request']['car_count'] + 1):
+            self.booking['cars'][str(i)]['type_choice'] = self.cleaned_data['type_field' + str(i)]
+            self.booking['cars'][str(i)]['interior_choice'] = self.cleaned_data['interior_field' + str(i)]
+            self.booking['cars'][str(i)]['extra_dirty_choice'] = self.cleaned_data['extra_dirty_field' + str(i)]
+            self.booking['cars'][str(i)]['car_specs'] = self.cleaned_data['car_specs_field' + str(i)]
+            self.booking['cars'][str(i)]['price'] = self.get_car_price(i)
 
     def save(self):
         self.get_cleaned_data()
         user = self.save_user()
-        washee = self.save_washee(user)
         address = self.save_address(user)
-        washrequest = self.save_wash_request(washee, address)
-        car = self.save_car(washrequest)
+        washrequest = self.save_wash_request(user, address)
+        self.save_car(washrequest)
 
     def save_user(self):
         user = BaseUser.objects.get(id=self.booking['user'].id)
@@ -206,12 +221,6 @@ class BookingForm(LandingForm):
         user.role = "Washee"
         user.save()
         return user
-
-    def save_washee(self, user):
-        washee = Washee()
-        washee.__dict__ = user.__dict__
-        washee.save()
-        return washee
 
     def save_address(self, user):
         if self.booking['address']:
@@ -224,55 +233,69 @@ class BookingForm(LandingForm):
             address.suburb = self.booking['address']['suburb']
             address.state = self.booking['address']['state']
             address.postcode = self.booking['address']['postcode']
+            address.oneline_address = self.booking['address']['oneline_address']
             address.save()
             return address
         else:
             return None
 
-    def save_wash_request(self, washee, address):
-        car_price = LandingForm.type_choices_dict.get(self.booking['cars']['one']['type_choice'])
-        interior_price = LandingForm.interior_choices_dict.get(self.booking['cars']['one']['interior_choice'])
-        dirty_price = (5 if self.booking['cars']['one']['extra_dirty_choice'] else 0)
-
+    def save_wash_request(self, user, address):
         washrequest = WashRequest()
-        washrequest.washee = washee
+        washrequest.washee = user
         if self.booking['address']:
             washrequest.address = address
         washrequest.request_date = timezone.now()
         if self.booking['request']['wash_date']:
             washrequest.wash_date = self.booking['request']['wash_date']
-        washrequest.total_price += sum([car_price, interior_price, dirty_price])
+        washrequest.car_count = self.booking['request']['car_count']
+        washrequest.total_price = self.get_total_price()
         washrequest.save()
         self.booking['request_id'] = washrequest.id
         return washrequest
 
     def save_car(self, washrequest):
-        interior_price = LandingForm.interior_choices_dict.get(self.booking['cars']['one']['interior_choice'])
+        for i in range(1, self.booking['request']['car_count'] + 1):
+            car = Car()
+            car.washRequest = washrequest
 
-        car = Car()
-        car.washRequest = washrequest
-        if interior_price == 0:
-            car.vacuum = False
-            car.wiping = False
-        else:
-            car.vacuum = True
-            car.wiping = True
-        car.specs = self.booking['cars']['one']['car_specs']
-        car.extra_dirty = self.booking['cars']['one']['extra_dirty_choice']
-        car.type = self.booking['cars']['one']['type_choice']
-        car.save()
-        return car
+            interior_price = LandingForm.interior_choices_dict.get(self.booking['cars'][str(i)]['interior_choice'])
+            if interior_price == 0:
+                car.vacuum = False
+                car.wiping = False
+            else:
+                car.vacuum = True
+                car.wiping = True
+
+            specs = self.booking['cars'][str(i)]['car_specs']
+            if specs:
+                car.specs = specs
+            else:
+                car.specs = 'Car' + str(i)
+            car.extra_dirty = self.booking['cars'][str(i)]['extra_dirty_choice']
+            car.type = self.booking['cars'][str(i)]['type_choice']
+            car.price = self.get_car_price(i)
+            car.save()
 
     @staticmethod
     def get_valid_address(street_address, suburb, state, postcode):
         if not street_address and suburb and state and postcode:
             return None
         else:
+            oneline_address = ''
+            if street_address:
+                oneline_address += street_address + ','
+            if suburb:
+                oneline_address += ' ' + suburb
+            if state:
+                oneline_address += ' ' + state
+            if postcode:
+                oneline_address += ' ' + postcode
             address = {
                 'street_address': street_address,
                 'suburb': suburb,
                 'state': state,
                 'postcode': postcode,
+                'oneline_address': oneline_address,
             }
             return address
 
@@ -289,15 +312,15 @@ class BookingForm(LandingForm):
 
         return None
 
+    def get_car_price(self, i):
+        car_price = LandingForm.type_choices_dict.get(self.booking['cars'][str(i)]['type_choice'])
+        interior_price = LandingForm.interior_choices_dict.get(self.booking['cars'][str(i)]['interior_choice'])
+        dirty_price = (5 if self.booking['cars'][str(i)]['extra_dirty_choice'] else 0)
+        car_price = sum([car_price, interior_price, dirty_price])
+        return car_price
 
-class FieldSet(object):
-    def __init__(self, form, fields, legend='', cls=None):
-        self.form = form
-        self.legend = legend
-        self.fields = fields
-        self.cls = cls
-
-    def __iter__(self):
-        for name in self.fields:
-            field = self.form.fields[name]
-            yield BoundField(self.form, field, name)
+    def get_total_price(self):
+        total_price = 0
+        for i in range(1, self.booking['request']['car_count'] + 1):
+            total_price += self.get_car_price(i)
+        return total_price

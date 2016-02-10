@@ -1,6 +1,3 @@
-/* <!-- INDEX PAGE --> */
-
-/* LANDING SECTION */
 @media (max-width: 767px) {
     .promo.section {
         padding-top: 20px;
@@ -11,7 +8,7 @@
         display: block;
     }
 
-    .container
+
 }
 
 @media (min-width: 768px) {
@@ -19,7 +16,27 @@
         display: inline-block;
         font-size: 64px;
     }
+
+    .custom-section .section-inner {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
 }
+
+@media (min-width: 992px) {
+    .branding {
+        margin-left: 20px;
+    }
+
+    .navbar-right {
+        margin-right: 20px;
+    }
+}
+
+/* <!-- INDEX PAGE --> */
+
+/* LANDING SECTION */
+
 
 .container.text-center > h2 {
     font-weight: 200;
@@ -106,12 +123,6 @@
     margin: 0 15px;
 }
 
-.booking-section .booking-form-inner {
-    background: white;
-    padding: 30px;
-    border-radius: 4px;
-}
-
 .booking-section .btn.dropdown-toggle.btn-default {
     border-radius: 3px;
     height: 40px;
@@ -143,6 +154,10 @@
     border: 1px solid #ccc;
 }
 
+.booking-section .form-group.form-group-extra-dirty {
+    margin-bottom: 40px;
+}
+
 .booking-section .form-group.form-group-extra-dirty .form-control {
     height: auto;
     width: auto;
@@ -153,10 +168,10 @@
 .booking-section .form-group.form-group-extra-dirty > label {
     font-weight: normal;
     font-size: 14px;
+    display: inline;
 }
 
-.booking-section .form-group.form-group-extra-cars > a {
-
+.booking-section .form-group.form-group-extra-cars {
 }
 
 #booking-submit {
@@ -164,6 +179,16 @@
     height: 50px;
     font-size: 20px;
 }
+
+/* <!-- PAYMENT PAGE --> */
+.payment-section table {
+    width: 100%;
+}
+
+.payment-section .paypal-form {
+    margin: 30px;
+}
+
 
 /* <!-- ALL PAGES --> */
 /* SECTION */
@@ -191,6 +216,13 @@
     margin-top: 30px;
 }
 
+.custom-section .section-inner {
+    background: white;
+    border-radius: 4px;
+    padding-bottom: 30px;
+}
+
+
 #total-price {
     font-size: 24px;
     font-weight: 300;
@@ -202,15 +234,6 @@
 }
 
 /* NAVBAR */
-@media (min-width: 992px) {
-    .branding {
-        margin-left: 20px;
-    }
-
-    .navbar-right {
-        margin-right: 20px;
-    }
-}
 
 .header h1.logo > a {
     border-bottom-left-radius: 3px;

@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 
 from allauth.account.views import SignupView
 
 from .forms import LandingForm, BookingForm
+from .models import WashRequest, BaseUser
 
 from urllib import parse
 
@@ -39,8 +40,8 @@ def profile(request):
 @login_required(login_url='/accounts/signup/')
 def booking(request):
     context = {
-        'initial_type_choice': request.GET.get('type'),
-        'initial_interior_choice': request.GET.get('interior'),
+        'initial_type_choice': request.GET['type'],
+        'initial_interior_choice': request.GET['interior'],
     }
 
     if request.method == 'POST':
@@ -56,15 +57,22 @@ def booking(request):
 
         else:
             context['message'] = 'We could not process your request at this time'
+            context['form'] = form
 
-    context['form'] = BookingForm(user=request.user)
+    else:
+        context['form'] = BookingForm(user=request.user)
 
     return render(request, 'booking.html', context)
 
 
 @login_required
 def payment(request):
-    context = {
+    washrequest = WashRequest.objects.get(id=request.GET['id'])
+    if request.user.id == washrequest.washee.id or request.user.is_superuser:
+        context = {
+            'wash_request': washrequest,
+        }
+        return render(request, 'payment.html', context)
 
-    }
-    return render(request, 'payment.html', context)
+    else:
+        return HttpResponseForbidden()
