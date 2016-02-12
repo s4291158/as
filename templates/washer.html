@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block head_title %}
+    Washer Sign Up
+{% endblock %}
+
+{% block body-class %}
+    class='washer-signup-page'
+{% endblock %}
+
+{% block content %}
+    <div class="headline-bg booking-headline-bg">
+    </div><!--//headline-bg-->
+
+    <section class="booking-section custom-section section section-on-bg">
+        <div class="container">
+            <h2 class="title text-center">Washer sign up</h2>
+
+            <form class="booking-form" method="POST" action="">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="section-inner col-md-6 col-md-offset-3 col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 class="inner-section-title">Profile</h3>
+                            </div>
+
+                            <div class="col-sm-6 form-group form-group-first-name">
+                                {{ form.first_name_field }}
+                            </div>
+                            <div class="col-sm-6 form-group form-group-last-name">
+                                {{ form.last_name_field }}
+                            </div>
+                            <div class="col-sm-12 form-group form-group-phone">
+                                {{ form.phone_field }}
+                            </div>
+                            <div class="col-sm-12 form-group from-group-email">
+                                {{ form.email_field }}
+                            </div>
+                            <div class="col-sm-12 form-group form-group-submit">
+                                <button id="washer-signup-submit" class="btn btn-cta btn-cta-primary btn-block"
+                                        type="submit">
+                                    Apply
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

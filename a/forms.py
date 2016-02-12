@@ -324,3 +324,53 @@ class BookingForm(LandingForm):
         for i in range(1, self.booking['request']['car_count'] + 1):
             total_price += self.get_car_price(i)
         return total_price
+
+
+class WasherForm(forms.Form):
+    washer = {
+        'user': None,
+        'personal': {
+            'first_name': None,
+            'last_name': None,
+            'phone': None,
+            'email': None,
+        },
+    }
+
+    def __init__(self, user, *args, **kwargs):
+        super(WasherForm, self).__init__(*args, **kwargs)
+        self.washer['user'] = user
+
+        self.fields['first_name_field'] = forms.CharField(
+            required=False,
+            initial=user.first_name,
+            widget=forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+                'placeholder': 'First Name',
+            }))
+        self.fields['last_name_field'] = forms.CharField(
+            required=False,
+            initial=user.last_name,
+            widget=forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+                'placeholder': 'Last Name',
+            }))
+        self.fields['phone_field'] = forms.CharField(
+            required=False,
+            initial=user.phone,
+            widget=forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+                'placeholder': 'Contact Number',
+            }))
+        self.fields['email_field'] = forms.EmailField(
+            required=False,
+            initial=user.email,
+            widget=forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'email',
+                'placeholder': 'Email Address',
+                'readonly': True,
+            }))

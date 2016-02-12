@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponseForbidden
 
 from allauth.account.views import SignupView
 
-from .forms import LandingForm, BookingForm
+from .forms import LandingForm, BookingForm, WasherForm
 from .models import WashRequest, BaseUser
 
 from urllib import parse
@@ -35,6 +35,16 @@ def index(request):
 def profile(request):
     context = {}
     return render(request, 'account/profile.html', context)
+
+
+@login_required(login_url='/accounts/signup/')
+def washer(request):
+    context = {}
+    if request.user.role == 'Washer':
+        return HttpResponseRedirect(reverse('a:profile'))
+    else:
+        context['form'] = WasherForm(request.user)
+        return render(request, 'washer.html', context)
 
 
 @login_required(login_url='/accounts/signup/')
