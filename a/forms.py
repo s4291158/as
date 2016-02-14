@@ -57,6 +57,7 @@ class BookingForm(LandingForm):
     booking = {
         'request_id': None,
         'user': None,
+        'role': 'Washee',
         'personal': {
             'first_name': None,
             'last_name': None,
@@ -194,7 +195,7 @@ class BookingForm(LandingForm):
         suburb = self.cleaned_data['suburb_field']
         state = self.cleaned_data['state_field']
         postcode = self.cleaned_data['postcode_field']
-        self.booking['address'] = self.get_valid_address(street_address, suburb, state, postcode)
+        self.booking['address'] = get_valid_address(street_address, suburb, state, postcode)
 
         self.booking['request']['wash_date'] = self.get_valid_wash_date(self.cleaned_data['wash_date_field'])
         self.booking['request']['car_count'] = self.cleaned_data['car_count_field']
@@ -208,36 +209,10 @@ class BookingForm(LandingForm):
 
     def save(self):
         self.get_cleaned_data()
-        user = self.save_user()
-        address = self.save_address(user)
+        user = save_user(self.booking)
+        address = save_address(self.booking, user)
         washrequest = self.save_wash_request(user, address)
         self.save_car(washrequest)
-
-    def save_user(self):
-        user = BaseUser.objects.get(id=self.booking['user'].id)
-        user.first_name = self.booking['personal']['first_name']
-        user.last_name = self.booking['personal']['last_name']
-        user.phone = self.booking['personal']['phone']
-        user.role = "Washee"
-        user.save()
-        return user
-
-    def save_address(self, user):
-        if self.booking['address']:
-            try:
-                address = Address.objects.get(baseUser=user)
-            except Address.DoesNotExist:
-                address = Address()
-                address.baseUser = user
-            address.street_address = self.booking['address']['street_address']
-            address.suburb = self.booking['address']['suburb']
-            address.state = self.booking['address']['state']
-            address.postcode = self.booking['address']['postcode']
-            address.oneline_address = self.booking['address']['oneline_address']
-            address.save()
-            return address
-        else:
-            return None
 
     def save_wash_request(self, user, address):
         washrequest = WashRequest()
@@ -277,29 +252,6 @@ class BookingForm(LandingForm):
             car.save()
 
     @staticmethod
-    def get_valid_address(street_address, suburb, state, postcode):
-        if not street_address and suburb and state and postcode:
-            return None
-        else:
-            oneline_address = ''
-            if street_address:
-                oneline_address += street_address + ','
-            if suburb:
-                oneline_address += ' ' + suburb
-            if state:
-                oneline_address += ' ' + state
-            if postcode:
-                oneline_address += ' ' + postcode
-            address = {
-                'street_address': street_address,
-                'suburb': suburb,
-                'state': state,
-                'postcode': postcode,
-                'oneline_address': oneline_address,
-            }
-            return address
-
-    @staticmethod
     def get_valid_wash_date(wash_date):
         if wash_date:
             try:
@@ -329,6 +281,7 @@ class BookingForm(LandingForm):
 class WasherForm(forms.Form):
     washer = {
         'user': None,
+        'role': 'Washer',
         'personal': {
             'first_name': None,
             'last_name': None,
@@ -374,3 +327,63 @@ class WasherForm(forms.Form):
                 'placeholder': 'Email Address',
                 'readonly': True,
             }))
+
+    def get_cleaned_data(self):
+        self.washer['personal']['first_name'] = self.cleaned_data['first_name_field']
+        self.washer['personal']['last_name'] = self.cleaned_data['last_name_field']
+        self.washer['personal']['phone'] = self.cleaned_data['phone_field']
+
+    def save(self):
+        self.get_cleaned_data()
+        user = save_user(self.washer)
+
+
+def save_user(data):
+    user = BaseUser.objects.get(id=data['user'].id)
+    user.first_name = data['personal']['first_name']
+    user.last_name = data['personal']['last_name']
+    user.phone = data['personal']['phone']
+    user.role = data['role']
+    user.save()
+    return user
+
+
+def save_address(data, user):
+    if data['address']:
+        try:
+            address = Address.objects.get(baseUser=user)
+        except Address.DoesNotExist:
+            address = Address()
+            address.baseUser = user
+        address.street_address = data['address']['street_address']
+        address.suburb = data['address']['suburb']
+        address.state = data['address']['state']
+        address.postcode = data['address']['postcode']
+        address.oneline_address = data['address']['oneline_address']
+        address.save()
+        return address
+    else:
+        return None
+
+
+def get_valid_address(street_address, suburb, state, postcode):
+    if not street_address and suburb and state and postcode:
+        return None
+    else:
+        oneline_address = ''
+        if street_address:
+            oneline_address += street_address + ','
+        if suburb:
+            oneline_address += ' ' + suburb
+        if state:
+            oneline_address += ' ' + state
+        if postcode:
+            oneline_address += ' ' + postcode
+        address = {
+            'street_address': street_address,
+            'suburb': suburb,
+            'state': state,
+            'postcode': postcode,
+            'oneline_address': oneline_address,
+        }
+        return address

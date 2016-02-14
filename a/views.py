@@ -40,11 +40,21 @@ def profile(request):
 @login_required(login_url='/accounts/signup/')
 def washer(request):
     context = {}
-    if request.user.role == 'Washer':
-        return HttpResponseRedirect(reverse('a:profile'))
+
+    if request.method == 'POST':
+        form = WasherForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('a:profile'))
+
+        else:
+            context['message'] = 'We could not process your request at this time'
+            context['form'] = form
+
     else:
-        context['form'] = WasherForm(request.user)
-        return render(request, 'washer.html', context)
+        context['form'] = WasherForm(user=request.user)
+
+    return render(request, 'washer.html', context)
 
 
 @login_required(login_url='/accounts/signup/')
