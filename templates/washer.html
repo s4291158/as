@@ -14,15 +14,15 @@
     <div class="headline-bg booking-headline-bg">
     </div><!--//headline-bg-->
 
-    <section class="booking-section custom-section section section-on-bg">
+    <section class="washer-section custom-section section section-on-bg">
         <div class="container">
             <h2 class="title text-center">Washer sign up</h2>
 
-            <form class="booking-form" method="POST" action="">
+            <form class="washer-form" method="POST" action="">
                 {% csrf_token %}
                 <div class="row">
                     <div class="section-inner col-md-6 col-md-offset-3 col-sm-12">
-                        <div class="row">
+                        <div class="row form-profile">
                             <div class="col-sm-12">
                                 <h3 class="inner-section-title">Profile</h3>
                             </div>
@@ -39,12 +39,68 @@
                             <div class="col-sm-12 form-group from-group-email">
                                 {{ form.email_field }}
                             </div>
+                            <div class="col-sm-12 form-group form-group-street-address">
+                                {{ form.street_address_field }}
+                            </div>
+                            <div class="col-sm-6 col-xs-12 form-group form-group-suburb">
+                                {{ form.suburb_field }}
+                            </div>
+                            <div class="col-sm-3 col-xs-6 form-group form-group-state">
+                                {{ form.state_field }}
+                            </div>
+                            <div class="col-sm-3 col-xs-6 form-group form-group-postcode">
+                                {{ form.postcode_field }}
+                            </div>
+                        </div>
+                        <div class="row form-circumstances">
+                            <div class="col-sm-12 form-group">
+                                <label for="has_car_field">Do you have a car?</label>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <label class="btn btn-default active">
+                                        <input type="radio" name="has_car_field" checked="checked" value="True"/>
+                                        Yes
+                                    </label>
+                                    <label class="btn btn-default">
+                                        <input type="radio" name="has_car_field" value="False"/> No
+                                    </label>
+                                </div>
+                                {% for error in form.has_car_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="col-sm-12 form-group">
+                                <label for="has_hose_field">What about a hose?</label>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <label class="btn btn-default active">
+                                        <input type="radio" name="has_hose_field" checked="checked" value="True"/>
+                                        Yes
+                                    </label>
+                                    <label class="btn btn-default">
+                                        <input type="radio" name="has_hose_field" value="False"/> No
+                                    </label>
+                                </div>
+                                {% for error in form.has_hose_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="col-sm-12 form-group">
+                                <label for="distance_travel_field">What is the max distance you're willing to
+                                    travel?</label>
+                                <input class="form-control" type="text" name="distance_travel_field" value="20">
+                                {% for error in form.travel_distance_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+
+                        </div>
+                        <div class="row form-submit">
                             <div class="col-sm-12 form-group form-group-submit">
                                 <button id="washer-signup-submit" class="btn btn-cta btn-cta-primary btn-block"
-                                        type="submit">Apply</button>
+                                        type="submit">Apply
+                                </button>
                             </div>
                             <div class="col-sm-12">
-                                <p style="color:red">{{ message }}</p>
+                                <p class="error-message">{{ message }}</p>
                             </div>
                         </div>
                     </div>

@@ -16,7 +16,7 @@ def index(request):
     if request.method == 'POST':
         form = LandingForm(request.POST)
         if form.is_valid():
-            form.get_query()
+            form.get_cleaned_data()
             query_string = parse.urlencode({
                 'type': form.type_choice,
                 'interior': form.interior_choice

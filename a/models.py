@@ -6,21 +6,21 @@ from django.contrib.auth.models import AbstractUser
 class BaseUser(AbstractUser):
     role = models.CharField(max_length=40, null=True, blank=True)
     phone = models.CharField(max_length=20, null=True, blank=True)
-    rating = models.IntegerField(null=True, blank=True)
+    rating = models.FloatField(null=True, blank=True)
 
 
-class Washer(BaseUser):
-    pass
+class Washer(models.Model):
+    baseUser = models.OneToOneField(BaseUser)
 
-    class Meta:
-        verbose_name = 'Washer'
+    has_car = models.BooleanField(default=False)
+    has_hose = models.BooleanField(default=False)
+    travel_distance = models.IntegerField(default=0)
+    vacuum_type = models.CharField(max_length=40)
+    availability = models.CharField(max_length=40, blank=True)
+    experience = models.CharField(max_length=255, blank=True)
 
-
-class Washee(BaseUser):
-    pass
-
-    class Meta:
-        verbose_name = 'Washee'
+    def __str__(self):
+        return self.baseUser.username
 
 
 class Address(models.Model):

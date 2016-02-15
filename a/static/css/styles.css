@@ -8,7 +8,6 @@
         display: block;
     }
 
-
 }
 
 @media (min-width: 768px) {
@@ -36,7 +35,6 @@
 /* <!-- INDEX PAGE --> */
 
 /* LANDING SECTION */
-
 
 .container.text-center > h2 {
     font-weight: 200;
@@ -150,10 +148,6 @@
     display: inline-block;
 }
 
-.booking-section .form-group .form-control {
-    border: 1px solid #ccc;
-}
-
 .booking-section .form-group.form-group-extra-dirty {
     margin-bottom: 40px;
 }
@@ -180,6 +174,16 @@
     font-size: 20px;
 }
 
+#total-price {
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 26px;
+    padding: 0;
+    margin-top: 30px;
+    display: inline-block;
+    float: right;
+}
+
 /* <!-- PAYMENT PAGE --> */
 .payment-section table {
     width: 100%;
@@ -189,6 +193,25 @@
     margin: 30px;
 }
 
+/* <!-- WASHER SIGNUP --> */
+.washer-section .form-group > label {
+    display: block;
+    font-weight: 300;
+    font-size: 24px;
+    margin-bottom: 0;
+}
+
+.washer-section .row.form-circumstances .form-group {
+    margin-top: 30px;
+}
+
+.washer-section .btn-group {
+
+}
+
+.washer-section .btn-group .btn {
+    border-radius: 0px;
+}
 
 /* <!-- ALL PAGES --> */
 /* SECTION */
@@ -222,15 +245,12 @@
     padding-bottom: 30px;
 }
 
+.custom-section .form-group .form-control {
+    border: 1px solid #ccc;
+}
 
-#total-price {
-    font-size: 24px;
-    font-weight: 300;
-    line-height: 26px;
-    padding: 0;
-    margin-top: 30px;
-    display: inline-block;
-    float: right;
+.error-message {
+    color: red;
 }
 
 /* NAVBAR */
@@ -240,8 +260,8 @@
     border-bottom-right-radius: 3px;
 }
 
-.nav-item.nav-item-cta.last > a {
-    border-radius: 2px;
+.nav-item.nav-item-cta > a {
+    border-radius: 0;
 }
 
 

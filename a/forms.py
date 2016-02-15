@@ -4,7 +4,7 @@ from django.utils import timezone
 from datetime import datetime
 import collections
 
-from .models import BaseUser, Address, BankAccount, WashRequest, Car
+from .models import BaseUser, Washer, Address, BankAccount, WashRequest, Car
 
 
 class LandingForm(forms.Form):
@@ -48,9 +48,128 @@ class LandingForm(forms.Form):
         'interior_field': interior_field,
     }
 
-    def get_query(self):
+    def get_cleaned_data(self):
         self.type_choice = self.cleaned_data['type_field']
         self.interior_choice = self.cleaned_data['interior_field']
+
+
+class BaseUserForm(forms.Form):
+    def __init__(self, user, *args, **kwargs):
+        super(BaseUserForm, self).__init__(*args, **kwargs)
+
+        self.fields['first_name_field'] = forms.CharField(
+            required=False,
+            initial=user.first_name,
+            widget=forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+                'placeholder': 'First Name',
+            }))
+        self.fields['last_name_field'] = forms.CharField(
+            required=False,
+            initial=user.last_name,
+            widget=forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+                'placeholder': 'Last Name',
+            }))
+        self.fields['phone_field'] = forms.CharField(
+            required=False,
+            initial=user.phone,
+            widget=forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+                'placeholder': 'Contact Number',
+            }))
+        self.fields['email_field'] = forms.EmailField(
+            required=False,
+            initial=user.email,
+            widget=forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'email',
+                'placeholder': 'Email Address',
+                'readonly': True,
+            }))
+
+        self.fields['street_address_field'] = forms.CharField(
+            required=False,
+            widget=forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+                'placeholder': 'Street Address',
+            }))
+        self.fields['suburb_field'] = forms.CharField(
+            required=False,
+            widget=forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+                'placeholder': 'Suburb',
+            }))
+        self.fields['state_field'] = forms.CharField(
+            required=False,
+            widget=forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+                'placeholder': 'State',
+            }))
+        self.fields['postcode_field'] = forms.CharField(
+            required=False,
+            widget=forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+                'placeholder': 'Postcode',
+            }))
+
+        try:
+            address = Address.objects.get(baseUser=user)
+            self.fields['street_address_field'].initial = address.street_address
+            self.fields['suburb_field'].initial = address.suburb
+            self.fields['state_field'].initial = address.state
+            self.fields['postcode_field'].initial = address.postcode
+        except Address.DoesNotExist:
+            pass
+
+
+class WasherForm(BaseUserForm):
+    washer = {
+        'user': None,
+        'role': 'Washer',
+        'personal': {},
+        'address': {},
+        'questions': {},
+    }
+
+    def __init__(self, user, *args, **kwargs):
+        super(WasherForm, self).__init__(user, *args, **kwargs)
+        self.washer['user'] = user
+
+        self.fields['has_car_field'] = forms.BooleanField(required=False)
+        self.fields['has_hose_field'] = forms.BooleanField(required=False)
+        self.fields['travel_distance_field'] = forms.IntegerField(required=False)
+
+    def get_cleaned_data(self):
+        self.washer['personal'] = cleaned_personal(self.cleaned_data)
+        self.washer['address'] = cleaned_address(self.cleaned_data)
+
+        self.washer['questions']['has_car'] = self.cleaned_data['has_car_field']
+        self.washer['questions']['has_hose'] = self.cleaned_data['has_hose_field']
+
+    def save(self):
+        self.get_cleaned_data()
+        user = save_user(self.washer)
+        address = save_address(self.washer, user)
+        washer = self.save_washer(user)
+
+    def save_washer(self, user):
+        try:
+            washer = Washer.objects.get(baseUser=user)
+        except Washer.DoesNotExist:
+            washer = Washer()
+            washer.baseUser = user
+        washer.has_car = self.washer['questions']['has_car']
+        washer.has_hose = self.washer['questions']['has_hose']
+        washer.save()
+        return washer
 
 
 class BookingForm(LandingForm):
@@ -69,6 +188,7 @@ class BookingForm(LandingForm):
             'suburb': None,
             'state': None,
             'postcode': None,
+            'oneline_address': None,
         },
         'request': {
             'wash_date': None,
@@ -278,64 +398,49 @@ class BookingForm(LandingForm):
         return total_price
 
 
-class WasherForm(forms.Form):
-    washer = {
-        'user': None,
-        'role': 'Washer',
-        'personal': {
-            'first_name': None,
-            'last_name': None,
-            'phone': None,
-            'email': None,
-        },
+##############################
+# OUTSIDE-OF-CLASS FUNCTIONS #
+##############################
+
+def cleaned_personal(cleaned_data):
+    personal = {
+        'first_name': cleaned_data['first_name_field'],
+        'last_name': cleaned_data['last_name_field'],
+        'phone': cleaned_data['phone_field']
     }
+    return personal
 
-    def __init__(self, user, *args, **kwargs):
-        super(WasherForm, self).__init__(*args, **kwargs)
-        self.washer['user'] = user
 
-        self.fields['first_name_field'] = forms.CharField(
-            required=False,
-            initial=user.first_name,
-            widget=forms.TextInput(attrs={
-                'class': 'form-control',
-                'type': 'text',
-                'placeholder': 'First Name',
-            }))
-        self.fields['last_name_field'] = forms.CharField(
-            required=False,
-            initial=user.last_name,
-            widget=forms.TextInput(attrs={
-                'class': 'form-control',
-                'type': 'text',
-                'placeholder': 'Last Name',
-            }))
-        self.fields['phone_field'] = forms.CharField(
-            required=False,
-            initial=user.phone,
-            widget=forms.TextInput(attrs={
-                'class': 'form-control',
-                'type': 'text',
-                'placeholder': 'Contact Number',
-            }))
-        self.fields['email_field'] = forms.EmailField(
-            required=False,
-            initial=user.email,
-            widget=forms.TextInput(attrs={
-                'class': 'form-control',
-                'type': 'email',
-                'placeholder': 'Email Address',
-                'readonly': True,
-            }))
+def cleaned_address(cleaned_data):
+    street_address = cleaned_data['street_address_field']
+    suburb = cleaned_data['suburb_field']
+    state = cleaned_data['state_field']
+    postcode = cleaned_data['postcode_field']
+    address = get_valid_address(street_address, suburb, state, postcode)
+    return address
 
-    def get_cleaned_data(self):
-        self.washer['personal']['first_name'] = self.cleaned_data['first_name_field']
-        self.washer['personal']['last_name'] = self.cleaned_data['last_name_field']
-        self.washer['personal']['phone'] = self.cleaned_data['phone_field']
 
-    def save(self):
-        self.get_cleaned_data()
-        user = save_user(self.washer)
+def get_valid_address(street_address, suburb, state, postcode):
+    if not street_address and suburb and state and postcode:
+        return None
+    else:
+        oneline_address = ''
+        if street_address:
+            oneline_address += street_address + ','
+        if suburb:
+            oneline_address += ' ' + suburb
+        if state:
+            oneline_address += ' ' + state
+        if postcode:
+            oneline_address += ' ' + postcode
+        address = {
+            'street_address': street_address,
+            'suburb': suburb,
+            'state': state,
+            'postcode': postcode,
+            'oneline_address': oneline_address,
+        }
+        return address
 
 
 def save_user(data):
@@ -364,26 +469,3 @@ def save_address(data, user):
         return address
     else:
         return None
-
-
-def get_valid_address(street_address, suburb, state, postcode):
-    if not street_address and suburb and state and postcode:
-        return None
-    else:
-        oneline_address = ''
-        if street_address:
-            oneline_address += street_address + ','
-        if suburb:
-            oneline_address += ' ' + suburb
-        if state:
-            oneline_address += ' ' + state
-        if postcode:
-            oneline_address += ' ' + postcode
-        address = {
-            'street_address': street_address,
-            'suburb': suburb,
-            'state': state,
-            'postcode': postcode,
-            'oneline_address': oneline_address,
-        }
-        return address
