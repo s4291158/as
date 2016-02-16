@@ -41,20 +41,24 @@ def profile(request):
 def washer(request):
     context = {}
 
-    if request.method == 'POST':
-        form = WasherForm(request.user, request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('a:profile'))
+    if request.user.role == 'Washee' and not request.user.is_superuser:
+        context['message'] = 'We require separate accounts to provide and use our service'
+        return render(request, 'index.html', context)
+    else:
+        if request.method == 'POST':
+            form = WasherForm(request.user, request.POST)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect(reverse('a:profile'))
+
+            else:
+                context['message'] = 'We could not process your request at this time, please check field errors'
+                context['form'] = form
 
         else:
-            context['message'] = 'We could not process your request at this time'
-            context['form'] = form
+            context['form'] = WasherForm(user=request.user)
 
-    else:
-        context['form'] = WasherForm(user=request.user)
-
-    return render(request, 'washer.html', context)
+        return render(request, 'washer.html', context)
 
 
 @login_required(login_url='/accounts/signup/')
@@ -76,7 +80,7 @@ def booking(request):
             )
 
         else:
-            context['message'] = 'We could not process your request at this time'
+            context['message'] = 'We could not process your request at this time, please check field errors'
             context['form'] = form
 
     else:

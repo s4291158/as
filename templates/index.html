@@ -26,16 +26,16 @@
             <h2 class="title">CARWASH.</h2>
             <h2 class="title">ON DEMAND</h2>
             <p class="intro">We'll bring the carwash to you</p>
-            {{ message }}
+            {% if message %}
+                <p class="error-message">{{ message }}</p>
+            {% endif %}
             <form method="post" action="">
                 {% csrf_token %}
-
-                {{ form.non_field_errors }}
-                {{ form.oneline_address.errors }}
                 <div class="row no-pad">
                     {{ form.type_field }}
                     <div class="col-xs-12 col-md-3 col-md-offset-2 form-group form-group-type">
-                        <select id="select-type" data-width="100%" class="selectpicker" onchange="selectChangeLanding(this)">
+                        <select id="select-type" data-width="100%" class="selectpicker"
+                                onchange="selectChangeLanding(this)">
                             {% for car_type, car_price in form.type_choices %}
                                 <option class="select-options"
                                         {% if car_type == form.default_type_choice %}selected{% endif %}>
@@ -56,7 +56,8 @@
                         </select>
                     </div>
                     <div class="col-xs-12 col-md-1 form-group form-group-submit">
-                        <button id="landing-submit" class="btn btn-cta btn-cta-primary btn-block" type="submit"></button>
+                        <button id="landing-submit" class="btn btn-cta btn-cta-primary btn-block"
+                                type="submit"></button>
                     </div>
                 </div>
 

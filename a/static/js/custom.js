@@ -10,11 +10,13 @@ function selectChangeBooking(ele) {
 
 function selectChange(ele) {
     var field = getTupleById(ele.id)[1];
+    var name = ele.id.slice(0, -1);
+    var index = ele.id.slice(-1);
 
-    if (ele.id == 'select-type') {
-        $('#id_type_field').val(field);
-    } else if (ele.id == 'select-interior') {
-        $('#id_interior_field').val(field)
+    if (name == 'select-type') {
+        $('#id_type_field' + index).val(field);
+    } else if (name == 'select-interior') {
+        $('#id_interior_field' + index).val(field)
     }
 }
 

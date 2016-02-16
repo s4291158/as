@@ -14,10 +14,10 @@ class Washer(models.Model):
 
     has_car = models.BooleanField(default=False)
     has_hose = models.BooleanField(default=False)
-    travel_distance = models.IntegerField(default=0)
-    vacuum_type = models.CharField(max_length=40)
-    availability = models.CharField(max_length=40, blank=True)
-    experience = models.CharField(max_length=255, blank=True)
+    travel_distance = models.IntegerField(default=0, blank=True)
+    vacuum_type = models.CharField(max_length=40, blank=True)
+    availability = models.CharField(max_length=255, blank=True)
+    experience = models.CharField(max_length=2000, blank=True)
 
     def __str__(self):
         return self.baseUser.username

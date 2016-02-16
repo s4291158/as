@@ -22,39 +22,72 @@
                 {% csrf_token %}
                 <div class="row">
                     <div class="section-inner col-md-6 col-md-offset-3 col-sm-12">
+                        {% if message %}
+                            <div class="col-sm-12">
+                                <p class="inner-section-title error-message">{{ message }}</p>
+                            </div>
+                        {% endif %}
                         <div class="row form-profile">
                             <div class="col-sm-12">
                                 <h3 class="inner-section-title">Profile</h3>
                             </div>
-
-                            <div class="col-sm-6 form-group form-group-first-name">
+                            <div class="col-sm-6 form-group">
                                 {{ form.first_name_field }}
+                                {% for error in form.first_name_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
                             </div>
-                            <div class="col-sm-6 form-group form-group-last-name">
+                            <div class="col-sm-6 form-group">
                                 {{ form.last_name_field }}
+                                {% for error in form.last_name_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
                             </div>
-                            <div class="col-sm-12 form-group form-group-phone">
+                            <div class="col-sm-12 form-group">
                                 {{ form.phone_field }}
+                                {% for error in form.phone_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
                             </div>
-                            <div class="col-sm-12 form-group from-group-email">
+                            <div class="col-sm-12 form-group">
                                 {{ form.email_field }}
+                                {% for error in form.email_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
                             </div>
-                            <div class="col-sm-12 form-group form-group-street-address">
+                        </div>
+                        <div class="row form-address">
+                            <div class="col-sm-12">
+                                <h3 class="inner-section-title">Address</h3>
+                            </div>
+                            <div class="col-sm-12 form-group">
                                 {{ form.street_address_field }}
+                                {% for error in form.street_address_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
                             </div>
-                            <div class="col-sm-6 col-xs-12 form-group form-group-suburb">
+                            <div class="col-sm-6 col-xs-12 form-group">
                                 {{ form.suburb_field }}
+                                {% for error in form.suburb_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
                             </div>
-                            <div class="col-sm-3 col-xs-6 form-group form-group-state">
+                            <div class="col-sm-3 col-xs-6 form-group">
                                 {{ form.state_field }}
+                                {% for error in form.state_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
                             </div>
-                            <div class="col-sm-3 col-xs-6 form-group form-group-postcode">
+                            <div class="col-sm-3 col-xs-6 form-group">
                                 {{ form.postcode_field }}
+                                {% for error in form.postcode_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
                             </div>
                         </div>
                         <div class="row form-circumstances">
                             <div class="col-sm-12 form-group">
-                                <label for="has_car_field">Do you have a car?</label>
+                                <label for="{{ form.has_car_field.id_for_label }}">{{ form.has_car_field.label }}</label>
                                 <div class="btn-group" data-toggle="buttons">
                                     <label class="btn btn-default active">
                                         <input type="radio" name="has_car_field" checked="checked" value="True"/>
@@ -69,7 +102,7 @@
                                 {% endfor %}
                             </div>
                             <div class="col-sm-12 form-group">
-                                <label for="has_hose_field">What about a hose?</label>
+                                <label for="{{ form.has_hose_field.id_for_label }}">{{ form.has_hose_field.label }}</label>
                                 <div class="btn-group" data-toggle="buttons">
                                     <label class="btn btn-default active">
                                         <input type="radio" name="has_hose_field" checked="checked" value="True"/>
@@ -84,23 +117,53 @@
                                 {% endfor %}
                             </div>
                             <div class="col-sm-12 form-group">
-                                <label for="distance_travel_field">What is the max distance you're willing to
-                                    travel?</label>
-                                <input class="form-control" type="text" name="distance_travel_field" value="20">
+                                <label for="{{ form.vacuum_type_field.id_for_label }}">{{ form.vacuum_type_field.label }}</label>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <label class="btn btn-default active">
+                                        <input type="radio" name="vacuum_type_field" checked="checked" value="Regular"/>
+                                        Regular
+                                    </label>
+                                    <label class="btn btn-default">
+                                        <input type="radio" name="vacuum_type_field" value="Cordless"/>
+                                        Cordless
+                                    </label>
+                                    <label class="btn btn-default">
+                                        <input type="radio" name="vacuum_type_field" value="None"/>
+                                        None
+                                    </label>
+                                </div>
+                                {% for error in form.has_hose_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="col-sm-12 form-group">
+                                <label for="{{ form.travel_distance_field.id_for_label }}">{{ form.travel_distance_field.label }}</label>
+                                {{ form.travel_distance_field }}
                                 {% for error in form.travel_distance_field.errors %}
                                     <p class="error-message">{{ error }}</p>
                                 {% endfor %}
                             </div>
-
+                            <div class="col-sm-12 form-group">
+                                <label for="{{ form.availability_field.id_for_label }}">{{ form.availability_field.label }}</label>
+                                {{ form.availability_field }}
+                                {% for error in form.availability_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="col-sm-12 form-group">
+                                <label for="{{ form.experience_field.id_for_label }}">{{ form.experience_field.label }}</label>
+                                {{ form.experience_field }}
+                                {% for error in form.experience_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
+                            </div>
                         </div>
                         <div class="row form-submit">
-                            <div class="col-sm-12 form-group form-group-submit">
-                                <button id="washer-signup-submit" class="btn btn-cta btn-cta-primary btn-block"
+                            <div class="col-sm-12 form-group">
+                                <button id="washer-signup-submit"
+                                        class="btn btn-cta btn-cta-primary btn-block btn-form-submit"
                                         type="submit">Apply
                                 </button>
-                            </div>
-                            <div class="col-sm-12">
-                                <p class="error-message">{{ message }}</p>
                             </div>
                         </div>
                     </div>

@@ -23,62 +23,91 @@
                 {% csrf_token %}
                 <div class="row">
                     <div class="section-inner col-md-6 col-md-offset-3 col-sm-12">
-                        <div class="row">
+                        {% if message %}
+                            <div class="col-sm-12">
+                                <p class="inner-section-title error-message">{{ message }}</p>
+                            </div>
+                        {% endif %}
+                        <div class="row form-profile">
                             <div class="col-sm-12">
                                 <h3 class="inner-section-title">Profile</h3>
                             </div>
-
-                            <div class="col-sm-6 form-group form-group-first-name">
+                            <div class="col-sm-6 form-group">
                                 {{ form.first_name_field }}
+                                {% for error in form.first_name_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
                             </div>
-                            <div class="col-sm-6 form-group form-group-last-name">
+                            <div class="col-sm-6 form-group">
                                 {{ form.last_name_field }}
+                                {% for error in form.last_name_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
                             </div>
-                            <div class="col-sm-12 form-group form-group-phone">
+                            <div class="col-sm-12 form-group">
                                 {{ form.phone_field }}
+                                {% for error in form.phone_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
                             </div>
-                            <div class="col-sm-12 form-group from-group-email">
+                            <div class="col-sm-12 form-group">
                                 {{ form.email_field }}
+                                {% for error in form.email_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
                             </div>
-
+                        </div>
+                        <div class="row form-wash-request">
                             <div class="col-sm-12">
                                 <h3 class="inner-section-title">Carwash Request</h3>
                             </div>
-                            <div class="col-sm-12 form-group form-group-street-address">
+                            <div class="col-sm-12 form-group">
                                 {{ form.street_address_field }}
+                                {% for error in form.street_address_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
                             </div>
-                            <div class="col-sm-6 form-group form-group-suburb">
+                            <div class="col-sm-6 col-xs-12 form-group">
                                 {{ form.suburb_field }}
+                                {% for error in form.suburb_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
                             </div>
-                            <div class="col-sm-3 form-group form-group-state">
+                            <div class="col-sm-3 col-xs-6 form-group">
                                 {{ form.state_field }}
+                                {% for error in form.state_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
                             </div>
-                            <div class="col-sm-3 form-group form-group-postcode">
+                            <div class="col-sm-3 col-xs-6 form-group">
                                 {{ form.postcode_field }}
+                                {% for error in form.postcode_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
                             </div>
-
-                            <div class="col-sm-12 form-group form-group-wash-date">
+                            <div class="col-sm-12 form-group">
                                 {{ form.wash_date_field }}
+                                {% for error in form.wash_date_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
                             </div>
-
-
+                        </div>
+                        <div class="row form-car-details">
                             <div class="col-sm-12">
                                 <h3 class="inner-section-title">Car Details</h3>
                                 <p id="total-price">$0</p>
                             </div>
-
                             {{ form.car_count_field }}
-
                             {% for car in form.booking.cars %}
                                 <div id="car{{ car }}" {% if car != '1' %}style="display:none"{% endif %}>
-                                    <div class="col-sm-12 form-group form-group-car-specs">
+                                    <div class="col-sm-12 form-group">
                                         <input class="form-control" id="id_car_specs_field{{ car }}"
                                                name="car_specs_field{{ car }}" placeholder="Car make and model"
                                                type="text">
                                     </div>
                                     <input class="form-control" id="id_type_field{{ car }}" name="type_field{{ car }}"
                                            type="hidden" value="Sedan">
-                                    <div class="col-sm-5 form-group form-group-type">
+                                    <div class="col-sm-5 form-group">
                                         <select id="select-type{{ car }}" data-width="100%" class="selectpicker"
                                                 onchange="selectChangeBooking(this)">
                                             {% for car_type, car_price in form.type_choices %}
@@ -95,7 +124,7 @@
                                     <input class="form-control" id="id_interior_field{{ car }}"
                                            name="interior_field{{ car }}" type="hidden"
                                            value="Interior Vacuum &amp; Wipe">
-                                    <div class="col-sm-7 form-group form-group-interior">
+                                    <div class="col-sm-7 form-group">
                                         <select id="select-interior{{ car }}" data-width="100%" class="selectpicker"
                                                 onchange="selectChangeBooking(this)">
                                             {% for interior_type, interior_price in form.interior_choices %}
@@ -111,38 +140,28 @@
                                             {% endfor %}
                                         </select>
                                     </div>
-
-
                                     <div class="col-sm-12 form-group form-group-extra-dirty">
                                         <input class="form-control" id="id_extra_dirty_field{{ car }}"
                                                name="extra_dirty_field{{ car }}" onclick="getTotalPrice();"
                                                type="checkbox">
                                         <label for="id_extra_dirty_field{{ car }}">This car is really dirty, like
                                             seriously</label>
-
                                     </div>
-
                                 </div>
                             {% endfor %}
-
-
-                            <div class="col-sm-12 form-group form-group-extra-cars">
+                            <div class="col-sm-12 form-group">
                                 <a id="add_car_btn" onclick="addCar(this);">add another car </a>
                                 |
                                 <a id="remove_car_btn" onclick="removeCar(this);" style="display: none">remove a car</a>
                             </div>
-
-
-                            <div class="col-sm-12 form-group form-group-submit">
-                                <button id="booking-submit" class="btn btn-cta btn-cta-primary btn-block" type="submit">
+                        </div>
+                        <div class="row form-submit">
+                            <div class="col-sm-12 form-group">
+                                <button id="booking-submit"
+                                        class="btn btn-cta btn-cta-primary btn-block btn-form-submit" type="submit">
                                     Submit Request
                                 </button>
                             </div>
-
-                            <div class="col-sm-12">
-                                <p style="color:red">{{ message }}</p>
-                            </div>
-
                         </div>
                     </div>
                 </div>
