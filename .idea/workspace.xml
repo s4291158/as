@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="28727170-58ab-423e-b774-db23849e50e7" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/a/migrations/0026_auto_20160210_1453.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/as.iml" afterPath="$PROJECT_DIR$/.idea/as.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/a/forms.py" afterPath="$PROJECT_DIR$/a/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/a/models.py" afterPath="$PROJECT_DIR$/a/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/a/static/css/styles.css" afterPath="$PROJECT_DIR$/a/static/css/styles.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/a/views.py" afterPath="$PROJECT_DIR$/a/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/account/profile.html" afterPath="$PROJECT_DIR$/templates/account/profile.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/nav.html" afterPath="$PROJECT_DIR$/templates/nav.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/washer.html" afterPath="$PROJECT_DIR$/templates/washer.html" />
-    </list>
+    <list default="true" id="28727170-58ab-423e-b774-db23849e50e7" name="Default" comment="" />
     <ignored path="as.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -207,8 +191,8 @@
       <file leaf-file-name="forms.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/a/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.75454545">
-              <caret line="159" column="35" selection-start-line="159" selection-start-column="35" selection-end-line="159" selection-end-column="35" />
+            <state vertical-scroll-proportion="0.8878788">
+              <caret line="190" column="36" selection-start-line="190" selection-start-column="36" selection-end-line="190" selection-end-column="36" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -1211,8 +1195,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/a/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.75454545">
-          <caret line="159" column="35" selection-start-line="159" selection-start-column="35" selection-end-line="159" selection-end-column="35" />
+        <state vertical-scroll-proportion="0.8878788">
+          <caret line="190" column="36" selection-start-line="190" selection-start-column="36" selection-end-line="190" selection-end-column="36" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>
