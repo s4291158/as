@@ -2,7 +2,7 @@ from django import forms
 from django.forms.forms import BoundField
 from django.utils import timezone
 from datetime import datetime
-import collections
+import collections, random
 
 from .models import BaseUser, Washer, Address, BankAccount, WashRequest, Car
 
@@ -62,7 +62,6 @@ class BaseUserForm(forms.Form):
             label='First name',
             widget=forms.TextInput(attrs={
                 'class': 'form-control',
-                'type': 'text',
                 'placeholder': 'First Name',
             }))
         self.fields['last_name_field'] = forms.CharField(
@@ -70,7 +69,6 @@ class BaseUserForm(forms.Form):
             label='Last name',
             widget=forms.TextInput(attrs={
                 'class': 'form-control',
-                'type': 'text',
                 'placeholder': 'Last Name',
             }))
         self.fields['phone_field'] = forms.CharField(
@@ -78,7 +76,6 @@ class BaseUserForm(forms.Form):
             label='Phone number',
             widget=forms.TextInput(attrs={
                 'class': 'form-control',
-                'type': 'text',
                 'placeholder': 'Contact Number',
             }))
         self.fields['email_field'] = forms.EmailField(
@@ -95,14 +92,12 @@ class BaseUserForm(forms.Form):
             label='Street address',
             widget=forms.TextInput(attrs={
                 'class': 'form-control',
-                'type': 'text',
                 'placeholder': 'Street Address',
             }))
         self.fields['suburb_field'] = forms.CharField(
             label='Suburb',
             widget=forms.TextInput(attrs={
                 'class': 'form-control',
-                'type': 'text',
                 'placeholder': 'Suburb',
             }))
         self.fields['state_field'] = forms.CharField(
@@ -110,7 +105,6 @@ class BaseUserForm(forms.Form):
             label='State',
             widget=forms.TextInput(attrs={
                 'class': 'form-control',
-                'type': 'text',
                 'placeholder': 'State',
             }))
         self.fields['postcode_field'] = forms.CharField(
@@ -118,7 +112,6 @@ class BaseUserForm(forms.Form):
             label='Postcode',
             widget=forms.TextInput(attrs={
                 'class': 'form-control',
-                'type': 'text',
                 'placeholder': 'Postcode',
             }))
 
@@ -135,7 +128,7 @@ class BaseUserForm(forms.Form):
 class WasherForm(BaseUserForm):
     washer = {
         'user': None,
-        'role': 'Washer',
+        'role': 'washer',
         'personal': {},
         'address': {},
         'questions': {},
@@ -218,10 +211,27 @@ class WasherForm(BaseUserForm):
 
 
 class BookingForm(LandingForm, BaseUserForm):
+    type_price_dict = {
+        'Hatchback': 25,
+        'Sedan': 29,
+        'Wagon': 35,
+        'SUV': 39,
+        'Van': 45
+    }
+    interior_price_dict = {
+        'none': 0,
+        'both': 19
+    }
+    extra_dirty_texts = [
+        "The car is really dirty... like seriously",
+        "It is unbelivable how dirty this car is, like you wouldn't believe",
+        "Took it for a spin in a shit storm and now the car is full of shit... literally",
+        "Car is extra dirty",
+    ]
     booking = {
         'request_id': None,
         'user': None,
-        'role': 'Washee',
+        'role': 'washee',
         'personal': {
             'first_name': None,
             'last_name': None,
@@ -251,7 +261,6 @@ class BookingForm(LandingForm, BaseUserForm):
             required=False,
             widget=forms.TextInput(attrs={
                 'class': 'form-control',
-                'type': 'text',
                 'placeholder': 'Wash date   e.g. 01/02/2016 5:20pm'
             })
         )
@@ -263,10 +272,49 @@ class BookingForm(LandingForm, BaseUserForm):
             })
         )
         for i in range(1, 6):
-            self.fields['type_field' + str(i)] = forms.CharField(required=False)
-            self.fields['interior_field' + str(i)] = forms.CharField(required=False)
-            self.fields['car_specs_field' + str(i)] = forms.CharField(required=False)
-            self.fields['extra_dirty_field' + str(i)] = forms.BooleanField(required=False)
+            self.fields['car_specs_field' + str(i)] = forms.CharField(
+                required=False,
+                widget=forms.TextInput(attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Car make and model'
+                })
+            )
+            self.fields['type_field' + str(i)] = forms.CharField(
+                required=False,
+                initial='Sedan',
+                widget=forms.Select(attrs={
+                        'class': 'form-control',
+                        'onchange': 'getTotalPrice();',
+                    }, choices=(
+                        ('Hatchback', 'Hatchback'),
+                        ('Sedan', 'Sedan'),
+                        ('Wagon', 'Wagon'),
+                        ('SUV', 'SUV'),
+                        ('Van', 'Van'),
+                    )
+                )
+            )
+            self.fields['interior_field' + str(i)] = forms.CharField(
+                required=False,
+                initial='both',
+                widget=forms.Select(attrs={
+                        'class': 'form-control',
+                        'onchange': 'getTotalPrice();',
+                    }, choices=(
+                        ('none', 'No interior cleaning'),
+                        ('both', 'Interior vacuum & wipe'),
+                    )
+                )
+            )
+            self.fields['extra_dirty_field' + str(i)] = forms.BooleanField(
+                required=False,
+                label=random.choice(self.extra_dirty_texts),
+                widget=forms.CheckboxInput(attrs={
+                    'class': 'form-control',
+                    'onclick': 'getTotalPrice();',
+                })
+            )
+
             car_details = {
                 'type_choice': None,
                 'interior_choice': None,
@@ -316,8 +364,7 @@ class BookingForm(LandingForm, BaseUserForm):
             car = Car()
             car.washRequest = washrequest
 
-            interior_price = LandingForm.interior_choices_dict.get(self.booking['cars'][str(i)]['interior_choice'])
-            if interior_price == 0:
+            if self.booking['cars'][str(i)]['interior_choice'] == 'none':
                 car.vacuum = False
                 car.wiping = False
             else:
@@ -348,8 +395,8 @@ class BookingForm(LandingForm, BaseUserForm):
         return None
 
     def get_car_price(self, i):
-        car_price = LandingForm.type_choices_dict.get(self.booking['cars'][str(i)]['type_choice'])
-        interior_price = LandingForm.interior_choices_dict.get(self.booking['cars'][str(i)]['interior_choice'])
+        car_price = self.type_price_dict[self.booking['cars'][str(i)]['type_choice']]
+        interior_price = self.interior_price_dict[self.booking['cars'][str(i)]['interior_choice']]
         dirty_price = (5 if self.booking['cars'][str(i)]['extra_dirty_choice'] else 0)
         car_price = sum([car_price, interior_price, dirty_price])
         return car_price

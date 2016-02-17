@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load customtags %}
+
 {% load staticfiles %}
 
 {% block head_title %}
@@ -99,53 +101,59 @@
                             </div>
                             {{ form.car_count_field }}
                             {% for car in form.booking.cars %}
-                                <div id="car{{ car }}" {% if car != '1' %}style="display:none"{% endif %}>
+                                <div id="car{{ car }}"
+                                     {% if car != '1' %}class="row no-margin car-divs"
+                                     {% else %}class="row no-margin"{% endif %}>
                                     <div class="col-sm-12 form-group">
-                                        <input class="form-control" id="id_car_specs_field{{ car }}"
-                                               name="car_specs_field{{ car }}" placeholder="Car make and model"
-                                               type="text">
+                                        {{ form|get_car_specs_field:car }}
                                     </div>
-                                    <input class="form-control" id="id_type_field{{ car }}" name="type_field{{ car }}"
-                                           type="hidden" value="Sedan">
                                     <div class="col-sm-5 form-group">
-                                        <select id="select-type{{ car }}" data-width="100%" class="selectpicker"
-                                                onchange="selectChangeBooking(this)">
-                                            {% for car_type, car_price in form.type_choices %}
-                                                <option class="select-options"
-                                                        {% if car == '1' and initial_type_choice != None %}
-                                                        {% if car_type == initial_type_choice %}selected{% endif %}
-                                                        {% else %}
-                                                        {% if car_type == form.default_type_choice %}selected{% endif %}
-                                                        {% endif %}>
-                                                    ${{ car_price }} &nbsp;&nbsp;&nbsp; {{ car_type }}</option>
-                                            {% endfor %}
-                                        </select>
+                                        {{ form|get_type_field:car }}
                                     </div>
-                                    <input class="form-control" id="id_interior_field{{ car }}"
-                                           name="interior_field{{ car }}" type="hidden"
-                                           value="Interior Vacuum &amp; Wipe">
                                     <div class="col-sm-7 form-group">
-                                        <select id="select-interior{{ car }}" data-width="100%" class="selectpicker"
-                                                onchange="selectChangeBooking(this)">
-                                            {% for interior_type, interior_price in form.interior_choices %}
-                                                <option class="select-options"
-                                                        {% if car == '1' and initial_interior_choice != None %}
-                                                        {% if interior_type == initial_interior_choice %}selected
-                                                        {% endif %}
-                                                        {% else %}
-                                                        {% if interior_type == form.default_interior_choice %}selected
-                                                        {% endif %}
-                                                        {% endif %}>
-                                                    ${{ interior_price }}&nbsp;&nbsp;&nbsp; {{ interior_type }}</option>
-                                            {% endfor %}
-                                        </select>
+                                        {{ form|get_interior_field:car }}
                                     </div>
+
+{#                                    <input class="form-control" id="id_type_field{{ car }}" name="type_field{{ car }}"#}
+{#                                           type="hidden" value="Sedan">#}
+{#                                    <div class="col-sm-5 form-group">#}
+{#                                        <select id="select-type{{ car }}" data-width="100%"#}
+{#                                                onchange="selectChangeBooking(this)">#}
+{#                                            {% for car_type, car_price in form.type_choices %}#}
+{#                                                <option#}
+{#                                                        {% if car == '1' and initial_type_choice != None %}#}
+{#                                                            {% if car_type == initial_type_choice %}selected{% endif %}#}
+{#                                                        {% else %}#}
+{#                                                            {% if car_type == form.default_type_choice %}selected#}
+{#                                                            {% endif %}#}
+{#                                                        {% endif %}>#}
+{#                                                    ${{ car_price }} &nbsp;&nbsp;&nbsp; {{ car_type }}</option>#}
+{#                                            {% endfor %}#}
+{#                                        </select>#}
+{##}
+{#                                    </div>#}
+{#                                    <input class="form-control" id="id_interior_field{{ car }}"#}
+{#                                           name="interior_field{{ car }}" type="hidden"#}
+{#                                           value="Interior Vacuum &amp; Wipe">#}
+{#                                    <div class="col-sm-7 form-group">#}
+{#                                        <select id="select-interior{{ car }}" data-width="100%" class="selectpicker"#}
+{#                                                onchange="selectChangeBooking(this)">#}
+{#                                            {% for interior_type, interior_price in form.interior_choices %}#}
+{#                                                <option class="select-options"#}
+{#                                                        {% if car == '1' and initial_interior_choice != None %}#}
+{#                                                        {% if interior_type == initial_interior_choice %}selected#}
+{#                                                        {% endif %}#}
+{#                                                        {% else %}#}
+{#                                                        {% if interior_type == form.default_interior_choice %}selected#}
+{#                                                        {% endif %}#}
+{#                                                        {% endif %}>#}
+{#                                                    ${{ interior_price }}&nbsp;&nbsp;&nbsp; {{ interior_type }}</option>#}
+{#                                            {% endfor %}#}
+{#                                        </select>#}
+{#                                    </div>#}
                                     <div class="col-sm-12 form-group form-group-extra-dirty">
-                                        <input class="form-control" id="id_extra_dirty_field{{ car }}"
-                                               name="extra_dirty_field{{ car }}" onclick="getTotalPrice();"
-                                               type="checkbox">
-                                        <label for="id_extra_dirty_field{{ car }}">This car is really dirty, like
-                                            seriously</label>
+                                        {{ form|get_extra_dirty_field:car }}
+                                        <label for="id_extra_dirty_field">{{ form|get_extra_dirty_field_label:car}}</label>
                                     </div>
                                 </div>
                             {% endfor %}

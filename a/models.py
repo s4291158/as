@@ -4,7 +4,13 @@ from django.contrib.auth.models import AbstractUser
 
 
 class BaseUser(AbstractUser):
-    role = models.CharField(max_length=40, null=True, blank=True)
+    ROLE_CHOICES = [
+        ('user', 'user'),
+        ('washee', 'washee'),
+        ('washer', 'washer'),
+        ('both', 'both'),
+    ]
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='user')
     phone = models.CharField(max_length=20, null=True, blank=True)
     rating = models.FloatField(null=True, blank=True)
 
@@ -51,8 +57,15 @@ class WashRequest(models.Model):
 
     washer = models.ForeignKey(BaseUser, on_delete=models.CASCADE, null=True, blank=True,
                                related_name='assigned_washer')
-
-    confirmed = models.BooleanField(default=False)
+    STATUS_CHOICES = [
+        ('pending', 'pending'),
+        ('confirmed', 'confirmed'),
+        ('in progress', 'in progress'),
+        ('completed', 'completed'),
+        ('cancelled', 'cancelled'),
+    ]
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    active = models.BooleanField(default=True)
 
     request_date = models.DateTimeField(null=True, blank=True)
     wash_date = models.DateTimeField(null=True, blank=True)
@@ -73,7 +86,14 @@ class Car(models.Model):
 
     specs = models.CharField(max_length=40, null=True, blank=True)
     number_plate = models.CharField(max_length=10, null=True, blank=True)
-    type = models.CharField(max_length=40, null=True, blank=True)
+    TYPE_CHOICES = [
+        ('Hatchback', 'Hatchback'),
+        ('Sedan', 'Sedan'),
+        ('Wagon', 'Wagon'),
+        ('SUV', 'SUV'),
+        ('Van', 'Van'),
+    ]
+    type = models.CharField(max_length=10, choices=TYPE_CHOICES, default='Sedan')
     dirtiness = models.IntegerField(null=True, blank=True)
     extra_dirty = models.BooleanField(default=False)
     vacuum = models.BooleanField(default=True)

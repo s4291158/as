@@ -3,8 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 
-from allauth.account.views import SignupView
-
 from .forms import LandingForm, BookingForm, WasherForm
 from .models import WashRequest, BaseUser
 
@@ -32,6 +30,18 @@ def index(request):
 
 
 @login_required
+def dashboard(request):
+    context = {}
+    if request.user.role == 'Washee' or request.user.is_superuser:
+        context['active_requests'] = WashRequest.objects.filter(washee=request.user, active=True).order_by(
+            'request_date').reverse()
+        context['inactive_requests'] = WashRequest.objects.filter(washee=request.user, active=False).order_by(
+            'request_date').reverse()
+
+    return render(request, 'account/dashboard.html', context)
+
+
+@login_required
 def profile(request):
     context = {}
     return render(request, 'account/profile.html', context)
@@ -41,52 +51,57 @@ def profile(request):
 def washer(request):
     context = {}
 
-    if request.user.role == 'Washee' and not request.user.is_superuser:
-        context['message'] = 'We require separate accounts to provide and use our service'
-        return render(request, 'index.html', context)
-    else:
-        if request.method == 'POST':
-            form = WasherForm(request.user, request.POST)
-            if form.is_valid():
-                form.save()
-                return HttpResponseRedirect(reverse('a:profile'))
-
-            else:
-                context['message'] = 'We could not process your request at this time, please check field errors'
-                context['form'] = form
-
-        else:
-            context['form'] = WasherForm(user=request.user)
-
-        return render(request, 'washer.html', context)
-
-
-@login_required(login_url='/accounts/signup/')
-def booking(request):
-    context = {
-        'initial_type_choice': request.GET['type'],
-        'initial_interior_choice': request.GET['interior'],
-    }
-
     if request.method == 'POST':
-        form = BookingForm(request.user, request.POST)
+        form = WasherForm(request.user, request.POST)
         if form.is_valid():
             form.save()
-            query_string = parse.urlencode({
-                'id': form.booking['request_id']
-            })
-            return HttpResponseRedirect(
-                reverse('a:payment') + "?" + query_string
-            )
+            return HttpResponseRedirect(reverse('a:profile'))
 
         else:
             context['message'] = 'We could not process your request at this time, please check field errors'
             context['form'] = form
 
     else:
-        context['form'] = BookingForm(user=request.user)
+        if request.user.role == 'Washee' and not request.user.is_superuser:
+            context['message'] = 'We require separate accounts to provide and use our service'
+            return render(request, 'index.html', context)
+        else:
+            context['form'] = WasherForm(user=request.user)
 
-    return render(request, 'booking.html', context)
+    return render(request, 'washer.html', context)
+
+
+@login_required(login_url='/accounts/signup/')
+def booking(request):
+    context = {}
+    if 'type' in request.GET:
+        context['initial_type_choice'] = request.GET['type']
+    if 'interior' in request.GET:
+        context['initial_interior_choice'] = request.GET['interior']
+
+    if request.user.role == 'Washer' and not request.user.is_superuser:
+        context['message'] = 'We require separate accounts to provide and use our service'
+        return render(request, 'index.html', context)
+    else:
+        if request.method == 'POST':
+            form = BookingForm(request.user, request.POST)
+            if form.is_valid():
+                form.save()
+                query_string = parse.urlencode({
+                    'id': form.booking['request_id']
+                })
+                return HttpResponseRedirect(
+                    reverse('a:payment') + "?" + query_string
+                )
+
+            else:
+                context['message'] = 'We could not process your request at this time, please check field errors'
+                context['form'] = form
+
+        else:
+            context['form'] = BookingForm(user=request.user)
+
+        return render(request, 'booking.html', context)
 
 
 @login_required

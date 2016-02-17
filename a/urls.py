@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^insurance/', TemplateView.as_view(template_name='insurance.html'), name='insurance'),
     url(r'^contact/', TemplateView.as_view(template_name='contact.html'), name='contact'),
 
+    url(r'^accounts/dashboard/', views.dashboard, name='dashboard'),
     url(r'^accounts/profile/', views.profile, name='profile'),
 
 ]

@@ -48,7 +48,6 @@
 }
 
 #landing-submit {
-    border-radius: 0;
     height: 65px;
     display: block;
     font-size: 25px;
@@ -165,6 +164,11 @@
     display: inline;
 }
 
+.booking-section .car-divs {
+    overflow: hidden;
+    height: 0;
+}
+
 .btn-form-submit {
     margin-top: 30px;
     height: 50px;
@@ -251,15 +255,18 @@
     margin-bottom: 0;
 }
 
+.btn-no-radius {
+    border-radius: 0;
+}
+
+.row.no-margin {
+    margin: 0;
+}
+
 /* NAVBAR */
 
 .header h1.logo > a {
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
 }
-
-.nav-item.nav-item-cta > a {
-    border-radius: 0;
-}
-
 

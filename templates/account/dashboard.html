@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block head_title %}
+    Dashboard
+{% endblock %}
+
+{% block body-class %}
+    class='dashboard-page'
+{% endblock %}
+
+{% block nav %}
+    {% include 'nav.html' with none='-none' scrolled='scrolled' %}
+{% endblock %}
+
+{% block content %}
+
+    <section class="dashboard-section custom-section section section-on-bg">
+        <div class="container">
+            {% if message %}
+                <div class="col-sm-12">
+                    <p class="inner-section-title error-message">{{ message }}</p>
+                </div>
+            {% endif %}
+            <div class="row active-requests">
+                <div class="col-sm-12">
+                    <h3 class="inner-section-title">Active Requests</h3>
+                </div>
+                <table id="active_requests_table" class="table table-hover">
+                    <tr>
+                        <th>Request</th>
+                        <th>Request Date</th>
+                        <th>Wash Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for request in active_requests %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'a:payment' %}?id={{ request.id }}">Wash request #{{ request.id }}</a>
+                            </td>
+                            <td>{{ request.request_date }}</td>
+                            <td>{{ request.wash_date }}</td>
+                            <td>{{ request.status }}</td>
+                            <td>
+                                {% if request.status == 'pending' %}
+                                    <a href="{% url 'a:payment' %}?id={{ request.id }}" type="button"
+                                       class="btn btn-success btn-no-radius">Payment</a>
+                                {% endif %}
+                                <a href="#" type="button" class="btn btn-danger btn-no-radius">Cancel</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="row inactive-requests">
+                <div class="col-sm-12">
+                    <h3 class="inner-section-title">Request History</h3>
+                </div>
+                <table id="inactive_requests_table" class="table table-hover">
+                    <tr>
+                        <th>Request</th>
+                        <th>Request Date</th>
+                        <th>Wash Date</th>
+                        <th>Status</th>
+                    </tr>
+                    {% for request in inactive_requests %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'a:payment' %}?id={{ request.id }}">Wash request #{{ request.id }}</a>
+                            </td>
+                            <td>{{ request.request_date }}</td>
+                            <td>{{ request.wash_date }}</td>
+                            <td>{{ request.status }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}

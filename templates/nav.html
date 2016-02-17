@@ -16,24 +16,28 @@
             </div><!--//navbar-header-->
             <div id="navbar-collapse" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-
-
-                    {% if not user.is_authenticated or user.role == None or user.role == '' %}
+                    {% if use.role != 'washer' %}
                         <li class="nav-item nav-item-cta">
-                            <a class="btn btn-cta btn-cta-secondary" href="{% url 'a:washer' %}">Become a Washer</a>
+                            <a class="btn btn-cta btn-cta-secondary btn-no-radius" href="{% url 'a:booking' %}">Book a
+                                Carwash</a>
                         </li>
                     {% endif %}
-
+                    {% if not user.is_authenticated  or user.role == 'user' or user.is_superuser %}
+                        <li class="nav-item nav-item-cta">
+                            <a class="btn btn-cta btn-cta-secondary btn-no-radius" href="{% url 'a:washer' %}">Become a
+                                Washer</a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item {{ pricing_active }}"><a href="{% url 'a:pricing' %}">Pricing</a></li>
                     <li class="nav-item {{ insurance_active }}"><a href="{% url 'a:insurance' %}">Insurance</a></li>
                     <li class="nav-item {{ about_active }}"><a href="{% url 'a:about' %}">About Us</a></li>
                     <li class="nav-item {{ contact_active }}"><a href="{% url 'a:contact' %}">Contact Us</a></li>
-
                     {% if user.is_authenticated %}
                         <li class="nav-item nav-item-cta last dropdown">
-                            <a class="dropdown-toggle btn btn-cta btn-cta-secondary" data-toggle="dropdown"
-                               data-hover="dropdown" data-delay="0"
-                               data-close-others="false" href="#">
+                            <a
+                                    data-toggle="dropdown"
+                                    data-hover="dropdown" data-delay="0"
+                                    data-close-others="false" href="#">
                                 {% if user.first_name %}
                                     {{ user.first_name }}
                                 {% else %}
@@ -42,6 +46,7 @@
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="dropdown-menu">
+                                <li><a href="{% url 'a:dashboard' %}">Dashboard</a></li>
                                 <li><a href="{% url 'a:profile' %}">Profile</a></li>
                                 <li><a href="{% url 'account_logout' %}">Log out</a></li>
                             </ul>
@@ -49,7 +54,8 @@
                     {% else %}
                         <li class="nav-item"><a href="{% url 'account_login' %}">Log in</a></li>
                         <li class="nav-item nav-item-cta last">
-                            <a class="btn btn-cta btn-cta-secondary" href="{% url 'account_signup' %}">Sign Up</a>
+                            <a href="{% url 'account_signup' %}">Sign
+                                Up</a>
                         </li>
                     {% endif %}
 
