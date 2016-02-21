@@ -1,33 +1,3 @@
-function selectChangeLanding(ele) {
-    var field = getTupleById(ele.id)[1];
-    if (ele.id == 'select-type') {
-        $('#id_type_field').val(field);
-    } else if (ele.id == 'select-interior') {
-        $('#id_interior_field').val(field)
-    }
-    getTotalPriceLanding();
-}
-
-function getTotalPriceLanding() {
-    var car_price = Number(getTupleById('select-type')[0]);
-    var interior_price = Number(getTupleById('select-interior')[0]);
-    var total_price = car_price + interior_price;
-    $('#landing-submit').text("$" + total_price);
-}
-
-function selectChangeBooking(ele) {
-    var field = getTupleById(ele.id)[1];
-    var name = ele.id.slice(0, -1);
-    var index = ele.id.slice(-1);
-
-    if (name == 'select-type') {
-        $('#id_type_field' + index).val(field);
-    } else if (name == 'select-interior') {
-        $('#id_interior_field' + index).val(field)
-    }
-    getTotalPrice();
-}
-
 function getTotalPrice() {
     var total_price = 0;
     var type_price_dict = {
@@ -41,26 +11,42 @@ function getTotalPrice() {
         'none': 0,
         'both': 19
     };
+    var landing_submit = $('#landing-submit');
+    if (landing_submit.length) {
+        var type_price = type_price_dict[$('#id_type_field').val()];
+        var interior_price = interior_price_dict[$('#id_interior_field').val()];
+        total_price += type_price + interior_price;
+        landing_submit.text('$' + total_price);
+    } else {
+        var car_count = numberOfCars();
+        for (var i = 1; i < car_count + 1; i++) {
+            type_price = type_price_dict[$('#id_type_field' + i).val()];
+            interior_price = interior_price_dict[$('#id_interior_field' + i).val()];
+            var extra_dirty = $('#id_extra_dirty_field' + i).is(':checked');
+            var extra_dirty_price = ((extra_dirty) ? 5 : 0);
+            total_price += type_price + interior_price + extra_dirty_price;
+        }
+        $('#total-price').text('$' + total_price);
+    }
+
+}
+
+function assignInitialValues(initial_type_choice, initial_interior_choice) {
+    if (initial_type_choice) {
+        $('#id_type_field1').val(initial_type_choice);
+    }
+    if (initial_interior_choice) {
+        $('#id_interior_field1').val(initial_interior_choice);
+    }
     var car_count = numberOfCars();
     for (var i = 1; i < car_count + 1; i++) {
-        var type_price = type_price_dict[$('#id_type_field' + i).val()];
-        var interior_price = interior_price_dict[$('#id_interior_field' + i).val()]
-        var extra_dirty = $('#id_extra_dirty_field' + i).is(':checked');
-        var extra_dirty_price = ((extra_dirty) ? 5 : 0);
-        total_price += type_price + interior_price + extra_dirty_price;
+        $('#car' + i).css('height', 'auto');
     }
-    $('#total-price').text("$" + total_price);
-}
-
-function getTupleById(id) {
-    var tuple = document.getElementById(id).value.replace("$", "").split(/\s{4}/);
-    tuple[1] = tuple[1].trim();
-    return tuple;
-}
-
-function assignValueFromLanding() {
-    $('#id_type_field1').val('Sedan');
-    $('#id_interior_field1').val('both');
+    if (car_count > 1) {
+        $('#remove_car_btn').css('display', 'inline-block');
+    } else if (car_count >= 5) {
+        $('#add_car_btn').style.display = 'none';
+    }
     getTotalPrice();
 }
 

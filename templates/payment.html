@@ -22,6 +22,10 @@
                     <div class="row request">
                         <div class="col-sm-12">
                             <h3 class="inner-section-title">Request</h3>
+                            {% if wash_request.status == 'pending' %}
+                                <a class="edit-request" href="{% url 'a:booking' %}?id={{ wash_request.id }}">Edit
+                                    Request</a>
+                            {% endif %}
                         </div>
                         <div class="col-sm-12">
                             <table class="table-condensed">
@@ -89,30 +93,32 @@
                             </div>
                         {% endfor %}
                     </div>
-                    <div class="form-group paypal-form text-center">
+                    {% if wash_request.status == 'pending' %}
+                        <div class="form-group paypal-form text-center">
 
-                        <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 
-                            <!-- Identify your business so that you can collect the payments. -->
-                            <input type="hidden" name="business" value="areej@airsponge.com">
+                                <!-- Identify your business so that you can collect the payments. -->
+                                <input type="hidden" name="business" value="areej@airsponge.com">
 
-                            <!-- Specify a Buy Now button. -->
-                            <input type="hidden" name="cmd" value="_xclick">
+                                <!-- Specify a Buy Now button. -->
+                                <input type="hidden" name="cmd" value="_xclick">
 
-                            <!-- Specify details about the item that buyers will purchase. -->
-                            <input type="hidden" name="item_name" value="One time carwash">
-                            <input type="hidden" name="amount" value={{ wash_request.total_price }}>
-                            <input type="hidden" name="currency_code" value="AUD">
+                                <!-- Specify details about the item that buyers will purchase. -->
+                                <input type="hidden" name="item_name" value="One time carwash">
+                                <input type="hidden" name="amount" value={{ wash_request.total_price }}>
+                                <input type="hidden" name="currency_code" value="AUD">
 
-                            <!-- Display the payment button. -->
-                            <input type="image" name="submit" border="0"
-                                   src="https://www.paypalobjects.com/en_US/i/btn/btn_xpressCheckout2.gif"
-                                   alt="PayPal - The safer, easier way to pay online">
-                            <img alt="" border="0" width="1" height="1"
-                                 src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif">
+                                <!-- Display the payment button. -->
+                                <input type="image" name="submit" border="0"
+                                       src="https://www.paypalobjects.com/en_US/i/btn/btn_xpressCheckout2.gif"
+                                       alt="PayPal - The safer, easier way to pay online">
+                                <img alt="" border="0" width="1" height="1"
+                                     src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif">
 
-                        </form>
-                    </div>
+                            </form>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

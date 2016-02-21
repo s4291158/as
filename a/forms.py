@@ -1,56 +1,44 @@
 from django import forms
-from django.forms.forms import BoundField
 from django.utils import timezone
 from datetime import datetime
-import collections, random
+import collections
+import random
 
-from .models import BaseUser, Washer, Address, BankAccount, WashRequest, Car
+from .models import BaseUser, Washer, Address, WashRequest, Car
 
 
 class LandingForm(forms.Form):
-    type_choice = None
-    type_choices = [
-        ('Hatchback', 25),
-        ('Sedan', 29),
-        ('Wagon', 35),
-        ('SUV', 39),
-        ('Van', 45),
-    ]
-    type_choices_dict = dict(type_choices)
-    default_type_choice = type_choices[1][0]
-    type_field = forms.CharField(
-        required=False,
-        initial=default_type_choice,
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'type': 'hidden',
-        })
-    )
-
-    interior_choice = None
-    interior_choices = [
-        ('No Interior Cleaning', 0),
-        ('Interior Vacuum & Wipe', 19),
-    ]
-    interior_choices_dict = dict(interior_choices)
-    default_interior_choice = interior_choices[1][0]
-    interior_field = forms.CharField(
-        required=False,
-        initial=default_interior_choice,
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'type': 'hidden',
-        })
-    )
-
-    car_fields = {
-        'type_field': type_field,
-        'interior_field': interior_field,
-    }
-
-    def get_cleaned_data(self):
-        self.type_choice = self.cleaned_data['type_field']
-        self.interior_choice = self.cleaned_data['interior_field']
+    def __init__(self, *args, **kwargs):
+        super(LandingForm, self).__init__(*args, **kwargs)
+        self.fields['type_field'] = forms.CharField(
+            required=False,
+            initial='Sedan',
+            widget=forms.Select(
+                attrs={
+                    'class': 'form-control no-border-radius',
+                    'onchange': 'getTotalPrice();',
+                }, choices=(
+                    ('Hatchback', '$25 — Hatchback'),
+                    ('Sedan', '$29 — Sedan'),
+                    ('Wagon', '$35 — Wagon'),
+                    ('SUV', '$39 — SUV'),
+                    ('Van', '$45 — Van'),
+                )
+            )
+        )
+        self.fields['interior_field'] = forms.CharField(
+            required=False,
+            initial='both',
+            widget=forms.Select(
+                attrs={
+                    'class': 'form-control no-border-radius',
+                    'onchange': 'getTotalPrice();',
+                }, choices=(
+                    ('none', '$0 — No interior cleaning'),
+                    ('both', '$19 — Interior vacuum & wipe'),
+                )
+            )
+        )
 
 
 class BaseUserForm(forms.Form):
@@ -210,7 +198,7 @@ class WasherForm(BaseUserForm):
         return washer
 
 
-class BookingForm(LandingForm, BaseUserForm):
+class BookingForm(BaseUserForm):
     type_price_dict = {
         'Hatchback': 25,
         'Sedan': 29,
@@ -282,27 +270,29 @@ class BookingForm(LandingForm, BaseUserForm):
             self.fields['type_field' + str(i)] = forms.CharField(
                 required=False,
                 initial='Sedan',
-                widget=forms.Select(attrs={
+                widget=forms.Select(
+                    attrs={
                         'class': 'form-control',
                         'onchange': 'getTotalPrice();',
                     }, choices=(
-                        ('Hatchback', 'Hatchback'),
-                        ('Sedan', 'Sedan'),
-                        ('Wagon', 'Wagon'),
-                        ('SUV', 'SUV'),
-                        ('Van', 'Van'),
+                        ('Hatchback', '$25 — Hatchback'),
+                        ('Sedan', '$29 — Sedan'),
+                        ('Wagon', '$35 — Wagon'),
+                        ('SUV', '$39 — SUV'),
+                        ('Van', '$45 — Van'),
                     )
                 )
             )
             self.fields['interior_field' + str(i)] = forms.CharField(
                 required=False,
                 initial='both',
-                widget=forms.Select(attrs={
+                widget=forms.Select(
+                    attrs={
                         'class': 'form-control',
                         'onchange': 'getTotalPrice();',
                     }, choices=(
-                        ('none', 'No interior cleaning'),
-                        ('both', 'Interior vacuum & wipe'),
+                        ('none', '$0 — No interior cleaning'),
+                        ('both', '$19 — Interior vacuum & wipe'),
                     )
                 )
             )
@@ -344,9 +334,13 @@ class BookingForm(LandingForm, BaseUserForm):
         address = save_address(self.booking, user)
         washrequest = self.save_wash_request(user, address)
         self.save_car(washrequest)
+        self.booking['request_id'] = washrequest.id
 
     def save_wash_request(self, user, address):
-        washrequest = WashRequest()
+        if self.booking['request_id']:
+            washrequest = WashRequest.objects.get(id=self.booking['request_id'])
+        else:
+            washrequest = WashRequest()
         washrequest.washee = user
         if self.booking['address']:
             washrequest.address = address
@@ -356,12 +350,15 @@ class BookingForm(LandingForm, BaseUserForm):
         washrequest.car_count = self.booking['request']['car_count']
         washrequest.total_price = self.get_total_price()
         washrequest.save()
-        self.booking['request_id'] = washrequest.id
         return washrequest
 
     def save_car(self, washrequest):
+
         for i in range(1, self.booking['request']['car_count'] + 1):
-            car = Car()
+            if self.booking['request_id']:
+                car = washrequest.car_set.all()[i - 1]
+            else:
+                car = Car()
             car.washRequest = washrequest
 
             if self.booking['cars'][str(i)]['interior_choice'] == 'none':

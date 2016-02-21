@@ -40,42 +40,17 @@
     font-weight: 200;
 }
 
-.promo.section .btn.dropdown-toggle.btn-default {
+.promo.section select {
     border-radius: 0;
     height: 65px;
-    display: block;
     font-size: 16px;
 }
 
 #landing-submit {
     height: 65px;
-    display: block;
     font-size: 25px;
     font-weight: 100;
     padding: 0;
-}
-
-.promo.section .dropdown-menu.open {
-    border-radius: 0;
-    padding: 0;
-    border: 1px;
-    margin: 1px 0;
-}
-
-.promo.section .dropdown-menu.inner > li:hover {
-    background: #ccffff;
-}
-
-.promo.section .dropdown-menu.inner > li > a {
-    height: 100%;
-    width: 100%;
-    line-height: 46px;
-    z-index: 1;
-}
-
-.promo.section .dropdown-menu.inner > li > a {
-    display: inline-block;
-    velical-align: middle;
 }
 
 .row.no-pad {
@@ -135,27 +110,16 @@
     margin: 1px 0;
 }
 
-.booking-section .dropdown-menu.inner > li:hover {
-    background: #ccffff;
-}
-
-.booking-section .dropdown-menu.inner > li > a {
-    height: 100%;
-    width: 100%;
-    line-height: 46px;
-    z-index: 1;
-    display: inline-block;
-}
-
 .booking-section .form-group.form-group-extra-dirty {
     margin-bottom: 40px;
 }
 
 .booking-section .form-group.form-group-extra-dirty .form-control {
-    height: auto;
+    height: 17px;
     width: auto;
     float: left;
     margin-right: 10px;
+    margin-top: 1px
 }
 
 .booking-section .form-group.form-group-extra-dirty > label {
@@ -186,6 +150,16 @@
 }
 
 /* <!-- PAYMENT PAGE --> */
+.payment-section .edit-request {
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 26px;
+    padding: 0;
+    margin-top: 30px;
+    display: inline-block;
+    float: right;
+}
+
 .payment-section table {
     width: 100%;
 }
@@ -206,10 +180,6 @@
     margin-top: 30px;
 }
 
-.washer-section .btn-group {
-
-}
-
 .washer-section .btn-group .btn {
     border-radius: 0px;
 }
@@ -217,13 +187,9 @@
 /* <!-- ALL PAGES --> */
 /* SECTION */
 .custom-section {
-    padding-top: 90px;
+    padding-top: 150px;
     position: relative;
     z-index: 10;
-}
-
-.custom-section {
-    padding-top: 125px;
 }
 
 .custom-section .title {
@@ -255,7 +221,7 @@
     margin-bottom: 0;
 }
 
-.btn-no-radius {
+.no-border-radius {
     border-radius: 0;
 }
 

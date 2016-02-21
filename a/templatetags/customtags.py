@@ -9,12 +9,12 @@ def get_car_specs_field(form, i):
 
 
 @register.filter
-def get_type_field(form, i):
+def get_type_field(form, i=''):
     return form['type_field' + str(i)]
 
 
 @register.filter
-def get_interior_field(form, i):
+def get_interior_field(form, i=''):
     return form['interior_field' + str(i)]
 
 

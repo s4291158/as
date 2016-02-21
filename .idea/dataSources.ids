@@ -40,9 +40,9 @@
       <column name="is_staff" sqlType="BOOL" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="is_active" sqlType="BOOL" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="date_joined" sqlType="DATETIME" precision="0" scale="-1" nullable="false" jdbcType="12"/>
-      <column name="rating" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
-      <column name="role" sqlType="VARCHAR(40)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
       <column name="phone" sqlType="VARCHAR(20)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="rating" sqlType="REAL" precision="0" scale="-1" nullable="true" jdbcType="6"/>
+      <column name="role" sqlType="VARCHAR(10)" precision="0" scale="-1" nullable="false" jdbcType="12"/>
       <primary-key columns="id"/>
     </table>
     <table name="a_baseuser_groups" schema="" catalog="" type="TABLE">
@@ -71,20 +71,33 @@
       <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="number_plate" sqlType="VARCHAR(10)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
       <column name="washRequest_id" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
-      <column name="type" sqlType="VARCHAR(40)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
       <column name="dirtiness" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
       <column name="extra_dirty" sqlType="BOOL" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="specs" sqlType="VARCHAR(40)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
       <column name="vacuum" sqlType="BOOL" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="wiping" sqlType="BOOL" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="price" sqlType="REAL" precision="0" scale="-1" nullable="false" jdbcType="6"/>
+      <column name="type" sqlType="VARCHAR(10)" precision="0" scale="-1" nullable="false" jdbcType="12"/>
       <primary-key columns="id"/>
       <foreign-key name="#FAKE_a_car_1" columns="washRequest_id" ref-table="a_washrequest" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
       <index name="a_car_1b083532" unique="true" columns="washRequest_id"/>
     </table>
+    <table name="a_washer" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="has_car" sqlType="BOOL" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="has_hose" sqlType="BOOL" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="travel_distance" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="availability" sqlType="VARCHAR(255)" precision="0" scale="-1" nullable="false" jdbcType="12"/>
+      <column name="experience" sqlType="VARCHAR(2000)" precision="0" scale="-1" nullable="false" jdbcType="12"/>
+      <column name="baseUser_id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="vacuum_type" sqlType="VARCHAR(40)" precision="0" scale="-1" nullable="false" jdbcType="12"/>
+      <primary-key columns="id"/>
+      <foreign-key name="#FAKE_a_washer_1" columns="baseUser_id" ref-table="a_baseuser" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+    </table>
     <table name="a_washrequest" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="request_date" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="washee_id" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
       <column name="description" sqlType="VARCHAR(254)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
       <column name="discount" sqlType="REAL" precision="0" scale="-1" nullable="false" jdbcType="6"/>
       <column name="electricity_details" sqlType="VARCHAR(40)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
@@ -92,18 +105,18 @@
       <column name="vacuum_details" sqlType="VARCHAR(40)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
       <column name="wash_date" sqlType="DATETIME" precision="0" scale="-1" nullable="true" jdbcType="12"/>
       <column name="water_details" sqlType="VARCHAR(40)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
-      <column name="confirmed" sqlType="BOOL" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="address_id" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
       <column name="car_count" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="washer_id" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
-      <column name="washee_id" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
+      <column name="status" sqlType="VARCHAR(20)" precision="0" scale="-1" nullable="false" jdbcType="12"/>
+      <column name="active" sqlType="BOOL" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <primary-key columns="id"/>
-      <foreign-key name="#FAKE_a_washrequest_1" columns="washee_id" ref-table="a_baseuser" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
-      <foreign-key name="#FAKE_a_washrequest_2" columns="washer_id" ref-table="a_baseuser" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
-      <foreign-key name="#FAKE_a_washrequest_3" columns="address_id" ref-table="a_address" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
-      <index name="a_washrequest_1ac94ded" unique="true" columns="washee_id"/>
+      <foreign-key name="#FAKE_a_washrequest_1" columns="washer_id" ref-table="a_baseuser" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <foreign-key name="#FAKE_a_washrequest_2" columns="address_id" ref-table="a_address" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <foreign-key name="#FAKE_a_washrequest_3" columns="washee_id" ref-table="a_baseuser" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
       <index name="a_washrequest_b35ce58a" unique="true" columns="washer_id"/>
       <index name="a_washrequest_ea8e5d12" unique="true" columns="address_id"/>
+      <index name="a_washrequest_1ac94ded" unique="true" columns="washee_id"/>
     </table>
     <table name="account_emailaddress" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
