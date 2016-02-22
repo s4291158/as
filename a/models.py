@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 from django.contrib.auth.models import AbstractUser
 
@@ -18,6 +19,7 @@ class BaseUser(AbstractUser):
 class Washer(models.Model):
     baseUser = models.OneToOneField(BaseUser)
 
+    approved = models.BooleanField(default=False)
     has_car = models.BooleanField(default=False)
     has_hose = models.BooleanField(default=False)
     travel_distance = models.IntegerField(default=0, blank=True)
@@ -27,6 +29,24 @@ class Washer(models.Model):
 
     def __str__(self):
         return self.baseUser.username
+
+
+class Promocode(models.Model):
+    code = models.CharField(max_length=40)
+    available = models.BooleanField(default=True)
+    usage = models.IntegerField(default=0)
+    max_usage = models.IntegerField(null=True, blank=True, default=1)
+    start_date = models.DateField(default=timezone.now)
+    end_date = models.DateField(null=True, blank=True)
+    DISCOUNT_CHOICES = [
+        ('%', 'percentage'),
+        ('$', 'amount'),
+    ]
+    discount_type = models.CharField(max_length=1, choices=DISCOUNT_CHOICES, default='$')
+    discount = models.FloatField(default=0)
+
+    def __str__(self):
+        return self.code + ' ' + str(self.discount)
 
 
 class Address(models.Model):
@@ -57,6 +77,9 @@ class WashRequest(models.Model):
 
     washer = models.ForeignKey(BaseUser, on_delete=models.CASCADE, null=True, blank=True,
                                related_name='assigned_washer')
+
+    promocode = models.ForeignKey(Promocode, on_delete=models.CASCADE, null=True, blank=True)
+
     STATUS_CHOICES = [
         ('pending', 'pending'),
         ('confirmed', 'confirmed'),

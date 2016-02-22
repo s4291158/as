@@ -49,6 +49,16 @@
                                     <th>Wash Date:</th>
                                     <td>{{ wash_request.wash_date }}</td>
                                 </tr>
+                                {% if wash_request.promocode %}
+                                    <tr>
+                                        <th>Promocode:</th>
+                                        <td>{{ wash_request.promocode.code }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Discount:</th>
+                                        <td>${{ wash_request.discount }}</td>
+                                    </tr>
+                                {% endif %}
                                 <tr>
                                     <th>Total:</th>
                                     <td>${{ wash_request.total_price }}</td>

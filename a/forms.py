@@ -4,7 +4,7 @@ from datetime import datetime
 import collections
 import random
 
-from .models import BaseUser, Washer, Address, WashRequest, Car
+from .models import *
 
 
 class LandingForm(forms.Form):
@@ -252,6 +252,13 @@ class BookingForm(BaseUserForm):
                 'placeholder': 'Wash date   e.g. 01/02/2016 5:20pm'
             })
         )
+        self.fields['promocode_field'] = forms.CharField(
+            required=False,
+            widget=forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Promocode'
+            })
+        )
         self.fields['car_count_field'] = forms.IntegerField(
             initial=1,
             required=False,
@@ -319,6 +326,7 @@ class BookingForm(BaseUserForm):
         self.booking['address'] = cleaned_address(self.cleaned_data)
 
         self.booking['request']['wash_date'] = self.get_valid_wash_date(self.cleaned_data['wash_date_field'])
+        self.booking['request']['promocode'] = self.cleaned_data['promocode_field']
         self.booking['request']['car_count'] = self.cleaned_data['car_count_field']
 
         for i in range(1, self.booking['request']['car_count'] + 1):
@@ -332,24 +340,70 @@ class BookingForm(BaseUserForm):
         self.get_cleaned_data()
         user = save_user(self.booking)
         address = save_address(self.booking, user)
-        washrequest = self.save_wash_request(user, address)
+        promocode = self.save_promo_code()
+        washrequest = self.save_wash_request(user, address, promocode)
         self.save_car(washrequest)
         self.booking['request_id'] = washrequest.id
 
-    def save_wash_request(self, user, address):
+    def save_promo_code(self):
+        # # Check if washrequest exist
+        # if self.booking['request_id']:
+        #     washrequest = WashRequest.objects.get(id=self.booking['request_id'])
+        #     # Check if previous promocode exist
+        #     if washrequest.promocode and self.booking['request']['promocode'] == washrequest.promocode.code:
+        #         # Use same promocode
+        #         return washrequest.promocode
+
+        if self.booking['request']['promocode']:
+            try:
+                promocode = Promocode.objects.get(code=self.booking['request']['promocode'])
+                if promocode.end_date and timezone.now > promocode.end_date:
+                    # TODO return expired error
+                    print('expired')
+                else:
+                    if promocode.usage < promocode.max_usage or not promocode.max_usage:
+                        promocode.usage += 1
+                        promocode.save()
+                        return promocode
+                    else:
+                        # TODO return used error
+                        print('used')
+            except Promocode.DoesNotExist:
+                # TODO return non existent error
+                print('non existen')
+
+        return None
+
+    def save_wash_request(self, user, address, promocode):
         if self.booking['request_id']:
             washrequest = WashRequest.objects.get(id=self.booking['request_id'])
         else:
             washrequest = WashRequest()
+
         washrequest.washee = user
-        if self.booking['address']:
+
+        if address:
             washrequest.address = address
+
         washrequest.request_date = timezone.now()
         if self.booking['request']['wash_date']:
             washrequest.wash_date = self.booking['request']['wash_date']
+
         washrequest.car_count = self.booking['request']['car_count']
+
         washrequest.total_price = self.get_total_price()
+
+        if promocode:
+            washrequest.promocode = promocode
+            if promocode.discount_type == '$':
+                washrequest.discount = promocode.discount
+                washrequest.total_price -= washrequest.discount
+            elif promocode.discount_type == '%':
+                washrequest.discount = washrequest.total_price * (1 - promocode / 100)
+                washrequest.total_price -= washrequest.discount
+
         washrequest.save()
+
         return washrequest
 
     def save_car(self, washrequest):

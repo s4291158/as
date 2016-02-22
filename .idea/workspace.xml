@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/a/static/css/styles.css" line="121" />
+    <bookmark url="file://$PROJECT_DIR$/a/static/css/styles.css" line="85" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28727170-58ab-423e-b774-db23849e50e7" name="Default" comment="">
@@ -12,13 +12,14 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/a/forms.py" afterPath="$PROJECT_DIR$/a/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/a/static/css/styles.css" afterPath="$PROJECT_DIR$/a/static/css/styles.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/a/static/js/custom.js" afterPath="$PROJECT_DIR$/a/static/js/custom.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/a/templatetags/customtags.py" afterPath="$PROJECT_DIR$/a/templatetags/customtags.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/a/models.py" afterPath="$PROJECT_DIR$/a/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/a/urls.py" afterPath="$PROJECT_DIR$/a/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/a/views.py" afterPath="$PROJECT_DIR$/a/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/account/dashboard.html" afterPath="$PROJECT_DIR$/templates/account/dashboard.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/account/login.html" afterPath="$PROJECT_DIR$/templates/account/login.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/account/profile.html" afterPath="$PROJECT_DIR$/templates/account/profile.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/account/signup.html" afterPath="$PROJECT_DIR$/templates/account/signup.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/booking.html" afterPath="$PROJECT_DIR$/templates/booking.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/index.html" afterPath="$PROJECT_DIR$/templates/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/footer.html" afterPath="$PROJECT_DIR$/templates/footer.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/nav.html" afterPath="$PROJECT_DIR$/templates/nav.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/payment.html" afterPath="$PROJECT_DIR$/templates/payment.html" />
     </list>
@@ -64,8 +65,8 @@
             <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/templates/index.html">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="3.9230769">
-                    <caret line="39" column="81" selection-start-line="39" selection-start-column="81" selection-end-line="39" selection-end-column="81" />
+                  <state vertical-scroll-proportion="0.0">
+                    <caret line="36" column="62" selection-start-line="36" selection-start-column="62" selection-end-line="36" selection-end-column="62" />
                     <folding />
                   </state>
                 </provider>
@@ -74,9 +75,12 @@
             <file leaf-file-name="profile.html" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/templates/account/profile.html">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="-15.038462">
-                    <caret line="23" column="14" selection-start-line="0" selection-start-column="0" selection-end-line="23" selection-end-column="14" />
-                    <folding />
+                  <state vertical-scroll-proportion="-9.83871">
+                    <caret line="14" column="14" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
+                    <folding>
+                      <marker date="1456107506674" expanded="true" signature="354:4966" placeholder="..." />
+                      <marker date="1456107506674" expanded="true" signature="386:4951" placeholder="..." />
+                    </folding>
                   </state>
                 </provider>
               </entry>
@@ -84,8 +88,8 @@
             <file leaf-file-name="dashboard.html" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/templates/account/dashboard.html">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="-8.461538">
-                    <caret line="39" column="56" selection-start-line="39" selection-start-column="56" selection-end-line="39" selection-end-column="56" />
+                  <state vertical-scroll-proportion="-3.548387">
+                    <caret line="5" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="113" selection-end-column="14" />
                     <folding />
                   </state>
                 </provider>
@@ -94,10 +98,10 @@
             <file leaf-file-name="booking.html" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/templates/booking.html">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="11.084337">
-                    <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+                  <state vertical-scroll-proportion="-9.935484">
+                    <caret line="98" column="34" selection-start-line="98" selection-start-column="34" selection-end-line="98" selection-end-column="34" />
                     <folding>
-                      <element signature="e#6701#6722#0#HTML" expanded="true" />
+                      <element signature="e#7059#7080#0#HTML" expanded="true" />
                     </folding>
                   </state>
                 </provider>
@@ -106,7 +110,7 @@
             <file leaf-file-name="washer.html" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/templates/washer.html">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="-11.576923">
+                  <state vertical-scroll-proportion="0.0">
                     <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
                     <folding />
                   </state>
@@ -116,8 +120,8 @@
             <file leaf-file-name="payment.html" pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/templates/payment.html">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="0.4364641">
-                    <caret line="96" column="70" selection-start-line="96" selection-start-column="70" selection-end-line="96" selection-end-column="70" />
+                  <state vertical-scroll-proportion="0.6237172">
+                    <caret line="54" column="74" selection-start-line="54" selection-start-column="74" selection-end-line="54" selection-end-column="74" />
                     <folding />
                   </state>
                 </provider>
@@ -126,30 +130,8 @@
             <file leaf-file-name="nav.html" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/templates/nav.html">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="-4.3012047">
-                    <caret line="21" column="43" selection-start-line="21" selection-start-column="43" selection-end-line="21" selection-end-column="43" />
-                    <folding>
-                      <marker date="1456067231381" expanded="true" signature="1259:1624" placeholder="{% if not user.is_authenticated or user.role == 'user' or user.is_superuser ... %}" />
-                    </folding>
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="css.html" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/templates/css.html">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="0.0">
-                    <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="js.html" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/templates/js.html">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="0.0">
-                    <caret line="6" column="48" selection-start-line="6" selection-start-column="48" selection-end-line="6" selection-end-column="48" />
+                  <state vertical-scroll-proportion="-22.612904">
+                    <caret line="54" column="63" selection-start-line="54" selection-start-column="63" selection-end-line="54" selection-end-column="63" />
                     <folding />
                   </state>
                 </provider>
@@ -158,8 +140,28 @@
             <file leaf-file-name="footer.html" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/templates/footer.html">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="0.0">
-                    <caret line="45" column="109" selection-start-line="45" selection-start-column="109" selection-end-line="45" selection-end-column="109" />
+                  <state vertical-scroll-proportion="-5.612903">
+                    <caret line="34" column="57" selection-start-line="34" selection-start-column="57" selection-end-line="34" selection-end-column="57" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="login.html" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/templates/account/login.html">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="-16.32258">
+                    <caret line="44" column="83" selection-start-line="44" selection-start-column="82" selection-end-line="44" selection-end-column="83" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="signup.html" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/templates/account/signup.html">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="-10.16129">
+                    <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
                     <folding />
                   </state>
                 </provider>
@@ -186,11 +188,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/a/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.22335766">
-              <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -202,9 +204,10 @@
         <entry file="file://$PROJECT_DIR$/a/models.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="95" column="76" selection-start-line="95" selection-start-column="76" selection-end-line="95" selection-end-column="80" />
+              <caret line="36" column="27" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
+                <marker date="1456117597013" expanded="true" signature="1063:1675" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -214,19 +217,17 @@
         <entry file="file://$PROJECT_DIR$/a/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="99" column="50" selection-start-line="99" selection-start-column="50" selection-end-line="99" selection-end-column="50" />
-              <folding>
-                <element signature="e#0#35#0" expanded="true" />
-              </folding>
+              <caret line="136" column="77" selection-start-line="136" selection-start-column="77" selection-end-line="136" selection-end-column="77" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="forms.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/a/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="366" column="17" selection-start-line="366" selection-start-column="17" selection-end-line="366" selection-end-column="17" />
+            <state vertical-scroll-proportion="1.5963581">
+              <caret line="396" column="45" selection-start-line="396" selection-start-column="45" selection-end-line="396" selection-end-column="45" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -248,7 +249,7 @@
         <entry file="file://$PROJECT_DIR$/a/static/js/custom.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="57" column="25" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="25" />
+              <caret line="31" column="1" selection-start-line="31" selection-start-column="1" selection-end-line="31" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -257,8 +258,8 @@
       <file leaf-file-name="styles.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/a/static/css/styles.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.038462">
-              <caret line="161" column="0" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
+            <state vertical-scroll-proportion="-12.064516">
+              <caret line="139" column="1" selection-start-line="139" selection-start-column="1" selection-end-line="139" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -273,6 +274,7 @@
         <option value="JavaScript File" />
         <option value="HTML File" />
         <option value="Python Script" />
+        <option value="Setup Script" />
       </list>
     </option>
   </component>
@@ -298,36 +300,36 @@
         <option value="$PROJECT_DIR$/a/static/js/bootstrap-select.min.js" />
         <option value="$PROJECT_DIR$/templates/meta.html" />
         <option value="$PROJECT_DIR$/templates/insurance.html" />
-        <option value="$PROJECT_DIR$/templates/account/signup.html" />
         <option value="$PROJECT_DIR$/a/static/js/custom-booking.js" />
         <option value="$PROJECT_DIR$/a/static/js/custom-landing.js" />
         <option value="$PROJECT_DIR$/a/static/js/main.js" />
         <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/a/static/css/bootstrap-datetimepicker.min.css" />
-        <option value="$PROJECT_DIR$/templates/account/login.html" />
         <option value="$PROJECT_DIR$/a/migrations/0027_auto_20160215_1226.py" />
         <option value="$PROJECT_DIR$/a/migrations/0027_auto_20160215_1239.py" />
         <option value="$PROJECT_DIR$/a/migrations/0027_auto_20160215_1244.py" />
-        <option value="$PROJECT_DIR$/templates/account/profile.html" />
         <option value="$PROJECT_DIR$/templates/washer.html" />
-        <option value="$PROJECT_DIR$/templates/footer.html" />
         <option value="$PROJECT_DIR$/templates/dashboard.html" />
         <option value="$PROJECT_DIR$/templates/css.html" />
         <option value="$PROJECT_DIR$/templates/js.html" />
         <option value="$PROJECT_DIR$/a/customtags.py" />
-        <option value="$PROJECT_DIR$/a/models.py" />
         <option value="$PROJECT_DIR$/templates/account/dashboard.html" />
         <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/a/templatetags/customtags.py" />
-        <option value="$PROJECT_DIR$/templates/booking.html" />
         <option value="$PROJECT_DIR$/a/static/js/custom.js" />
         <option value="$PROJECT_DIR$/as/settings.py" />
-        <option value="$PROJECT_DIR$/templates/nav.html" />
         <option value="$PROJECT_DIR$/a/static/css/styles.css" />
-        <option value="$PROJECT_DIR$/a/views.py" />
-        <option value="$PROJECT_DIR$/a/forms.py" />
+        <option value="$PROJECT_DIR$/templates/footer.html" />
+        <option value="$PROJECT_DIR$/templates/account/signup.html" />
+        <option value="$PROJECT_DIR$/templates/account/login.html" />
+        <option value="$PROJECT_DIR$/templates/account/profile.html" />
+        <option value="$PROJECT_DIR$/templates/nav.html" />
         <option value="$PROJECT_DIR$/a/urls.py" />
+        <option value="$PROJECT_DIR$/templates/booking.html" />
+        <option value="$PROJECT_DIR$/a/models.py" />
+        <option value="$PROJECT_DIR$/a/views.py" />
         <option value="$PROJECT_DIR$/templates/payment.html" />
+        <option value="$PROJECT_DIR$/a/forms.py" />
       </list>
     </option>
   </component>
@@ -337,9 +339,10 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="2869" />
-    <option name="width" value="978" />
-    <option name="height" value="1047" />
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="1938" />
+    <option name="height" value="1048" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -395,6 +398,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -511,32 +515,31 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="js-jscs-nodeInterpreter" value="D:\ProgramFiles\jsnode\node.exe" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\ZerongTony\Documents\GitHub\as\a\templatetags" />
-      <recent name="C:\Users\ZerongTony\Documents\GitHub\as\templates\account" />
-      <recent name="C:\Users\ZerongTony\Documents\GitHub\as\a\static\js" />
-      <recent name="C:\Users\ZerongTony\Documents\GitHub\as\a\static\images\icons" />
-      <recent name="C:\Users\ZerongTony\Documents\GitHub\as\a\static\css" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ZerongTony\Documents\GitHub\as\a\static\js" />
       <recent name="C:\Users\ZerongTony\Documents\GitHub\as\a\static\css" />
       <recent name="C:\Users\ZerongTony\Documents\GitHub\as\a\static\images\icons" />
       <recent name="C:\Users\ZerongTony\Documents\GitHub\as\a\static\css\styles" />
       <recent name="C:\Users\ZerongTony\Documents\GitHub\as\a\static" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ZerongTony\Documents\GitHub\as\a\templatetags" />
+      <recent name="C:\Users\ZerongTony\Documents\GitHub\as\templates\account" />
+      <recent name="C:\Users\ZerongTony\Documents\GitHub\as\a\static\js" />
+      <recent name="C:\Users\ZerongTony\Documents\GitHub\as\a\static\images\icons" />
+      <recent name="C:\Users\ZerongTony\Documents\GitHub\as\a\static\css" />
     </key>
   </component>
   <component name="RunManager" selected="Django server.as">
@@ -807,16 +810,17 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="2869" y="0" width="978" height="1047" extended-state="0" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22875817" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23204716" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32919955" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29763246" sideWeight="0.5021436" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="manage.py@as" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29763246" sideWeight="0.49785638" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329582" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2356257" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21991247" sideWeight="0.49571276" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21984217" sideWeight="0.49571276" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32807216" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -828,7 +832,6 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="manage.py@as" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29763246" sideWeight="0.49785638" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32919955" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
@@ -997,14 +1000,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/account/signup.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="66" column="53" selection-start-line="66" selection-start-column="53" selection-end-line="66" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/socialaccount/signup.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.096774">
@@ -1046,14 +1041,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="15" column="4" selection-start-line="15" selection-start-column="4" selection-end-line="16" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/account/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.8387096">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="32" />
           <folding />
         </state>
       </provider>
@@ -1112,9 +1099,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.30697674">
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#32#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1134,41 +1118,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/footer.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="45" column="109" selection-start-line="45" selection-start-column="109" selection-end-line="45" selection-end-column="109" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/account/dashboard.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.461538">
-          <caret line="39" column="56" selection-start-line="39" selection-start-column="56" selection-end-line="39" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/account/profile.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.038462">
-          <caret line="23" column="14" selection-start-line="0" selection-start-column="0" selection-end-line="23" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.9230769">
-          <caret line="39" column="81" selection-start-line="39" selection-start-column="81" selection-end-line="39" selection-end-column="81" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="36" column="62" selection-start-line="36" selection-start-column="62" selection-end-line="36" selection-end-column="62" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/washer.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.576923">
+        <state vertical-scroll-proportion="0.0">
           <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
           <folding />
         </state>
@@ -1177,7 +1137,7 @@
     <entry file="file://$PROJECT_DIR$/a/static/js/custom.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="57" column="25" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="25" />
+          <caret line="31" column="1" selection-start-line="31" selection-start-column="1" selection-end-line="31" selection-end-column="1" />
           <folding />
         </state>
       </provider>
@@ -1190,34 +1150,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/nav.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.3012047">
-          <caret line="21" column="43" selection-start-line="21" selection-start-column="43" selection-end-line="21" selection-end-column="43" />
-          <folding>
-            <marker date="1456067231381" expanded="true" signature="1259:1624" placeholder="{% if not user.is_authenticated or user.role == 'user' or user.is_superuser ... %}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/booking.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="11.084337">
-          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
-          <folding>
-            <element signature="e#6701#6722#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/a/static/css/styles.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.038462">
-          <caret line="161" column="0" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/a/templatetags/customtags.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1226,50 +1158,118 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/a/views.py">
+    <entry file="file://$PROJECT_DIR$/templates/account/signup.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="99" column="50" selection-start-line="99" selection-start-column="50" selection-end-line="99" selection-end-column="50" />
+        <state vertical-scroll-proportion="-10.16129">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/account/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.32258">
+          <caret line="44" column="83" selection-start-line="44" selection-start-column="82" selection-end-line="44" selection-end-column="83" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/footer.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.612903">
+          <caret line="34" column="57" selection-start-line="34" selection-start-column="57" selection-end-line="34" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/account/dashboard.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.548387">
+          <caret line="5" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="113" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/account/profile.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.83871">
+          <caret line="14" column="14" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
           <folding>
-            <element signature="e#0#35#0" expanded="true" />
+            <marker date="1456107506674" expanded="true" signature="354:4966" placeholder="..." />
+            <marker date="1456107506674" expanded="true" signature="386:4951" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/a/forms.py">
+    <entry file="file://$PROJECT_DIR$/a/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="366" column="17" selection-start-line="366" selection-start-column="17" selection-end-line="366" selection-end-column="17" />
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding>
-            <element signature="e#0#24#0" expanded="true" />
+            <element signature="e#0#32#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/nav.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-22.612904">
+          <caret line="54" column="63" selection-start-line="54" selection-start-column="63" selection-end-line="54" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/a/static/css/styles.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.064516">
+          <caret line="139" column="1" selection-start-line="139" selection-start-column="1" selection-end-line="139" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/a/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="95" column="76" selection-start-line="95" selection-start-column="76" selection-end-line="95" selection-end-column="80" />
+          <caret line="36" column="27" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
+            <marker date="1456117597013" expanded="true" signature="1063:1675" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/a/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="136" column="77" selection-start-line="136" selection-start-column="77" selection-end-line="136" selection-end-column="77" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/booking.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.935484">
+          <caret line="98" column="34" selection-start-line="98" selection-start-column="34" selection-end-line="98" selection-end-column="34" />
+          <folding>
+            <element signature="e#7059#7080#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/payment.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4364641">
-          <caret line="96" column="70" selection-start-line="96" selection-start-column="70" selection-end-line="96" selection-end-column="70" />
+        <state vertical-scroll-proportion="0.6237172">
+          <caret line="54" column="74" selection-start-line="54" selection-start-column="74" selection-end-line="54" selection-end-column="74" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/a/urls.py">
+    <entry file="file://$PROJECT_DIR$/a/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22335766">
-          <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
+        <state vertical-scroll-proportion="1.5963581">
+          <caret line="396" column="45" selection-start-line="396" selection-start-column="45" selection-end-line="396" selection-end-column="45" />
           <folding>
-            <element signature="e#0#32#0" expanded="true" />
+            <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>

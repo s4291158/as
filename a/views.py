@@ -52,6 +52,20 @@ def dashboard(request):
 @login_required
 def profile(request):
     context = {}
+    if request.user.role == 'user':
+        context['message'] = 'Book a request now or sign up to become an AirSponge washer'
+    elif request.user.role == 'washee':
+        context['active_requests'] = WashRequest.objects.filter(washee=request.user, active=True).order_by(
+            'request_date').reverse()
+        context['inactive_requests'] = WashRequest.objects.filter(washee=request.user, active=False).order_by(
+            'request_date').reverse()
+    elif request.user.role == 'washer' or request.user.is_superuser:
+        context['available_requests'] = WashRequest.objects.filter(status='confirmed').order_by(
+            'request_date').reverse()
+        context['active_requests'] = WashRequest.objects.filter(washer=request.user, active=True).order_by(
+            'request_date').reverse()
+        context['inactive_requests'] = WashRequest.objects.filter(washer=request.user, active=False).order_by(
+            'request_date').reverse()
     return render(request, 'account/profile.html', context)
 
 
@@ -119,6 +133,8 @@ def booking(request):
                 'wash_date_field': washrequest.wash_date,
                 'car_count_field': washrequest.car_count,
             }
+            if washrequest.promocode:
+                initial_value['promocode_field'] = washrequest.promocode.code
             for i, car in enumerate(washrequest.car_set.iterator()):
                 i = str(i + 1)
                 initial_value['car_specs_field' + i] = car.specs

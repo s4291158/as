@@ -97,6 +97,12 @@
                                     <p class="error-message">{{ error }}</p>
                                 {% endfor %}
                             </div>
+                            <div class="col-sm-12 form-group">
+                                {{ form.promocode_field }}
+                                {% for error in form.promocode_field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
+                            </div>
                         </div>
                         <div class="row form-car-details">
                             <div class="col-sm-12">

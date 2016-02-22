@@ -30,20 +30,26 @@
                                           action="{% url 'account_signup' %}">
                                         {% csrf_token %}
 
-                                        <div class="form-group email">
-                                            {{ form.email.error }}
-                                            <label class="sr-only" for="id_email">Your email</label>
-                                            <input id="id_email" name="email" type="email"
-                                                   class="form-control login-email"
-                                                   placeholder="Your email">
-                                        </div><!--//form-group-->
+{#                                        <div class="form-group email">#}
+{#                                            <label class="sr-only" for="id_email">Your email</label>#}
+{#                                            <input id="id_email" name="email" type="email"#}
+{#                                                   class="form-control login-email"#}
+{#                                                   placeholder="Your email">#}
+{#                                            {% for error in form.email.errors %}#}
+{#                                                <p class="error-message">{{ error }}</p>#}
+{#                                            {% endfor %}#}
+{#                                        </div><!--//form-group-->#}
+{##}
+{#                                        <div class="form-group password">#}
+{#                                            <label class="sr-only" for="id_password">Your password</label>#}
+{#                                            <input id="id_password1" name="password1" type="password"#}
+{#                                                   class="form-control login-password" placeholder="Password">#}
+{#                                            {% for error in form.password1.errors %}#}
+{#                                                <p class="error-message">{{ error }}</p>#}
+{#                                            {% endfor %}#}
+{#                                        </div><!--//form-group-->#}
 
-                                        <div class="form-group password">
-                                            {{ form.password1.error }}
-                                            <label class="sr-only" for="id_password">Your password</label>
-                                            <input id="id_password1" name="password1" type="password"
-                                                   class="form-control login-password" placeholder="Password">
-                                        </div><!--//form-group-->
+                                        {{ form|bootstrap }}
 
                                         {% if redirect_field_value %}
                                             <input type="hidden" name="{{ redirect_field_name }}"
@@ -65,6 +71,8 @@
                                             Already have an account?
                                             <a class="login-link" id="login-link"
                                                href="
+
+
                                                        {% url 'account_login' %}{% if request.GET.next %}?next={{ request.GET.next|urlencode }}{% endif %}">
                                                 Log in
                                             </a>

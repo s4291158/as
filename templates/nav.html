@@ -16,7 +16,7 @@
             </div><!--//navbar-header-->
             <div id="navbar-collapse" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    {% if use.role != 'washer' %}
+                    {% if user.role != 'washer' %}
                         <li class="nav-item nav-item-cta">
                             <a class="btn btn-cta btn-cta-secondary no-border-radius" href="{% url 'a:booking' %}">Book a
                                 Carwash</a>
@@ -46,7 +46,6 @@
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="{% url 'a:dashboard' %}">Dashboard</a></li>
                                 <li><a href="{% url 'a:profile' %}">Profile</a></li>
                                 <li><a href="{% url 'account_logout' %}">Log out</a></li>
                             </ul>
