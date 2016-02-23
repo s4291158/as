@@ -37,7 +37,7 @@
                         {% for request in available_requests %}
                             <tr>
                                 <td>
-                                    <a href="{% url 'a:payment' %}?id={{ request.id }}">Wash request
+                                    <a href="{% url 'a:carwash' %}?id={{ request.id }}">Wash request
                                         #{{ request.id }}</a>
                                 </td>
                                 <td>{{ request.request_date }}</td>
@@ -65,15 +65,15 @@
                         {% for request in active_requests %}
                             <tr>
                                 <td>
-                                    <a href="{% url 'a:payment' %}?id={{ request.id }}">Wash request
+                                    <a href="{% url 'a:carwash' %}?id={{ request.id }}">Wash request
                                         #{{ request.id }}</a>
                                 </td>
                                 <td>{{ request.request_date }}</td>
                                 <td>{{ request.wash_date }}</td>
-                                <td>{{ request.status }}</td>
+                                <td>{{ request.get_status_display }}</td>
                                 <td>
                                     {% if request.status == 'pending' and user.role == 'washee' %}
-                                        <a href="{% url 'a:payment' %}?id={{ request.id }}" type="button"
+                                        <a href="{% url 'a:carwash' %}?id={{ request.id }}" type="button"
                                            class="btn btn-success no-border-radius">Payment</a>
                                     {% endif %}
                                     {#                                    <a href="#" type="button" class="btn btn-danger no-border-radius">Cancel</a>#}
@@ -96,12 +96,12 @@
                         {% for request in inactive_requests %}
                             <tr>
                                 <td>
-                                    <a href="{% url 'a:payment' %}?id={{ request.id }}">Wash request
+                                    <a href="{% url 'a:carwash' %}?id={{ request.id }}">Wash request
                                         #{{ request.id }}</a>
                                 </td>
                                 <td>{{ request.request_date }}</td>
                                 <td>{{ request.wash_date }}</td>
-                                <td>{{ request.status }}</td>
+                                <td>{{ request.get_status_display }}</td>
                             </tr>
                         {% endfor %}
                     </table>

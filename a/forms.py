@@ -336,45 +336,28 @@ class BookingForm(BaseUserForm):
             self.booking['cars'][str(i)]['car_specs'] = self.cleaned_data['car_specs_field' + str(i)]
             self.booking['cars'][str(i)]['price'] = self.get_car_price(i)
 
+    def clean_promocode_field(self):
+        if self.cleaned_data['promocode_field']:
+            try:
+                promocode = Promocode.objects.get(code=self.cleaned_data['promocode_field'])
+                if promocode.end_date and timezone.now().date() > promocode.end_date:
+                    raise forms.ValidationError('Promocode has expired')
+                else:
+                    if promocode.max_usage and promocode.usage >= promocode.max_usage:
+                        raise forms.ValidationError('Promocode has been used')
+            except Promocode.DoesNotExist:
+                raise forms.ValidationError('Promocode does not exist')
+        return self.cleaned_data['promocode_field']
+
     def save(self):
         self.get_cleaned_data()
         user = save_user(self.booking)
         address = save_address(self.booking, user)
-        promocode = self.save_promo_code()
-        washrequest = self.save_wash_request(user, address, promocode)
+        washrequest = self.save_wash_request(user, address)
         self.save_car(washrequest)
         self.booking['request_id'] = washrequest.id
 
-    def save_promo_code(self):
-        # # Check if washrequest exist
-        # if self.booking['request_id']:
-        #     washrequest = WashRequest.objects.get(id=self.booking['request_id'])
-        #     # Check if previous promocode exist
-        #     if washrequest.promocode and self.booking['request']['promocode'] == washrequest.promocode.code:
-        #         # Use same promocode
-        #         return washrequest.promocode
-
-        if self.booking['request']['promocode']:
-            try:
-                promocode = Promocode.objects.get(code=self.booking['request']['promocode'])
-                if promocode.end_date and timezone.now > promocode.end_date:
-                    # TODO return expired error
-                    print('expired')
-                else:
-                    if promocode.usage < promocode.max_usage or not promocode.max_usage:
-                        promocode.usage += 1
-                        promocode.save()
-                        return promocode
-                    else:
-                        # TODO return used error
-                        print('used')
-            except Promocode.DoesNotExist:
-                # TODO return non existent error
-                print('non existen')
-
-        return None
-
-    def save_wash_request(self, user, address, promocode):
+    def save_wash_request(self, user, address):
         if self.booking['request_id']:
             washrequest = WashRequest.objects.get(id=self.booking['request_id'])
         else:
@@ -393,13 +376,13 @@ class BookingForm(BaseUserForm):
 
         washrequest.total_price = self.get_total_price()
 
-        if promocode:
-            washrequest.promocode = promocode
-            if promocode.discount_type == '$':
-                washrequest.discount = promocode.discount
+        if self.booking['request']['promocode']:
+            washrequest.promocode = Promocode.objects.get(code=self.booking['request']['promocode'])
+            if washrequest.promocode.discount_type == '$':
+                washrequest.discount = washrequest.promocode.discount
                 washrequest.total_price -= washrequest.discount
-            elif promocode.discount_type == '%':
-                washrequest.discount = washrequest.total_price * (1 - promocode / 100)
+            elif washrequest.promocode.discount_type == '%':
+                washrequest.discount = washrequest.total_price * (1 - washrequest.promocode / 100)
                 washrequest.total_price -= washrequest.discount
 
         washrequest.save()
@@ -407,10 +390,14 @@ class BookingForm(BaseUserForm):
         return washrequest
 
     def save_car(self, washrequest):
-
+        if self.booking['request_id']:
+            carset = Car.objects.filter(washRequest=washrequest)
+        else:
+            carset = None
         for i in range(1, self.booking['request']['car_count'] + 1):
-            if self.booking['request_id']:
-                car = washrequest.car_set.all()[i - 1]
+
+            if carset and i <= len(carset):
+                car = carset[i - 1]
             else:
                 car = Car()
             car.washRequest = washrequest

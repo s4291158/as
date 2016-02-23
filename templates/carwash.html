@@ -7,14 +7,14 @@
 {% endblock %}
 
 {% block body-class %}
-    class='payment-page'
+    class='washrequest-page'
 {% endblock %}
 
 {% block content %}
     <div class="headline-bg payment-headline-bg">
     </div><!--//headline-bg-->
 
-    <section class="payment-section custom-section section section-on-bg">
+    <section class="washrequest-section custom-section section section-on-bg">
         <div class="container">
             <h2 class="title text-center">Wash Request #{{ wash_request.id }}</h2>
             <div class="row">
@@ -116,7 +116,35 @@
 
                                 <!-- Specify details about the item that buyers will purchase. -->
                                 <input type="hidden" name="item_name" value="One time carwash">
+                                <input type="hidden" name="return" value="{% url 'a:carwash' %}">
                                 <input type="hidden" name="amount" value={{ wash_request.total_price }}>
+                                <input type="hidden" name="currency_code" value="AUD">
+
+                                <!-- Display the payment button. -->
+                                <input type="image" name="submit" border="0"
+                                       src="https://www.paypalobjects.com/en_US/i/btn/btn_xpressCheckout2.gif"
+                                       alt="PayPal - The safer, easier way to pay online">
+                                <img alt="" border="0" width="1" height="1"
+                                     src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif">
+
+                            </form>
+                        </div>
+                    {% endif %}
+                    {% if user.is_superuser %}
+                        <div class="form-group paypal-form text-center">
+
+                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+
+                                <!-- Identify your business so that you can collect the payments. -->
+                                <input type="hidden" name="business" value="areej@airsponge.com">
+
+                                <!-- Specify a Buy Now button. -->
+                                <input type="hidden" name="cmd" value="_xclick">
+
+                                <!-- Specify details about the item that buyers will purchase. -->
+                                <input type="hidden" name="item_name" value="One time carwash">
+                                <input type="hidden" name="return" value="http://localhost:8000{% url 'a:carwash' %}">
+                                <input type="hidden" name="amount" value=0.01>
                                 <input type="hidden" name="currency_code" value="AUD">
 
                                 <!-- Display the payment button. -->

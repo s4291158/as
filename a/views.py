@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponseNotFound
+from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponseNotFound, Http404
 
 from .forms import LandingForm, BookingForm, WasherForm
 from .models import WashRequest, BaseUser
@@ -52,20 +52,6 @@ def dashboard(request):
 @login_required
 def profile(request):
     context = {}
-    if request.user.role == 'user':
-        context['message'] = 'Book a request now or sign up to become an AirSponge washer'
-    elif request.user.role == 'washee':
-        context['active_requests'] = WashRequest.objects.filter(washee=request.user, active=True).order_by(
-            'request_date').reverse()
-        context['inactive_requests'] = WashRequest.objects.filter(washee=request.user, active=False).order_by(
-            'request_date').reverse()
-    elif request.user.role == 'washer' or request.user.is_superuser:
-        context['available_requests'] = WashRequest.objects.filter(status='confirmed').order_by(
-            'request_date').reverse()
-        context['active_requests'] = WashRequest.objects.filter(washer=request.user, active=True).order_by(
-            'request_date').reverse()
-        context['inactive_requests'] = WashRequest.objects.filter(washer=request.user, active=False).order_by(
-            'request_date').reverse()
     return render(request, 'account/profile.html', context)
 
 
@@ -117,7 +103,7 @@ def booking(request):
                 'id': form.booking['request_id']
             })
             return HttpResponseRedirect(
-                reverse('a:payment') + "?" + query_string
+                reverse('a:carwash') + "?" + query_string
             )
 
         else:
@@ -155,13 +141,15 @@ def booking(request):
 
 
 @login_required
-def payment(request):
-    washrequest = WashRequest.objects.get(id=request.GET['id'])
-    if request.user.id == washrequest.washee.id or request.user.is_superuser:
-        context = {
-            'wash_request': washrequest,
-        }
-        return render(request, 'payment.html', context)
-
+def carwash(request):
+    if request.method == 'GET' and 'id' in request.GET:
+        washrequest = WashRequest.objects.get(id=request.GET['id'])
+        if request.user.id == washrequest.washee.id or request.user.role == 'washer' or request.user.is_superuser:
+            context = {
+                'wash_request': washrequest,
+            }
+            return render(request, 'carwash.html', context)
+        else:
+            return HttpResponseForbidden()
     else:
-        return HttpResponseForbidden()
+        raise Http404

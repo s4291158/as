@@ -33,6 +33,30 @@
 }
 
 /* <!-- INDEX PAGE --> */
+.bg-slider-wrapper .flexslider .slide.slide-1 {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), url('../images/background/custom-header-1.JPG') no-repeat 50% top;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.bg-slider-wrapper .flexslider .slide.slide-2 {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75)), url('../images/background/custom-header-2.JPG') no-repeat 50% top;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.bg-slider-wrapper .flexslider .slide.slide-3 {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), url('../images/background/custom-header-3.JPG') no-repeat 50% top;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
 
 /* LANDING SECTION */
 
@@ -165,6 +189,26 @@
 }
 
 .payment-section .paypal-form {
+    margin: 30px;
+}
+
+/* <!-- WASHREQUEST PAGE --> */
+/* <!-- PAYMENT PAGE --> */
+.washrequest-section .edit-request {
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 26px;
+    padding: 0;
+    margin-top: 30px;
+    display: inline-block;
+    float: right;
+}
+
+.washrequest-section table {
+    width: 100%;
+}
+
+.washrequest-section .paypal-form {
     margin: 30px;
 }
 
