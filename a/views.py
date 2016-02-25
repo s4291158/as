@@ -1,12 +1,25 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponseNotFound, Http404
+from django.http import HttpResponseBadRequest, HttpResponseRedirect, HttpResponseForbidden, HttpResponseNotFound, \
+    Http404, \
+    JsonResponse
 
-from .forms import LandingForm, BookingForm, WasherForm
+from .forms import *
 from .models import WashRequest, BaseUser
 
 from urllib import parse
+
+
+def admin_change_role(request):
+    context = {}
+    if request.method == 'POST':
+        form = AdminChangeRoleForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            context['role'] = form.cleaned_data['role_field']
+    # return JsonResponse(context)
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 def index(request):
@@ -39,7 +52,7 @@ def dashboard(request):
             'request_date').reverse()
         context['inactive_requests'] = WashRequest.objects.filter(washee=request.user, active=False).order_by(
             'request_date').reverse()
-    elif request.user.role == 'washer' or request.user.is_superuser:
+    elif request.user.role == 'washer':
         context['available_requests'] = WashRequest.objects.filter(status='confirmed').order_by(
             'request_date').reverse()
         context['active_requests'] = WashRequest.objects.filter(washer=request.user, active=True).order_by(
@@ -69,7 +82,7 @@ def washer(request):
             context['form'] = form
 
     else:
-        if request.user.role == 'washee' and not request.user.is_superuser:
+        if request.user.role == 'washee' or request.user.role == 'both':
             context['form'] = LandingForm()
             context['message'] = 'We require separate accounts to provide and use our service'
             return render(request, 'index.html', context)
@@ -90,10 +103,11 @@ def booking(request):
     if 'id' in request.GET:
         request_id = request.GET['id']
 
-    if request.user.role == 'washer' and not request.user.is_superuser:
+    if request.user.role == 'washer' or request.user.role == 'both':
         context['form'] = LandingForm()
         context['message'] = 'We require separate accounts to provide and use our service'
         return render(request, 'index.html', context)
+
     if request.method == 'POST':
         form = BookingForm(request.user, request.POST)
         if form.is_valid():
@@ -114,7 +128,7 @@ def booking(request):
             washrequest = WashRequest.objects.get(id=request_id)
         except WashRequest.DoesNotExist:
             return HttpResponseNotFound()
-        if request.user.id == washrequest.washee.id or request.user.is_superuser:
+        if can_see_carwash(request.user, washrequest.washee):
             initial_value = {
                 'wash_date_field': washrequest.wash_date,
                 'car_count_field': washrequest.car_count,
@@ -142,14 +156,35 @@ def booking(request):
 
 @login_required
 def carwash(request):
-    if request.method == 'GET' and 'id' in request.GET:
-        washrequest = WashRequest.objects.get(id=request.GET['id'])
-        if request.user.id == washrequest.washee.id or request.user.role == 'washer' or request.user.is_superuser:
+    if 'id' in request.GET:
+        try:
+            washrequest = WashRequest.objects.get(id=request.GET['id'])
+        except WashRequest.DoesNotExist:
+            raise Http404
+
+        if can_see_carwash(request.user, washrequest.washee):
+            if 'action' in request.GET and request.user.role == 'washee':
+                action = request.GET['action']
+                if action == 'cancel':
+                    washrequest.status = 'cancelled'
+                    washrequest.active = False
+                    washrequest.save()
+                else:
+                    return HttpResponseBadRequest()
+
             context = {
                 'wash_request': washrequest,
             }
+
             return render(request, 'carwash.html', context)
         else:
             return HttpResponseForbidden()
     else:
-        raise Http404
+        return HttpResponseBadRequest()
+
+
+def can_see_carwash(user, washee):
+    if user.id == washee.id or user.role == 'washer' or user.role == 'both':
+        return True
+    else:
+        return False

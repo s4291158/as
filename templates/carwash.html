@@ -22,13 +22,25 @@
                     <div class="row request">
                         <div class="col-sm-12">
                             <h3 class="inner-section-title">Request</h3>
-                            {% if wash_request.status == 'pending' %}
-                                <a class="edit-request" href="{% url 'a:booking' %}?id={{ wash_request.id }}">Edit
-                                    Request</a>
+                            {% if wash_request.status != 'cancelled' and wash_request.status != 'completed' %}
+                                <a class="request-action"
+                                   href="{% url 'a:carwash' %}?id={{ wash_request.id }}&action=cancel">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </a>
                             {% endif %}
+                            {% if wash_request.status == 'pending' %}
+                                <a class="request-action" href="{% url 'a:booking' %}?id={{ wash_request.id }}">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </a>
+                            {% endif %}
+
                         </div>
                         <div class="col-sm-12">
                             <table class="table-condensed">
+                                <tr>
+                                    <th>Status:</th>
+                                    <td>{{ wash_request.get_status_display }}</td>
+                                </tr>
                                 <tr>
                                     <th>Name:</th>
                                     <td>{{ wash_request.washee.first_name }} {{ wash_request.washee.last_name }}</td>
@@ -130,7 +142,7 @@
                             </form>
                         </div>
                     {% endif %}
-                    {% if user.is_superuser %}
+                    {% if user.role == 'both' %}
                         <div class="form-group paypal-form text-center">
 
                             <form action="https://www.paypal.com/cgi-bin/webscr" method="post">

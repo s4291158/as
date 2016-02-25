@@ -88,3 +88,20 @@ function numberOfCars(operation) {
     ele.val(car_count);
     return car_count;
 }
+
+$('.admin-change-role-btn').click(function () {
+    $('#id_role_field').val(this.text.toLowerCase());
+    var form = $('#admin-change-role-form');
+    form.submit();
+    //var posting = $.post(form.attr('action'), form.serialize(), function (data) {
+    //    if (data.role == 'washer') {
+    //        alert('washer');
+    //        $('#admin-washer-selector').text('>');
+    //        $('#admin-washee-selector').text('');
+    //    } else if (data.role == 'washee') {
+    //        alert('washee');
+    //        $('#admin-washer-selector').text('');
+    //        $('#admin-washee-selector').text('>');
+    //    }
+    //});
+});

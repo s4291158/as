@@ -19,4 +19,6 @@ urlpatterns = [
     url(r'^accounts/dashboard/$', views.dashboard, name='dashboard'),
     url(r'^accounts/profile/$', views.profile, name='profile'),
 
+    url(r'^accounts/profile/changerole/$', views.admin_change_role, name='admin_change_role')
+
 ]

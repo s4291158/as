@@ -1,0 +1,10 @@
+<li>
+    <a id="admin-{{ role }}" class="admin-change-role-btn" href="#">
+        <span id="admin-{{ role }}-selector">
+            {% if user.role == role %}
+                >
+            {% endif %}
+        </span>
+        {{ role }}
+    </a>
+</li>

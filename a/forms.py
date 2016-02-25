@@ -7,6 +7,24 @@ import random
 from .models import *
 
 
+class AdminChangeRoleForm(forms.Form):
+    def __init__(self, user, *args, **kwargs):
+        super(AdminChangeRoleForm, self).__init__(*args, **kwargs)
+        self.user = user
+
+        self.fields['role_field'] = forms.CharField()
+
+    def clean_role_field(self):
+        if not self.user.is_superuser:
+            raise forms.ValidationError('Only admin has access to this feature')
+        return self.cleaned_data['role_field']
+
+    def save(self):
+        user = BaseUser.objects.get(id=self.user.id)
+        user.role = self.cleaned_data['role_field']
+        user.save()
+
+
 class LandingForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(LandingForm, self).__init__(*args, **kwargs)
@@ -368,7 +386,8 @@ class BookingForm(BaseUserForm):
         if address:
             washrequest.address = address
 
-        washrequest.request_date = timezone.now()
+        if not washrequest.request_date:
+            washrequest.request_date = timezone.now()
         if self.booking['request']['wash_date']:
             washrequest.wash_date = self.booking['request']['wash_date']
 

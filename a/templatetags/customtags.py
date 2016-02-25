@@ -1,4 +1,5 @@
 from django import template
+from django.template.defaultfilters import stringfilter
 
 register = template.Library()
 
@@ -26,3 +27,8 @@ def get_extra_dirty_field(form, i):
 @register.filter
 def get_extra_dirty_field_label(form, i):
     return form['extra_dirty_field' + str(i)].label
+
+
+@register.filter(name='url_address')
+def url_address(address):
+    return address.replace(' ', '+')

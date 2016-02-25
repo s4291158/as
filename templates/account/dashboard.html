@@ -24,88 +24,13 @@
                 </div>
             {% endif %}
             {% if available_requests %}
-                <div class="row active-requests">
-                    <h3 class="inner-section-title">Available Requests</h3>
-                    <table id="active_requests_table" class="table table-hover">
-                        <tr>
-                            <th>Request</th>
-                            <th>Request Date</th>
-                            <th>Wash Date</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                        {% for request in available_requests %}
-                            <tr>
-                                <td>
-                                    <a href="{% url 'a:carwash' %}?id={{ request.id }}">Wash request
-                                        #{{ request.id }}</a>
-                                </td>
-                                <td>{{ request.request_date }}</td>
-                                <td>{{ request.wash_date }}</td>
-                                <td>{{ request.status }}</td>
-                                <td>
-                                    <a href="#" type="button" class="btn btn-success no-border-radius">Accept</a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </table>
-                </div>
+                {% include 'account/dashboard-table.html' with r=available_requests status='available' string='Available Requests' %}
             {% endif %}
             {% if active_requests %}
-                <div class="row active-requests">
-                    <h3 class="inner-section-title">Active Requests</h3>
-                    <table id="active_requests_table" class="table table-hover">
-                        <tr>
-                            <th>Request</th>
-                            <th>Request Date</th>
-                            <th>Wash Date</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                        {% for request in active_requests %}
-                            <tr>
-                                <td>
-                                    <a href="{% url 'a:carwash' %}?id={{ request.id }}">Wash request
-                                        #{{ request.id }}</a>
-                                </td>
-                                <td>{{ request.request_date }}</td>
-                                <td>{{ request.wash_date }}</td>
-                                <td>{{ request.get_status_display }}</td>
-                                <td>
-                                    {% if request.status == 'pending' and user.role == 'washee' %}
-                                        <a href="{% url 'a:carwash' %}?id={{ request.id }}" type="button"
-                                           class="btn btn-success no-border-radius">Payment</a>
-                                    {% endif %}
-                                    {#                                    <a href="#" type="button" class="btn btn-danger no-border-radius">Cancel</a>#}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </table>
-                </div>
+                {% include 'account/dashboard-table.html' with r=active_requests status='active' string='Active Requests' %}
             {% endif %}
             {% if inactive_requests %}
-                <div class="row inactive-requests">
-                    <h3 class="inner-section-title">Request History</h3>
-                    <table id="inactive_requests_table" class="table table-hover">
-                        <tr>
-                            <th>Request</th>
-                            <th>Request Date</th>
-                            <th>Wash Date</th>
-                            <th>Status</th>
-                        </tr>
-                        {% for request in inactive_requests %}
-                            <tr>
-                                <td>
-                                    <a href="{% url 'a:carwash' %}?id={{ request.id }}">Wash request
-                                        #{{ request.id }}</a>
-                                </td>
-                                <td>{{ request.request_date }}</td>
-                                <td>{{ request.wash_date }}</td>
-                                <td>{{ request.get_status_display }}</td>
-                            </tr>
-                        {% endfor %}
-                    </table>
-                </div>
+                {% include 'account/dashboard-table.html' with r=inactive_requests status='inactive' string='Request History' %}
             {% endif %}
         </div>
     </section>
