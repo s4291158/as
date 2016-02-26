@@ -5,20 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28727170-58ab-423e-b774-db23849e50e7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/a/decorators.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/account/dashboard-table.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/nav-role.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/a/forms.py" afterPath="$PROJECT_DIR$/a/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/a/static/css/styles.css" afterPath="$PROJECT_DIR$/a/static/css/styles.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/a/static/js/custom.js" afterPath="$PROJECT_DIR$/a/static/js/custom.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/a/templatetags/customtags.py" afterPath="$PROJECT_DIR$/a/templatetags/customtags.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/a/urls.py" afterPath="$PROJECT_DIR$/a/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/a/views.py" afterPath="$PROJECT_DIR$/a/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/account/dashboard.html" afterPath="$PROJECT_DIR$/templates/account/dashboard.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/carwash.html" afterPath="$PROJECT_DIR$/templates/carwash.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/nav.html" afterPath="$PROJECT_DIR$/templates/nav.html" />
     </list>
     <ignored path="as.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -91,11 +81,11 @@
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="nav.html" pinned="false" current-in-tab="false">
+            <file leaf-file-name="nav.html" pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/templates/nav.html">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="-3.0447762">
-                    <caret line="42" column="48" selection-start-line="42" selection-start-column="48" selection-end-line="42" selection-end-column="48" />
+                  <state vertical-scroll-proportion="0.57049894">
+                    <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
                     <folding />
                   </state>
                 </provider>
@@ -131,11 +121,11 @@
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="carwash.html" pinned="false" current-in-tab="true">
+            <file leaf-file-name="carwash.html" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/templates/carwash.html">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="0.33295712">
-                    <caret line="28" column="36" selection-start-line="28" selection-start-column="36" selection-end-line="28" selection-end-column="36" />
+                  <state vertical-scroll-proportion="32.373135">
+                    <caret line="36" column="36" selection-start-line="36" selection-start-column="36" selection-end-line="36" selection-end-column="36" />
                     <folding />
                   </state>
                 </provider>
@@ -162,10 +152,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/as/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="3.6707132">
               <caret line="146" column="29" selection-start-line="146" selection-start-column="29" selection-end-line="146" selection-end-column="29" />
               <folding />
             </state>
@@ -196,11 +186,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/a/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6661608">
-              <caret line="183" column="0" selection-start-line="183" selection-start-column="0" selection-end-line="183" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="176" column="13" selection-start-line="176" selection-start-column="13" selection-end-line="176" selection-end-column="13" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -212,7 +202,7 @@
         <entry file="file://$PROJECT_DIR$/a/forms.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="11" column="44" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
+              <caret line="486" column="50" selection-start-line="486" selection-start-column="50" selection-end-line="486" selection-end-column="50" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -314,14 +304,14 @@
         <option value="$PROJECT_DIR$/templates/account/dashboard.html" />
         <option value="$PROJECT_DIR$/templates/account/dashboard-table.html" />
         <option value="$PROJECT_DIR$/a/urls.py" />
-        <option value="$PROJECT_DIR$/a/forms.py" />
         <option value="$PROJECT_DIR$/a/static/js/custom.js" />
         <option value="$PROJECT_DIR$/templates/nav-role.html" />
         <option value="$PROJECT_DIR$/a/decorators.py" />
         <option value="$PROJECT_DIR$/templates/nav.html" />
-        <option value="$PROJECT_DIR$/a/views.py" />
-        <option value="$PROJECT_DIR$/templates/carwash.html" />
         <option value="$PROJECT_DIR$/a/static/css/styles.css" />
+        <option value="$PROJECT_DIR$/templates/carwash.html" />
+        <option value="$PROJECT_DIR$/a/views.py" />
+        <option value="$PROJECT_DIR$/a/forms.py" />
       </list>
     </option>
   </component>
@@ -1150,14 +1140,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/as/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="146" column="29" selection-start-line="146" selection-start-column="29" selection-end-line="146" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/account/dashboard-table.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-16.258064">
@@ -1236,22 +1218,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/nav.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.0447762">
-          <caret line="42" column="48" selection-start-line="42" selection-start-column="48" selection-end-line="42" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/carwash.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33295712">
-          <caret line="28" column="36" selection-start-line="28" selection-start-column="36" selection-end-line="28" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/a/static/css/styles.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="5.290323">
@@ -1268,23 +1234,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/a/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="176" column="13" selection-start-line="176" selection-start-column="13" selection-end-line="176" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/carwash.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="32.373135">
+          <caret line="36" column="36" selection-start-line="36" selection-start-column="36" selection-end-line="36" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/nav.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.57049894">
+          <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/a/forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="44" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
+          <caret line="486" column="50" selection-start-line="486" selection-start-column="50" selection-end-line="486" selection-end-column="50" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/a/views.py">
+    <entry file="file://$PROJECT_DIR$/as/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6661608">
-          <caret line="183" column="0" selection-start-line="183" selection-start-column="0" selection-end-line="183" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="3.6707132">
+          <caret line="146" column="29" selection-start-line="146" selection-start-column="29" selection-end-line="146" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>

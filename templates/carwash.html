@@ -22,16 +22,18 @@
                     <div class="row request">
                         <div class="col-sm-12">
                             <h3 class="inner-section-title">Request</h3>
-                            {% if wash_request.status != 'cancelled' and wash_request.status != 'completed' %}
-                                <a class="request-action"
-                                   href="{% url 'a:carwash' %}?id={{ wash_request.id }}&action=cancel">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </a>
-                            {% endif %}
-                            {% if wash_request.status == 'pending' %}
-                                <a class="request-action" href="{% url 'a:booking' %}?id={{ wash_request.id }}">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </a>
+                            {% if user.role == 'washee' or user.role == 'both' %}
+                                {% if wash_request.status != 'cancelled' and wash_request.status != 'completed' %}
+                                    <a class="request-action"
+                                       href="{% url 'a:carwash' %}?id={{ wash_request.id }}&action=cancel">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </a>
+                                {% endif %}
+                                {% if wash_request.status == 'pending' %}
+                                    <a class="request-action" href="{% url 'a:booking' %}?id={{ wash_request.id }}">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </a>
+                                {% endif %}
                             {% endif %}
 
                         </div>

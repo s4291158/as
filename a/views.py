@@ -179,6 +179,8 @@ def carwash(request):
             return render(request, 'carwash.html', context)
         else:
             return HttpResponseForbidden()
+
+
     else:
         return HttpResponseBadRequest()
 
