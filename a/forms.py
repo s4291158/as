@@ -465,6 +465,34 @@ class BookingForm(BaseUserForm):
         return total_price
 
 
+class CancelForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(CancelForm, self).__init__(*args, **kwargs)
+        self.washrequest = None
+
+        self.fields['washrequest_id'] = forms.IntegerField(
+            widget=forms.NumberInput(
+                attrs={
+                    'type': 'hidden'
+                }
+            )
+        )
+
+    def clean_washrequest_id(self):
+        try:
+            self.washrequest = WashRequest.objects.get(id=self.cleaned_data['washrequest_id'])
+        except WashRequest.DoesNotExist:
+            raise forms.ValidationError('request not found')
+
+        return self.cleaned_data['washrequest_id']
+
+    def save(self):
+        if self.washrequest:
+            self.washrequest.status = 'cancelled'
+            self.washrequest.active = False
+            self.washrequest.save()
+
+
 ##############################
 # OUTSIDE-OF-CLASS FUNCTIONS #
 ##############################
