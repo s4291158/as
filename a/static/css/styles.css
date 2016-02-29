@@ -263,8 +263,16 @@
 }
 
 .error-message {
-    color: red;
+    color: #a94442;
     margin-bottom: 0;
+}
+
+.form-group.has-error label {
+    color: #a94442;
+}
+
+.form-group.has-error .form-control {
+    border-color: #a94442;
 }
 
 .no-border-radius {

@@ -3,7 +3,6 @@ from django.template.defaultfilters import stringfilter
 
 register = template.Library()
 
-
 @register.filter
 def get_car_specs_field(form, i):
     return form['car_specs_field' + str(i)]

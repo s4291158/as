@@ -31,59 +31,19 @@
                             <div class="col-sm-12">
                                 <h3 class="inner-section-title">Profile</h3>
                             </div>
-                            <div class="col-sm-6 form-group">
-                                {{ form.first_name_field }}
-                                {% for error in form.first_name_field.errors %}
-                                    <p class="error-message">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                            <div class="col-sm-6 form-group">
-                                {{ form.last_name_field }}
-                                {% for error in form.last_name_field.errors %}
-                                    <p class="error-message">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                            <div class="col-sm-12 form-group">
-                                {{ form.phone_field }}
-                                {% for error in form.phone_field.errors %}
-                                    <p class="error-message">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                            <div class="col-sm-12 form-group">
-                                {{ form.email_field }}
-                                {% for error in form.email_field.errors %}
-                                    <p class="error-message">{{ error }}</p>
-                                {% endfor %}
-                            </div>
+                            {% include 'form-field.html' with field=form.first_name_field class='col-sm-6' %}
+                            {% include 'form-field.html' with field=form.last_name_field class='col-sm-6' %}
+                            {% include 'form-field.html' with field=form.phone_field class='col-sm-12' %}
+                            {% include 'form-field.html' with field=form.email_field class='col-sm-12' %}
                         </div>
                         <div class="row form-address">
                             <div class="col-sm-12">
                                 <h3 class="inner-section-title">Address</h3>
                             </div>
-                            <div class="col-sm-12 form-group">
-                                {{ form.street_address_field }}
-                                {% for error in form.street_address_field.errors %}
-                                    <p class="error-message">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                            <div class="col-sm-6 col-xs-12 form-group">
-                                {{ form.suburb_field }}
-                                {% for error in form.suburb_field.errors %}
-                                    <p class="error-message">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                            <div class="col-sm-3 col-xs-6 form-group">
-                                {{ form.state_field }}
-                                {% for error in form.state_field.errors %}
-                                    <p class="error-message">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                            <div class="col-sm-3 col-xs-6 form-group">
-                                {{ form.postcode_field }}
-                                {% for error in form.postcode_field.errors %}
-                                    <p class="error-message">{{ error }}</p>
-                                {% endfor %}
-                            </div>
+                            {% include 'form-field.html' with field=form.street_address_field class='col-sm-12' %}
+                            {% include 'form-field.html' with field=form.suburb_field class='col-sm-6 col-xs-12' %}
+                            {% include 'form-field.html' with field=form.state_field class='col-sm-3 col-xs-6' %}
+                            {% include 'form-field.html' with field=form.postcode_field class='col-sm-3 col-xs-6' %}
                         </div>
                         <div class="row form-circumstances">
                             <div class="col-sm-12 form-group">
@@ -136,27 +96,9 @@
                                     <p class="error-message">{{ error }}</p>
                                 {% endfor %}
                             </div>
-                            <div class="col-sm-12 form-group">
-                                <label for="{{ form.travel_distance_field.id_for_label }}">{{ form.travel_distance_field.label }}</label>
-                                {{ form.travel_distance_field }}
-                                {% for error in form.travel_distance_field.errors %}
-                                    <p class="error-message">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                            <div class="col-sm-12 form-group">
-                                <label for="{{ form.availability_field.id_for_label }}">{{ form.availability_field.label }}</label>
-                                {{ form.availability_field }}
-                                {% for error in form.availability_field.errors %}
-                                    <p class="error-message">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                            <div class="col-sm-12 form-group">
-                                <label for="{{ form.experience_field.id_for_label }}">{{ form.experience_field.label }}</label>
-                                {{ form.experience_field }}
-                                {% for error in form.experience_field.errors %}
-                                    <p class="error-message">{{ error }}</p>
-                                {% endfor %}
-                            </div>
+                            {% include 'form-field.html' with field=form.travel_distance_field label='before' class='col-sm-12' %}
+                            {% include 'form-field.html' with field=form.availability_field label='before' class='col-sm-12' %}
+                            {% include 'form-field.html' with field=form.experience_field label='before' class='col-sm-12' %}
                         </div>
                         <div class="row form-submit">
                             <div class="col-sm-12 form-group">

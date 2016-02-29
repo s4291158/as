@@ -38,71 +38,21 @@
                             <div class="col-sm-12">
                                 <h3 class="inner-section-title">Profile</h3>
                             </div>
-                            <div class="col-sm-6 form-group">
-                                {{ form.first_name_field }}
-                                {% for error in form.first_name_field.errors %}
-                                    <p class="error-message">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                            <div class="col-sm-6 form-group">
-                                {{ form.last_name_field }}
-                                {% for error in form.last_name_field.errors %}
-                                    <p class="error-message">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                            <div class="col-sm-12 form-group">
-                                {{ form.phone_field }}
-                                {% for error in form.phone_field.errors %}
-                                    <p class="error-message">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                            <div class="col-sm-12 form-group">
-                                {{ form.email_field }}
-                                {% for error in form.email_field.errors %}
-                                    <p class="error-message">{{ error }}</p>
-                                {% endfor %}
-                            </div>
+                            {% include 'form-field.html' with field=form.first_name_field class='col-sm-6' %}
+                            {% include 'form-field.html' with field=form.last_name_field class='col-sm-6' %}
+                            {% include 'form-field.html' with field=form.phone_field class='col-sm-12' %}
+                            {% include 'form-field.html' with field=form.email_field class='col-sm-12' %}
                         </div>
                         <div class="row form-wash-request">
                             <div class="col-sm-12">
                                 <h3 class="inner-section-title">Carwash Request</h3>
                             </div>
-                            <div class="col-sm-12 form-group">
-                                {{ form.street_address_field }}
-                                {% for error in form.street_address_field.errors %}
-                                    <p class="error-message">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                            <div class="col-sm-6 col-xs-12 form-group">
-                                {{ form.suburb_field }}
-                                {% for error in form.suburb_field.errors %}
-                                    <p class="error-message">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                            <div class="col-sm-3 col-xs-6 form-group">
-                                {{ form.state_field }}
-                                {% for error in form.state_field.errors %}
-                                    <p class="error-message">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                            <div class="col-sm-3 col-xs-6 form-group">
-                                {{ form.postcode_field }}
-                                {% for error in form.postcode_field.errors %}
-                                    <p class="error-message">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                            <div class="col-sm-12 form-group">
-                                {{ form.wash_date_field }}
-                                {% for error in form.wash_date_field.errors %}
-                                    <p class="error-message">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                            <div class="col-sm-12 form-group">
-                                {{ form.promocode_field }}
-                                {% for error in form.promocode_field.errors %}
-                                    <p class="error-message">{{ error }}</p>
-                                {% endfor %}
-                            </div>
+                            {% include 'form-field.html' with field=form.street_address_field class='col-sm-12' %}
+                            {% include 'form-field.html' with field=form.suburb_field class='col-sm-6 col-xs-12' %}
+                            {% include 'form-field.html' with field=form.state_field class='col-sm-3 col-xs-6' %}
+                            {% include 'form-field.html' with field=form.postcode_field class='col-sm-3 col-xs-6' %}
+                            {% include 'form-field.html' with field=form.wash_date_field class='col-sm-12' %}
+                            {% include 'form-field.html' with field=form.promocode_field class='col-sm-12' %}
                         </div>
                         <div class="row form-car-details">
                             <div class="col-sm-12">
@@ -114,19 +64,10 @@
                                 <div id="car{{ car }}"
                                      {% if car != '1' %}class="row no-margin car-divs"
                                      {% else %}class="row no-margin"{% endif %}>
-                                    <div class="col-sm-12 form-group">
-                                        {{ form|get_car_specs_field:car }}
-                                    </div>
-                                    <div class="col-sm-5 form-group">
-                                        {{ form|get_type_field:car }}
-                                    </div>
-                                    <div class="col-sm-7 form-group">
-                                        {{ form|get_interior_field:car }}
-                                    </div>
-                                    <div class="col-sm-12 form-group form-group-extra-dirty">
-                                        {{ form|get_extra_dirty_field:car }}
-                                        <label for="id_extra_dirty_field{{ car }}">{{ form|get_extra_dirty_field_label:car }}</label>
-                                    </div>
+                                    {% include 'form-field.html' with field=form|get_car_specs_field:car class='col-sm-12' %}
+                                    {% include 'form-field.html' with field=form|get_type_field:car class='col-sm-5' %}
+                                    {% include 'form-field.html' with field=form|get_interior_field:car class='col-sm-7' %}
+                                    {% include 'form-field.html' with field=form|get_extra_dirty_field:car label='after' class='col-sm-12 form-group-extra-dirty' %}
                                 </div>
                             {% endfor %}
                             <div class="col-sm-12 form-group text-center">

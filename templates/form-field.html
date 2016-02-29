@@ -1,0 +1,21 @@
+{# Generating form fields with following params #}
+{# field: field object #}
+{# label: before or after the field itself, or none at all #}
+{# class: appends class to the form-group div, e.g. col-sm-12 #}
+<div class="form-group {{ class }} {% if field.errors %}has-error{% endif %}">
+
+    {% if label == 'before' %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {% endif %}
+
+    {{ field }}
+
+    {% if label == 'after' %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {% endif %}
+
+    {% if field.errors %}
+        <p class="error-message">{{ field.errors.as_text }}</p>
+    {% endif %}
+
+</div>
