@@ -23,13 +23,12 @@
                         <div class="col-sm-12">
                             <h3 class="inner-section-title">Request</h3>
                             {% if user.role == 'washee' or user.role == 'both' %}
-                                {% if wash_request.status != 'cancelled' and wash_request.status != 'completed' %}
-                                    <a class="request-action"
-                                       href="{% url 'a:carwash' %}?id={{ wash_request.id }}&action=cancel">
+                                {% if wash_request.status > 0 and wash_request.status < 4 %}
+                                    <a id='cancel-carwash-btn' class="request-action" href="#">
                                         <span class="glyphicon glyphicon-remove"></span>
                                     </a>
                                 {% endif %}
-                                {% if wash_request.status == 'pending' %}
+                                {% if wash_request.status == 1 %}
                                     <a class="request-action" href="{% url 'a:booking' %}?id={{ wash_request.id }}">
                                         <span class="glyphicon glyphicon-pencil"></span>
                                     </a>
@@ -117,7 +116,7 @@
                             </div>
                         {% endfor %}
                     </div>
-                    {% if wash_request.status == 'pending' %}
+                    {% if wash_request.status == 1 and user.role == 'washee' %}
                         <div class="form-group paypal-form text-center">
 
                             <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
@@ -175,4 +174,10 @@
             </div>
         </div>
     </section>
+    {% if wash_request.status > 0 and wash_request.status < 4 %}
+        <form id="cancel-carwash-form" method="POST" action="">
+            {% csrf_token %}
+            <input id="id_washrequest_id" name="washrequest_id" type="hidden" value={{ wash_request.id }}>
+        </form>
+    {% endif %}
 {% endblock %}

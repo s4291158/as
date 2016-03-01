@@ -12,7 +12,11 @@ class AdminChangeRoleForm(forms.Form):
         super(AdminChangeRoleForm, self).__init__(*args, **kwargs)
         self.user = user
 
-        self.fields['role_field'] = forms.CharField()
+        self.fields['role_field'] = forms.CharField(
+            widget=forms.TextInput(attrs={
+                'type': 'hidden',
+            })
+        )
 
     def clean_role_field(self):
         if not self.user.is_superuser:
@@ -470,25 +474,19 @@ class CancelForm(forms.Form):
         super(CancelForm, self).__init__(*args, **kwargs)
         self.washrequest = None
 
-        self.fields['washrequest_id'] = forms.IntegerField(
-            widget=forms.NumberInput(
-                attrs={
-                    'type': 'hidden'
-                }
-            )
-        )
+        self.fields['washrequest_id'] = forms.IntegerField()
 
     def clean_washrequest_id(self):
+        washrequest_id = self.cleaned_data['washrequest_id']
         try:
-            self.washrequest = WashRequest.objects.get(id=self.cleaned_data['washrequest_id'])
+            self.washrequest = WashRequest.objects.get(id=washrequest_id)
         except WashRequest.DoesNotExist:
             raise forms.ValidationError('request not found')
-
         return self.cleaned_data['washrequest_id']
 
     def save(self):
         if self.washrequest:
-            self.washrequest.status = 'cancelled'
+            self.washrequest.status = 0
             self.washrequest.active = False
             self.washrequest.save()
 

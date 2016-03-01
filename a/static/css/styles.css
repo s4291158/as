@@ -229,6 +229,9 @@
     border-radius: 0px;
 }
 
+/* <!-- DASHBOARD --> */
+
+
 /* <!-- ALL PAGES --> */
 /* SECTION */
 .custom-section {
@@ -260,6 +263,11 @@
 
 .custom-section .form-group .form-control {
     border: 1px solid #ccc;
+}
+
+.animate-height {
+    overflow: hidden;
+    height: 0;
 }
 
 .error-message {

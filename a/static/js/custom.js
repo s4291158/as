@@ -89,6 +89,19 @@ function numberOfCars(operation) {
     return car_count;
 }
 
+$('#history-toggle-btn').click(function (e) {
+    e.preventDefault();
+    var value = this.text;
+    var ele = $('.inactive-requests');
+    if (value == 'show') {
+        ele.animate({height: ele.get(0).scrollHeight});
+        $('a#history-toggle-btn').text('hide');
+    } else if (value == 'hide') {
+        ele.animate({height: 0});
+        $('a#history-toggle-btn').text('show');
+    }
+});
+
 $('.admin-change-role-btn').click(function () {
     $('#id_role_field').val(this.text.toLowerCase());
     var form = $('#admin-change-role-form');
@@ -104,4 +117,8 @@ $('.admin-change-role-btn').click(function () {
     //        $('#admin-washee-selector').text('>');
     //    }
     //});
+});
+
+$('#cancel-carwash-btn').click(function () {
+    $('#cancel-carwash-form').submit();
 });

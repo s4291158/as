@@ -81,13 +81,13 @@ class WashRequest(models.Model):
     promocode = models.ForeignKey(Promocode, on_delete=models.CASCADE, null=True, blank=True)
 
     STATUS_CHOICES = [
-        ('pending', 'Payment Pending'),
-        ('confirmed', 'Arranging Washer'),
-        ('in progress', 'Wash in Progress'),
-        ('completed', 'Completed'),
-        ('cancelled', 'Cancelled'),
+        (1, 'Payment Pending'),
+        (2, 'Arranging Washer'),
+        (3, 'Wash in Progress'),
+        (4, 'Completed'),
+        (0, 'Cancelled'),
     ]
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    status = models.IntegerField(choices=STATUS_CHOICES, default=1)
     active = models.BooleanField(default=True)
 
     request_date = models.DateTimeField(null=True, blank=True)

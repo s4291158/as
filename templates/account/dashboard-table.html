@@ -1,8 +1,12 @@
 {% load customtags %}
+<div class="row">
+    <h3 class="inner-section-title">
+        {{ string }} {% if status == 'inactive' %}(<a id="history-toggle-btn" href="#">show</a>){% endif %}
+    </h3>
+</div>
+<div class="row {{ status }}-requests {% if status == 'inactive' %}animate-height{% endif %}" >
 
-<div class="row {{ status }}-requests">
-    <h3 class="inner-section-title">{{ string }}</h3>
-    <table id="{{ id }}-requests-table" class="table table-hover">
+    <table id="{{ status }}-requests-table" class="table table-hover" >
         <tr>
             <th>Request</th>
             <th>Address</th>
@@ -26,14 +30,14 @@
                 </td>
                 <td>{{ request.wash_date }}</td>
                 <td>{{ request.car_count }}</td>
-                <td>{{ request.status }}</td>
+                <td>{{ request.get_status_display }}</td>
                 {% if status == 'available' %}
                     <td>
                         <a href="#" type="button" class="btn btn-success no-border-radius">Accept</a>
                     </td>
                 {% elif status == 'active' %}
                     <td>
-                        {% if request.status == 'pending' and user.role == 'washee' %}
+                        {% if request.status == 1 and user.role == 'washee' %}
                             <a href="{% url 'a:carwash' %}?id={{ request.id }}" type="button"
                                class="btn btn-success no-border-radius">Payment</a>
                         {% endif %}

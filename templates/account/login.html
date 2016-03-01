@@ -27,35 +27,29 @@
                                     <form class="login-form" method="POST" action="{% url 'account_login' %}">
                                         {% csrf_token %}
 
-                                        {#                                        <div class="form-group email">#}
-                                        {#                                            <label class="sr-only" for="id_login">Email or username</label>#}
-                                        {#                                            <input id="id_login" name="login" type="email"#}
-                                        {#                                                   class="form-control login-email"#}
-                                        {#                                                   placeholder="Email">#}
-                                        {#                                            {% for error in form.email.errors %}#}
-                                        {#                                                <p class="error-message">{{ error }}</p>#}
-                                        {#                                            {% endfor %}#}
-                                        {#                                        </div><!--//form-group-->#}
-                                        {##}
-                                        {#                                        <div class="form-group password">#}
-                                        {#                                            <label class="sr-only" for="login-password">Password</label>#}
-                                        {#                                            <input id="id_password" name="password" type="password"#}
-                                        {#                                                   class="form-control login-password" placeholder="Password">#}
-                                        {#                                            {% for error in form.password.errors %}#}
-                                        {#                                                <p class="error-message">{{ error }}</p>#}
-                                        {#                                            {% endfor %}#}
-                                        {#                                        </div><!--//form-group-->#}
-                                        {##}
-                                        {#                                        <div class="form-group">#}
-                                        {#                                            <div class="checkbox remember">#}
-                                        {#                                                <label>#}
-                                        {#                                                    <input id="id_remember" name="remember"#}
-                                        {#                                                           type="checkbox">Remember me#}
-                                        {#                                                </label>#}
-                                        {#                                            </div><!--//checkbox-->#}
-                                        {#                                        </div>#}
+                                        <div class="form-group email {% if form.login.errors %}has-error{% endif %}">
+                                            <label class="sr-only" for="id_login">Email</label>
+                                            <input id="id_login" name="login" type="email"
+                                                   class="form-control login-email"
+                                                   placeholder="Email">
+                                            <p class="error-message">{{ form.login.errors.as_text }}</p>
+                                        </div>
 
-                                        {{ form|bootstrap }}
+                                        <div class="form-group password {% if form.password.errors %}has-error{% endif %}">
+                                            <label class="sr-only" for="login-password">Password</label>
+                                            <input id="id_password" name="password" type="password"
+                                                   class="form-control login-password" placeholder="Password">
+                                            <p class="error-message">{{ form.password.errors.as_text }}</p>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="checkbox remember">
+                                                <label>
+                                                    <input id="id_remember" name="remember"
+                                                           type="checkbox">Remember me
+                                                </label>
+                                            </div>
+                                        </div>
 
                                         {% if redirect_field_value %}
                                             <input type="hidden" name="{{ redirect_field_name }}"
@@ -75,12 +69,7 @@
                                         <p class="lead">
                                             Don't have an account with AirSponge?
                                             <a class="signup-link"
-                                               href="
-
-
-
-
-                                                       {% url 'account_signup' %}{% if request.GET.next %}?next={{ request.GET.next|urlencode }}{% endif %}">
+                                               href="{% url 'account_signup' %}{% if redirect_field_value %}?next={{ redirect_field_value|urlencode }}{% endif %}">
                                                 Sign Up
                                             </a>
                                         </p>

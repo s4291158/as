@@ -53,7 +53,7 @@ def dashboard(request):
         context['inactive_requests'] = WashRequest.objects.filter(washee=request.user, active=False).order_by(
             'request_date').reverse()
     elif request.user.role == 'washer':
-        context['available_requests'] = WashRequest.objects.filter(status='confirmed').order_by(
+        context['available_requests'] = WashRequest.objects.filter(status=2).order_by(
             'request_date').reverse()
         context['active_requests'] = WashRequest.objects.filter(washer=request.user, active=True).order_by(
             'request_date').reverse()
@@ -123,12 +123,13 @@ def booking(request):
         else:
             context['message'] = 'We could not process your request at this time, please check field errors'
             context['form'] = form
+
     elif request_id:
         try:
             washrequest = WashRequest.objects.get(id=request_id)
         except WashRequest.DoesNotExist:
             return HttpResponseNotFound()
-        if can_see_carwash(request.user, washrequest.washee):
+        if can_see_carwash(request.user, washrequest):
             initial_value = {
                 'wash_date_field': washrequest.wash_date,
                 'car_count_field': washrequest.car_count,
@@ -156,35 +157,41 @@ def booking(request):
 
 @login_required
 def carwash(request):
+    context = {}
     if 'id' in request.GET:
         try:
             washrequest = WashRequest.objects.get(id=request.GET['id'])
         except WashRequest.DoesNotExist:
             raise Http404
 
-        if can_see_carwash(request.user, washrequest.washee):
-            if 'action' in request.GET and request.user.role == 'washee':
-                action = request.GET['action']
-                if action == 'cancel':
-                    washrequest.status = 'cancelled'
-                    washrequest.active = False
-                    washrequest.save()
-                else:
-                    return HttpResponseBadRequest()
+        if request.method == 'GET':
+            if can_see_carwash(request.user, washrequest):
+                context = {
+                    'wash_request': washrequest,
+                }
+            else:
+                return HttpResponseForbidden()
 
-            context = {
-                'wash_request': washrequest,
-            }
+        elif request.method == 'POST':
+            form = CancelForm(request.POST)
+            if form.is_valid():
+                form.save()
+                context = {
+                    'wash_request': form.washrequest
+                }
 
-            return render(request, 'carwash.html', context)
-        else:
-            return HttpResponseForbidden()
+        return render(request, 'carwash.html', context)
+
     else:
         return HttpResponseBadRequest()
 
 
-def can_see_carwash(user, washee):
-    if user.id == washee.id or user.role == 'washer' or user.role == 'both':
+def can_see_carwash(user, washrequest):
+    if user.role == 'both':
+        return True
+    elif user.role == 'washer' and washrequest.status > 1:
+        return True
+    elif user.id == washrequest.washee.id:
         return True
     else:
         return False
